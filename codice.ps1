@@ -2,7 +2,7 @@
 # AUTO-ELEVAZIONE PRIVILEGI AMMINISTRATORE E NASCONDIMENTO CONSOLE - CON LOG DEBUG
 # ==============================================================================
 $global:DebugStartup = $false  # Metti a $true se vuoi VEDERE gli errori rossi all'avvio
-$scriptVersion = "v3.9.16"  # v3.9.16: popup di attesa rivisto (layout senza Dock, testo di aiuto chiaro e leggibile, finestra più alta); v3.9.15: Elimina Reti Wi-Fi Note con controllo preventivo (nessun falso successo su PC senza Wi-Fi, conferma con elenco reti, esito per profilo); v3.9.14: SpeedTest download con User-Agent da browser e server di riserva (Hetzner, OVH, Tele2) dopo errore 403 di Cloudflare; v3.9.13: SpeedTest Latenza + Download rifatto (latenza min/media/max/jitter con ripiego TCP, download reale in Mbit/s); v3.9.12: popup DISM ScanHealth più alto (pulsante Annulla non tagliato e leggibile); v3.9.11: colore dei comandi al passaggio del mouse blu (rosso/arancio schiariti); v3.9.10: Health Batteria con controllo preventivo (PC fisso = messaggio chiaro, niente errore), report HTML aperto solo se creato; v3.9.9: avviso AD-TOOLs graduato (PC in dominio senza RSAT = avviso leggero una volta per sessione; fuori dominio = avviso completo); v3.9.8: Canale Sicuro e Test Porte DC spostati da Rete ad AD-TOOLs (avviso e popup aggiornati); v3.9.7: esito chiaro per Esporta Password WiFi (popup con percorso, nessun falso successo senza WLAN); v3.9.6: log a colori (RichTextBox), commenti delle schede riscritti, numeri del popup NOTE dinamici; v3.9.5: schede con più margine interno e stacco tra una scheda e l'altra; v3.9.4: finestra più larga (1415 px) con griglia pulsanti e comandi in alto a destra riallineati; v3.9.3: testo dei tab senza puntini (niente padding/ellissi); v3.9.2: fix compilazione tab scuri (ControlStyles); v3.9.1: tema scuro (barra del titolo e tab) + accenti corretti nei testi; v3.9.0: popup informativo AD-TOOLs + file impostazioni; v3.8.0: nuovi comandi AD/rete e Show-ConfirmBox; v3.7.1: file di output nella cartella dello script; v3.7.0: fix pattern -like, CIM al posto di WMI, elevazione robusta, helper pulsanti
+$scriptVersion = "v3.9.17"  # v3.9.17: Network con 5 nuovi comandi sulle porte (porte in ascolto TCP/UDP con processo, connessioni attive, chi usa una porta, scansione porte host remoto, regole firewall in ingresso), tutti con CSV nella cartella dello script; v3.9.16: popup di attesa rivisto (layout senza Dock, testo di aiuto chiaro e leggibile, finestra più alta); v3.9.15: Elimina Reti Wi-Fi Note con controllo preventivo (nessun falso successo su PC senza Wi-Fi, conferma con elenco reti, esito per profilo); v3.9.14: SpeedTest download con User-Agent da browser e server di riserva (Hetzner, OVH, Tele2) dopo errore 403 di Cloudflare; v3.9.13: SpeedTest Latenza + Download rifatto (latenza min/media/max/jitter con ripiego TCP, download reale in Mbit/s); v3.9.12: popup DISM ScanHealth più alto (pulsante Annulla non tagliato e leggibile); v3.9.11: colore dei comandi al passaggio del mouse blu (rosso/arancio schiariti); v3.9.10: Health Batteria con controllo preventivo (PC fisso = messaggio chiaro, niente errore), report HTML aperto solo se creato; v3.9.9: avviso AD-TOOLs graduato (PC in dominio senza RSAT = avviso leggero una volta per sessione; fuori dominio = avviso completo); v3.9.8: Canale Sicuro e Test Porte DC spostati da Rete ad AD-TOOLs (avviso e popup aggiornati); v3.9.7: esito chiaro per Esporta Password WiFi (popup con percorso, nessun falso successo senza WLAN); v3.9.6: log a colori (RichTextBox), commenti delle schede riscritti, numeri del popup NOTE dinamici; v3.9.5: schede con più margine interno e stacco tra una scheda e l'altra; v3.9.4: finestra più larga (1415 px) con griglia pulsanti e comandi in alto a destra riallineati; v3.9.3: testo dei tab senza puntini (niente padding/ellissi); v3.9.2: fix compilazione tab scuri (ControlStyles); v3.9.1: tema scuro (barra del titolo e tab) + accenti corretti nei testi; v3.9.0: popup informativo AD-TOOLs + file impostazioni; v3.8.0: nuovi comandi AD/rete e Show-ConfirmBox; v3.7.1: file di output nella cartella dello script; v3.7.0: fix pattern -like, CIM al posto di WMI, elevazione robusta, helper pulsanti
 $global:StartLogFile = Join-Path $env:TEMP "Bino_Startup_Log.txt"
 
 # Funzione di log avvio (prima che parta la GUI)
@@ -1696,6 +1696,36 @@ Schede Rete: $((Get-NetAdapter | Where-Object Status -eq Up | Select-Object -Exp
     }, "#064E3B", "#F8FAFC", "Esporta lista software da registry Uninstall in CSV")
 )
 
+# --- HELPER PORTE DI RETE (v3.9.17) ---
+function Get-PortServiceName {
+    param([int]$Port)
+    $known = @{
+        21 = "FTP"; 22 = "SSH"; 23 = "Telnet"; 25 = "SMTP"; 53 = "DNS"; 67 = "DHCP"; 80 = "HTTP"; 88 = "Kerberos"
+        110 = "POP3"; 123 = "NTP"; 135 = "RPC"; 137 = "NetBIOS"; 138 = "NetBIOS"; 139 = "NetBIOS"; 143 = "IMAP"; 161 = "SNMP"
+        389 = "LDAP"; 443 = "HTTPS"; 445 = "SMB"; 464 = "Kerberos (password)"; 514 = "Syslog"; 636 = "LDAPS"
+        993 = "IMAPS"; 995 = "POP3S"; 1433 = "SQL Server"; 1521 = "Oracle"; 3268 = "Global Catalog"; 3269 = "Global Catalog SSL"
+        3306 = "MySQL"; 3389 = "Desktop remoto (RDP)"; 5357 = "WSDAPI"; 5432 = "PostgreSQL"; 5900 = "VNC"
+        5985 = "WinRM"; 5986 = "WinRM (HTTPS)"; 8080 = "HTTP alternativo"; 8443 = "HTTPS alternativo"; 9100 = "Stampa RAW"
+    }
+    if ($known.ContainsKey($Port)) { return [string]$known[$Port] }
+    return ""
+}
+
+# Tabella PID -> nome processo (per associare ogni porta al programma che la usa)
+function Get-PortProcessMap {
+    $map = @{}
+    try { Get-Process -ErrorAction SilentlyContinue | ForEach-Object { $map[[int]$_.Id] = $_.ProcessName } } catch { $null = $_ }
+    $map[0] = "System Idle"
+    $map[4] = "System"
+    return $map
+}
+
+# Vero se l'indirizzo è solo locale (loopback): la porta non è raggiungibile dalla rete
+function Test-LocalOnlyAddress {
+    param([string]$Addr)
+    return ($Addr -eq "127.0.0.1" -or $Addr -eq "::1")
+}
+
 $netBtns = @(
 
     @("Esporta Password WiFi Salvate", {
@@ -1902,6 +1932,242 @@ $netBtns = @(
         $res = Test-NetConnection -ComputerName "8.8.8.8" -Port 53
         Write-Log "Test Porte Rete (DNS 8.8.8.8:53): Risultato = $($res.TcpTestSucceeded)"
     }, "#064E3B", "#F8FAFC", "Verifica se la porta di rete remota (es. DNS 53) è raggiungibile e aperta."),
+    @("Porte in Ascolto`n(TCP + UDP)", {
+        Show-CommandSummary "Porte in Ascolto" @("Get-NetTCPConnection -State Listen", "Get-NetUDPEndpoint", "Associazione porta -> processo (PID)")
+        Show-WaitOverlay -msg "Lettura porte in ascolto..."
+        try {
+            $procMap = Get-PortProcessMap
+            $rows = New-Object System.Collections.ArrayList
+            foreach ($c in @(Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue)) {
+                $pn = $procMap[[int]$c.OwningProcess]; if (-not $pn) { $pn = "?" }
+                $acc = if (Test-LocalOnlyAddress $c.LocalAddress) { "Solo locale" } else { "Rete" }
+                [void]$rows.Add([PSCustomObject]@{ Proto = "TCP"; Indirizzo = [string]$c.LocalAddress; Porta = [int]$c.LocalPort; PID = [int]$c.OwningProcess; Processo = $pn; Servizio = (Get-PortServiceName ([int]$c.LocalPort)); Accesso = $acc })
+            }
+            foreach ($u in @(Get-NetUDPEndpoint -ErrorAction SilentlyContinue)) {
+                $pn = $procMap[[int]$u.OwningProcess]; if (-not $pn) { $pn = "?" }
+                $acc = if (Test-LocalOnlyAddress $u.LocalAddress) { "Solo locale" } else { "Rete" }
+                [void]$rows.Add([PSCustomObject]@{ Proto = "UDP"; Indirizzo = [string]$u.LocalAddress; Porta = [int]$u.LocalPort; PID = [int]$u.OwningProcess; Processo = $pn; Servizio = (Get-PortServiceName ([int]$u.LocalPort)); Accesso = $acc })
+            }
+            $rows = @($rows | Sort-Object Porta, Proto, Indirizzo)
+            $netRows = @($rows | Where-Object { $_.Accesso -eq "Rete" })
+            $locRows = @($rows | Where-Object { $_.Accesso -eq "Solo locale" })
+            Write-Log ("Trovate {0} porte in ascolto: {1} raggiungibili dalla rete, {2} solo locali." -f $rows.Count, $netRows.Count, $locRows.Count)
+            Write-Log "--- Porte raggiungibili dalla rete (0.0.0.0 / :: / IP della scheda) ---"
+            foreach ($r in $netRows) {
+                $svcTxt = if ($r.Servizio) { " (" + $r.Servizio + ")" } else { "" }
+                Write-Log ("{0} {1}{2} | {3} | {4} (PID {5})" -f $r.Proto, $r.Porta, $svcTxt, $r.Indirizzo, $r.Processo, $r.PID)
+            }
+            if ($netRows.Count -eq 0) { Write-Log "Nessuna porta in ascolto sulla rete." }
+            Write-Log ("Porte solo locali (loopback): {0}, visibili nel file CSV." -f $locRows.Count)
+            $csv = Join-Path $global:OutputDir ("Porte_Ascolto_{0}_{1}.csv" -f $env:COMPUTERNAME, (Get-Date -Format "yyyyMMdd_HHmmss"))
+            $rows | Export-Csv -Path $csv -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+            Write-Log ("[OK] Elenco completo salvato in: {0}" -f $csv) "Salvato"
+        } catch { Write-Log "[ERRORE] Lettura porte in ascolto: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Elenca le porte TCP e UDP in ascolto su questo PC con il processo che le usa, indicando quali sono raggiungibili dalla rete e quali solo locali. Salva un CSV nella cartella dello script."),
+    @("Connessioni Attive`n(Established)", {
+        Show-CommandSummary "Connessioni TCP Attive" @("Get-NetTCPConnection -State Established", "Associazione connessione -> processo (PID)")
+        Show-WaitOverlay -msg "Lettura connessioni attive..."
+        try {
+            $procMap = Get-PortProcessMap
+            $rows = New-Object System.Collections.ArrayList
+            foreach ($c in @(Get-NetTCPConnection -State Established -ErrorAction SilentlyContinue)) {
+                $pn = $procMap[[int]$c.OwningProcess]; if (-not $pn) { $pn = "?" }
+                [void]$rows.Add([PSCustomObject]@{ Processo = $pn; PID = [int]$c.OwningProcess; Locale = ("{0}:{1}" -f $c.LocalAddress, $c.LocalPort); Remoto = ("{0}:{1}" -f $c.RemoteAddress, $c.RemotePort) })
+            }
+            $rows = @($rows | Sort-Object Processo, Remoto)
+            $ext = @($rows | Where-Object { $_.Remoto -notmatch '^(127\.0\.0\.1|::1):' })
+            Write-Log ("Connessioni stabilite: {0} in totale, {1} verso altri computer (le altre sono interne al PC)." -f $rows.Count, $ext.Count)
+            Write-Log "--- Riepilogo per processo ---"
+            foreach ($g in @($ext | Group-Object Processo | Sort-Object Count -Descending)) {
+                Write-Log ("{0}: {1} connessioni" -f $g.Name, $g.Count)
+            }
+            Write-Log "--- Dettaglio (locale -> remoto) ---"
+            $shown = 0
+            foreach ($r in $ext) {
+                if ($shown -ge 80) { Write-Log ("... e altre {0} connessioni, visibili nel file CSV." -f ($ext.Count - 80)); break }
+                Write-Log ("{0} (PID {1}) | {2} -> {3}" -f $r.Processo, $r.PID, $r.Locale, $r.Remoto)
+                $shown++
+            }
+            $csv = Join-Path $global:OutputDir ("Connessioni_Attive_{0}_{1}.csv" -f $env:COMPUTERNAME, (Get-Date -Format "yyyyMMdd_HHmmss"))
+            $rows | Export-Csv -Path $csv -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+            Write-Log ("[OK] Elenco completo salvato in: {0}" -f $csv) "Salvato"
+        } catch { Write-Log "[ERRORE] Lettura connessioni attive: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Mostra le connessioni TCP stabilite in questo momento (con quale server stanno parlando e quale programma le usa), raggruppate per processo. Utile per scoprire traffico anomalo."),
+    @("Chi Usa la Porta?`n(porta -> processo)", {
+        $inp = [Microsoft.VisualBasic.Interaction]::InputBox("Inserisci il numero di porta da verificare (1-65535):", "Chi usa la porta?", "443")
+        if ([string]::IsNullOrWhiteSpace($inp)) { return }
+        $portNum = 0
+        if (-not [int]::TryParse($inp.Trim(), [ref]$portNum) -or $portNum -lt 1 -or $portNum -gt 65535) {
+            [System.Windows.Forms.MessageBox]::Show(("Numero di porta non valido: {0}" -f $inp), "Porta non valida", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning) | Out-Null
+            return
+        }
+        Show-CommandSummary ("Chi usa la porta {0}" -f $portNum) @("Get-NetTCPConnection -LocalPort $portNum", "Get-NetUDPEndpoint -LocalPort $portNum", "Win32_Process / Win32_Service (percorso e servizi)")
+        try {
+            $tcp = @(Get-NetTCPConnection -LocalPort $portNum -ErrorAction SilentlyContinue)
+            $udp = @(Get-NetUDPEndpoint -LocalPort $portNum -ErrorAction SilentlyContinue)
+            if ($tcp.Count -eq 0 -and $udp.Count -eq 0) {
+                Write-Log ("[INFO] Porta {0}: nessun processo la sta usando su questo PC (non è in ascolto e non ha connessioni)." -f $portNum)
+                return
+            }
+            $svcName = Get-PortServiceName $portNum
+            if ($svcName) { Write-Log ("Porta {0}: di solito è usata da {1}." -f $portNum, $svcName) }
+            $procIds = New-Object System.Collections.ArrayList
+            $shown = 0
+            foreach ($x in $tcp) {
+                [void]$procIds.Add([int]$x.OwningProcess)
+                if ($shown -lt 15) { Write-Log ("TCP | {0} | locale {1}:{2} | remoto {3}:{4}" -f $x.State, $x.LocalAddress, $x.LocalPort, $x.RemoteAddress, $x.RemotePort); $shown++ }
+            }
+            if ($tcp.Count -gt 15) { Write-Log ("... e altre {0} connessioni sulla stessa porta." -f ($tcp.Count - 15)) }
+            foreach ($x in $udp) {
+                [void]$procIds.Add([int]$x.OwningProcess)
+                Write-Log ("UDP | locale {0}:{1}" -f $x.LocalAddress, $x.LocalPort)
+            }
+            foreach ($procId in @($procIds | Sort-Object -Unique)) {
+                $pName = "?"; $pPath = ""
+                try {
+                    $pi = Get-CimInstance Win32_Process -Filter ("ProcessId = {0}" -f $procId) -ErrorAction Stop
+                    if ($pi) { $pName = $pi.Name; $pPath = $pi.ExecutablePath }
+                } catch { $null = $_ }
+                if ($procId -eq 4) { $pName = "System" }
+                Write-Log ("--- Processo: {0} (PID {1}) ---" -f $pName, $procId)
+                if ($pPath) { Write-Log ("Percorso: {0}" -f $pPath) }
+                try {
+                    $svcs = @(Get-CimInstance Win32_Service -Filter ("ProcessId = {0}" -f $procId) -ErrorAction Stop | ForEach-Object { $_.Name })
+                    if ($svcs.Count -gt 0) { Write-Log ("Servizi in questo processo: {0}" -f ($svcs -join ", ")) }
+                } catch { $null = $_ }
+            }
+        } catch { Write-Log "[ERRORE] Verifica porta: $_" "Errore" }
+    }, "#064E3B", "#F8FAFC", "Chiede un numero di porta e mostra quale programma o servizio la sta usando su questo PC (con percorso del file e servizi)."),
+    @("Scansione Porte`nHost Remoto", {
+        $target = [Microsoft.VisualBasic.Interaction]::InputBox("Inserisci IP o nome del computer da controllare:", "Scansione Porte Host Remoto", "127.0.0.1")
+        if ([string]::IsNullOrWhiteSpace($target)) { return }
+        $target = $target.Trim()
+        $defPorts = "21,22,23,25,53,80,110,135,139,143,389,443,445,636,1433,3306,3389,5900,5985,8080"
+        $portSpec = [Microsoft.VisualBasic.Interaction]::InputBox("Porte da controllare, elenco e/o intervalli (es. 22,80,443,8000-8010).`r`nMassimo 1024 porte.", ("Scansione Porte - {0}" -f $target), $defPorts)
+        if ([string]::IsNullOrWhiteSpace($portSpec)) { return }
+
+        # Lettura elenco porte (numeri singoli e intervalli)
+        $list = New-Object System.Collections.ArrayList
+        $bad = $false
+        foreach ($tok in ($portSpec -split "[,; ]+")) {
+            if ([string]::IsNullOrWhiteSpace($tok)) { continue }
+            if ($tok -match '^(\d{1,5})-(\d{1,5})$') {
+                $a = [int]$Matches[1]; $b = [int]$Matches[2]
+                if ($a -gt $b) { $t = $a; $a = $b; $b = $t }
+                if ($a -lt 1 -or $b -gt 65535 -or ($b - $a + 1) -gt 1024) { $bad = $true; break }
+                for ($n = $a; $n -le $b; $n++) { [void]$list.Add($n) }
+            } elseif ($tok -match '^\d{1,5}$') {
+                $n = [int]$tok
+                if ($n -lt 1 -or $n -gt 65535) { $bad = $true; break }
+                [void]$list.Add($n)
+            } else { $bad = $true; break }
+            if ($list.Count -gt 4096) { $bad = $true; break }
+        }
+        $ports = @($list | Sort-Object -Unique)
+        if ($bad -or $ports.Count -eq 0 -or $ports.Count -gt 1024) {
+            [System.Windows.Forms.MessageBox]::Show("Elenco porte non valido.`r`nUsa numeri da 1 a 65535 separati da virgola o intervalli (es. 22,80,8000-8010), massimo 1024 porte in totale.", "Porte non valide", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning) | Out-Null
+            return
+        }
+        if ($ports.Count -gt 200) {
+            if ((Show-ConfirmBox ("Stai per controllare {0} porte su {1}.`nUsa questa funzione solo su computer della tua rete. Continuare?" -f $ports.Count, $target)) -ne "Yes") { return }
+        }
+
+        Show-CommandSummary ("Scansione Porte su {0}" -f $target) @("Connessione TCP a {0} su {1} porte (timeout 700 ms)" -f $target, $ports.Count)
+        $ip = $null
+        try {
+            $addrs = @([System.Net.Dns]::GetHostAddresses($target))
+            $ip = $addrs | Where-Object { $_.AddressFamily -eq [System.Net.Sockets.AddressFamily]::InterNetwork } | Select-Object -First 1
+            if (-not $ip) { $ip = $addrs | Select-Object -First 1 }
+        } catch { $ip = $null }
+        if (-not $ip) { Write-Log ("[ERRORE] Impossibile risolvere l'host: {0}" -f $target) "Errore"; return }
+
+        Show-WaitOverlay -msg ("Scansione di {0} porte su {1}..." -f $ports.Count, $target)
+        try {
+            $timeoutMs = 700
+            $sw = [System.Diagnostics.Stopwatch]::StartNew()
+            $results = New-Object System.Collections.ArrayList
+            for ($i = 0; $i -lt $ports.Count; $i += 64) {
+                $batch = @($ports[$i..([math]::Min($i + 63, $ports.Count - 1))])
+                $jobs = New-Object System.Collections.ArrayList
+                foreach ($pt in $batch) {
+                    $cl = New-Object System.Net.Sockets.TcpClient
+                    $ar = $null
+                    try { $ar = $cl.BeginConnect($ip, [int]$pt, $null, $null) } catch { $ar = $null }
+                    [void]$jobs.Add([PSCustomObject]@{ Port = [int]$pt; Client = $cl; Ar = $ar })
+                }
+                $deadline = [DateTime]::UtcNow.AddMilliseconds($timeoutMs)
+                foreach ($jb in $jobs) {
+                    $stato = "senza risposta"
+                    if ($jb.Ar) {
+                        $rem = [int][math]::Max(1, ($deadline - [DateTime]::UtcNow).TotalMilliseconds)
+                        if ($jb.Ar.AsyncWaitHandle.WaitOne($rem)) {
+                            try { $jb.Client.EndConnect($jb.Ar); if ($jb.Client.Connected) { $stato = "aperta" } else { $stato = "chiusa" } } catch { $stato = "chiusa" }
+                        }
+                    } else { $stato = "chiusa" }
+                    try { $jb.Client.Close() } catch { $null = $_ }
+                    [void]$results.Add([PSCustomObject]@{ Porta = $jb.Port; Stato = $stato; Servizio = (Get-PortServiceName $jb.Port) })
+                }
+                [System.Windows.Forms.Application]::DoEvents()
+            }
+            $sw.Stop()
+            $openR = @($results | Where-Object { $_.Stato -eq "aperta" })
+            $closedN = @($results | Where-Object { $_.Stato -eq "chiusa" }).Count
+            $filtN = @($results | Where-Object { $_.Stato -eq "senza risposta" }).Count
+            Write-Log ("Host {0} ({1}): {2} porte controllate in {3:N1} secondi." -f $target, $ip, $results.Count, $sw.Elapsed.TotalSeconds)
+            if ($openR.Count -eq 0) {
+                Write-Log "Nessuna porta aperta tra quelle controllate."
+            } else {
+                foreach ($o in $openR) {
+                    $svcTxt = if ($o.Servizio) { " (" + $o.Servizio + ")" } else { "" }
+                    Write-LogCore ("[OK] Porta {0}/TCP APERTA{1}" -f $o.Porta, $svcTxt)
+                }
+            }
+            Write-Log ("Riepilogo: {0} aperte | {1} chiuse | {2} senza risposta (probabile firewall)." -f $openR.Count, $closedN, $filtN)
+            $safeHost = ($target -replace '[^\w\.-]', '_')
+            $rep = Join-Path $global:OutputDir ("Scansione_Porte_{0}_{1}.csv" -f $safeHost, (Get-Date -Format "yyyyMMdd_HHmmss"))
+            $results | Export-Csv -Path $rep -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+            Write-Log ("[OK] Risultato completo salvato in: {0}" -f $rep) "Salvato"
+        } catch { Write-Log "[ERRORE] Scansione porte: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#78350F", "#F8FAFC", "Controlla quali porte TCP sono aperte su un altro computer (IP o nome). Distingue aperte, chiuse e senza risposta (firewall). Usala solo su sistemi della tua rete. Salva un CSV nella cartella dello script."),
+    @("Firewall: Porte Aperte`nin Ingresso", {
+        Show-CommandSummary "Regole Firewall in Ingresso" @("Get-NetFirewallProfile", "Get-NetFirewallRule -Direction Inbound -Enabled True -Action Allow", "Get-NetFirewallPortFilter")
+        Show-WaitOverlay -msg "Lettura regole firewall..."
+        try {
+            foreach ($fp in @(Get-NetFirewallProfile -ErrorAction SilentlyContinue)) {
+                if ([string]$fp.Enabled -eq "True") {
+                    Write-Log ("Profilo firewall {0}: attivo" -f $fp.Name)
+                } else {
+                    Write-Log ("[AVVISO] Profilo firewall {0}: DISATTIVO (tutte le porte in ascolto sono raggiungibili)" -f $fp.Name)
+                }
+            }
+            $rules = @(Get-NetFirewallRule -Direction Inbound -Enabled True -Action Allow -ErrorAction SilentlyContinue)
+            $pfMap = @{}
+            foreach ($f in @(Get-NetFirewallPortFilter -All -ErrorAction SilentlyContinue)) { $pfMap[[string]$f.InstanceID] = $f }
+            $rows = New-Object System.Collections.ArrayList
+            foreach ($r in $rules) {
+                $f = $pfMap[[string]$r.Name]
+                if (-not $f) { continue }
+                $lp = ($f.LocalPort -join ",")
+                if (-not $lp) { $lp = "Any" }
+                [void]$rows.Add([PSCustomObject]@{ Protocollo = [string]$f.Protocol; PorteLocali = $lp; Regola = [string]$r.DisplayName; Gruppo = [string]$r.DisplayGroup; Profili = [string]$r.Profile })
+            }
+            $rows = @($rows | Sort-Object Protocollo, PorteLocali, Regola)
+            $withPort = @($rows | Where-Object { $_.PorteLocali -ne "Any" })
+            $anyPort = @($rows | Where-Object { $_.PorteLocali -eq "Any" })
+            Write-Log ("Regole in ingresso attive che consentono il traffico: {0} ({1} con porte specifiche, {2} per programma o qualsiasi porta)." -f $rows.Count, $withPort.Count, $anyPort.Count)
+            Write-Log "--- Regole con porte specifiche (protocollo | porte | regola) ---"
+            $shown = 0
+            foreach ($r in $withPort) {
+                if ($shown -ge 100) { Write-Log ("... e altre {0} regole, visibili nel file CSV." -f ($withPort.Count - 100)); break }
+                Write-Log ("{0} | {1} | {2}" -f $r.Protocollo, $r.PorteLocali, $r.Regola)
+                $shown++
+            }
+            Write-Log "[INFO] Una regola attiva non significa che la porta sia in ascolto: confronta con il comando Porte in Ascolto."
+            $csv = Join-Path $global:OutputDir ("Firewall_Ingresso_{0}_{1}.csv" -f $env:COMPUTERNAME, (Get-Date -Format "yyyyMMdd_HHmmss"))
+            $rows | Export-Csv -Path $csv -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+            Write-Log ("[OK] Elenco completo salvato in: {0}" -f $csv) "Salvato"
+        } catch { Write-Log "[ERRORE] Lettura regole firewall: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Mostra lo stato dei profili del firewall e le regole in ingresso attive che consentono il traffico su porte specifiche. Salva l'elenco completo in CSV."),
     @("Disattiva Proxy Windows", {
         Show-CommandSummary "Disattiva Proxy Windows" @("Set-ItemProperty HKCU:\...\Internet Settings -Name ProxyEnable -Value 0")
         $path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
@@ -4365,7 +4631,7 @@ $tabControl.Controls.Add($tabTools)
 Add-ButtonGrid -Tab $tabTools -Buttons $toolBtns
 
 # ==============================================================================
-# TAB 4: NETWORK - IP, DNS, Winsock e TCP/IP, ping, porte, proxy, profili Wi-Fi
+# TAB 4: NETWORK - IP, DNS, Winsock e TCP/IP, ping, porte (in ascolto, connessioni, scansione, firewall), proxy, profili Wi-Fi
 # ==============================================================================
 $tabNet = New-Object System.Windows.Forms.TabPage
 $tabNet.Text = "Network"
