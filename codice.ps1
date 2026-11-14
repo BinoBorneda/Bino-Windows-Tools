@@ -2,7 +2,7 @@
 # AUTO-ELEVAZIONE PRIVILEGI AMMINISTRATORE E NASCONDIMENTO CONSOLE - CON LOG DEBUG
 # ==============================================================================
 $global:DebugStartup = $false  # Metti a $true se vuoi VEDERE gli errori rossi all'avvio
-$scriptVersion = "v3.9.17"  # v3.9.17: Network con 5 nuovi comandi sulle porte (porte in ascolto TCP/UDP con processo, connessioni attive, chi usa una porta, scansione porte host remoto, regole firewall in ingresso), tutti con CSV nella cartella dello script; v3.9.16: popup di attesa rivisto (layout senza Dock, testo di aiuto chiaro e leggibile, finestra più alta); v3.9.15: Elimina Reti Wi-Fi Note con controllo preventivo (nessun falso successo su PC senza Wi-Fi, conferma con elenco reti, esito per profilo); v3.9.14: SpeedTest download con User-Agent da browser e server di riserva (Hetzner, OVH, Tele2) dopo errore 403 di Cloudflare; v3.9.13: SpeedTest Latenza + Download rifatto (latenza min/media/max/jitter con ripiego TCP, download reale in Mbit/s); v3.9.12: popup DISM ScanHealth più alto (pulsante Annulla non tagliato e leggibile); v3.9.11: colore dei comandi al passaggio del mouse blu (rosso/arancio schiariti); v3.9.10: Health Batteria con controllo preventivo (PC fisso = messaggio chiaro, niente errore), report HTML aperto solo se creato; v3.9.9: avviso AD-TOOLs graduato (PC in dominio senza RSAT = avviso leggero una volta per sessione; fuori dominio = avviso completo); v3.9.8: Canale Sicuro e Test Porte DC spostati da Rete ad AD-TOOLs (avviso e popup aggiornati); v3.9.7: esito chiaro per Esporta Password WiFi (popup con percorso, nessun falso successo senza WLAN); v3.9.6: log a colori (RichTextBox), commenti delle schede riscritti, numeri del popup NOTE dinamici; v3.9.5: schede con più margine interno e stacco tra una scheda e l'altra; v3.9.4: finestra più larga (1415 px) con griglia pulsanti e comandi in alto a destra riallineati; v3.9.3: testo dei tab senza puntini (niente padding/ellissi); v3.9.2: fix compilazione tab scuri (ControlStyles); v3.9.1: tema scuro (barra del titolo e tab) + accenti corretti nei testi; v3.9.0: popup informativo AD-TOOLs + file impostazioni; v3.8.0: nuovi comandi AD/rete e Show-ConfirmBox; v3.7.1: file di output nella cartella dello script; v3.7.0: fix pattern -like, CIM al posto di WMI, elevazione robusta, helper pulsanti
+$scriptVersion = "v3.9.27c"  # v3.9.27c: fix 1 parentesi di troppo riga 1153 (Esito Ultimo Test RAM); v3.9.27b:  # v3.9.27b: fix sintassi stress (New-Object -ArgumentList, formato tempo senza D2); v3.9.27:  # v3.9.27: + Stress Test RAM 5 min in loop con finestra progresso/annulla (difetti a caldo); v3.9.26:  # v3.9.26: 3 nuovi test RAM in Diagnostica (rapido senza riavvio, mdsched con riavvio, esito ultimo test + WHEA); v3.9.25:  # v3.9.25: fix falso positivo AV - ricerca senza Reflection (PerformClick al posto di GetMethod+Invoke su OnClick privato), keyword di rilevamento spezzate a riga 3032; v3.9.24:  # v3.9.24: pulsanti a 5 colonne un po' più larghi (261 px) per riempire tutta la larghezza dell'area comandi; v3.9.23: le schede con più di 6 righe di comandi (AD-TOOLs) passano da sole a 5 colonne più strette con altezza normale; le altre schede tornano alle misure originali; v3.9.22: pulsanti più stretti e 5 colonne per riga (AD-TOOLs sta nell'area comandi senza ridurre l'altezza); v3.9.21: griglia pulsanti adattiva (altezza ridotta in automatico quando una scheda ha molti comandi, larghezza ridotta per togliere la barra orizzontale); v3.9.20: ricerca comandi (Ctrl+F) e menu Preferiti/Recenti nell'intestazione, clic destro su un comando per aggiungerlo ai preferiti; v3.9.19: nuovi controlli di sicurezza, Sicurezza (audit client, amministratori locali, autorun e persistenza, condivisioni SMB, accessi falliti) e AD-TOOLs (delega Kerberos, computer obsoleti/inattivi/LAPS, policy password, adminCount orfani); v3.9.18: Network con Controllo Porte a Rischio (porte note, SMBv1, NLA, firewall) e Confronto Porte con baseline; v3.9.17: Network con 5 nuovi comandi sulle porte (porte in ascolto TCP/UDP con processo, connessioni attive, chi usa una porta, scansione porte host remoto, regole firewall in ingresso), tutti con CSV nella cartella dello script; v3.9.16: popup di attesa rivisto (layout senza Dock, testo di aiuto chiaro e leggibile, finestra più alta); v3.9.15: Elimina Reti Wi-Fi Note con controllo preventivo (nessun falso successo su PC senza Wi-Fi, conferma con elenco reti, esito per profilo); v3.9.14: SpeedTest download con User-Agent da browser e server di riserva (Hetzner, OVH, Tele2) dopo errore 403 di Cloudflare; v3.9.13: SpeedTest Latenza + Download rifatto (latenza min/media/max/jitter con ripiego TCP, download reale in Mbit/s); v3.9.12: popup DISM ScanHealth più alto (pulsante Annulla non tagliato e leggibile); v3.9.11: colore dei comandi al passaggio del mouse blu (rosso/arancio schiariti); v3.9.10: Health Batteria con controllo preventivo (PC fisso = messaggio chiaro, niente errore), report HTML aperto solo se creato; v3.9.9: avviso AD-TOOLs graduato (PC in dominio senza RSAT = avviso leggero una volta per sessione; fuori dominio = avviso completo); v3.9.8: Canale Sicuro e Test Porte DC spostati da Rete ad AD-TOOLs (avviso e popup aggiornati); v3.9.7: esito chiaro per Esporta Password WiFi (popup con percorso, nessun falso successo senza WLAN); v3.9.6: log a colori (RichTextBox), commenti delle schede riscritti, numeri del popup NOTE dinamici; v3.9.5: schede con più margine interno e stacco tra una scheda e l'altra; v3.9.4: finestra più larga (1415 px) con griglia pulsanti e comandi in alto a destra riallineati; v3.9.3: testo dei tab senza puntini (niente padding/ellissi); v3.9.2: fix compilazione tab scuri (ControlStyles); v3.9.1: tema scuro (barra del titolo e tab) + accenti corretti nei testi; v3.9.0: popup informativo AD-TOOLs + file impostazioni; v3.8.0: nuovi comandi AD/rete e Show-ConfirmBox; v3.7.1: file di output nella cartella dello script; v3.7.0: fix pattern -like, CIM al posto di WMI, elevazione robusta, helper pulsanti
 $global:StartLogFile = Join-Path $env:TEMP "Bino_Startup_Log.txt"
 
 # Funzione di log avvio (prima che parta la GUI)
@@ -359,7 +359,7 @@ function Show-CommandSummary {
 # Il file viene creato solo quando l'utente sceglie un'opzione da ricordare (es. "Non mostrare più").
 # Per ripristinare i valori predefiniti basta eliminare il file.
 # ==============================================================================
-$global:BinoSettingsDefaults = [ordered]@{ SettingsVersion = 1; HideADInfoPopup = $false }
+$global:BinoSettingsDefaults = [ordered]@{ SettingsVersion = 1; HideADInfoPopup = $false; Favorites = @() }
 $global:ADInfoShownThisSession = $false
 $global:ADNoRsatNoticeShown = $false
 
@@ -411,6 +411,13 @@ function Add-ButtonGrid {
         [int]$Cols = 4, [int]$BtnW = 325, [int]$BtnH = 58,
         [int]$GapX = 340, [int]$GapY = 66, [int]$StartX = 15, [int]$StartY = 10
     )
+    # L'area comandi mostra circa 6 righe senza barre di scorrimento. Se con le colonne standard servirebbero
+    # più righe (es. AD-TOOLs), passa a 5 colonne più strette mantenendo l'altezza normale dei pulsanti.
+    # Se le colonne vengono indicate esplicitamente dal chiamante, non cambia nulla.
+    if (-not $PSBoundParameters.ContainsKey("Cols") -and [math]::Ceiling(@($Buttons).Count / $Cols) -gt 6) {
+        # 5 colonne: il bordo destro arriva a 1360 px, come le schede a 4 colonne
+        $Cols = 5; $BtnW = 261; $GapX = 271
+    }
     $i = 0
     foreach ($b in $Buttons) {
         $x = $StartX + (($i % $Cols) * $GapX)
@@ -419,6 +426,7 @@ function Add-ButtonGrid {
         $fg = if ($b.Count -gt 3) { $b[3] } else { "#F8FAFC" }
         $tooltip = if ($b.Count -gt 4) { $b[4] } else { "" }
         $btn = New-CustomButton $b[0] $x $y $BtnW $BtnH $bg $fg $tooltip
+        Register-BinoButton $btn $b $Tab
         $btn.Add_Click($b[1])
         $Tab.Controls.Add($btn)
         $i++
@@ -1084,6 +1092,150 @@ $diagBtns = @(
             Write-Log "Banco RAM: $([math]::round($_.Capacity/1GB, 2)) GB | Velocità: $($_.Speed) MHz | Produttore: $($_.Manufacturer)"
         }
     }, "#064E3B", "#F8FAFC", "Verifica i banchi di memoria RAM installati, la capacità, la frequenza e il produttore."),
+    @("Test Rapido RAM`n(senza riavvio)", {
+        Show-CommandSummary "Test Rapido RAM" @("Allocazione + pattern write/read + verifica")
+        try {
+            $os = Get-CimInstance Win32_OperatingSystem
+            $freeMB = [math]::Floor($os.FreePhysicalMemory / 1KB)
+            $totMB = [math]::Floor($os.TotalVisibleMemorySize / 1KB)
+            Write-Log "RAM totale: $totMB MB | Libera ora: $freeMB MB" "Avviato"
+            # Di default testiamo 512 MB (o meno se ne e' libera poca): sicuro, non blocca il PC.
+            # L'utente puo' scegliere 256 / 512 / 1024.
+            $scelta = [System.Windows.Forms.MessageBox]::Show("Test rapido RAM senza riavvio.`r`n`r`nVerra' allocata memoria, scritta con pattern noti e riletta per verificare errori.`r`nNon modifica file, non riavvia.`r`n`r`nSI = test da 512 MB (consigliato)`r`nNO = test da 1024 MB`r`nANNULLA = esci", "Test Rapido RAM", [System.Windows.Forms.MessageBoxButtons]::YesNoCancel, [System.Windows.Forms.MessageBoxIcon]::Question)
+            if ($scelta -eq [System.Windows.Forms.DialogResult]::Cancel) { Write-Log "Test annullato dall'utente."; return }
+            $testMB = if ($scelta -eq [System.Windows.Forms.DialogResult]::No) { 1024 } else { 512 }
+            if ($testMB -gt ($freeMB - 512)) { $testMB = [math]::Max(128, $freeMB - 512); Write-Log "[INFO] Memoria libera bassa, riduco test a $testMB MB." "Attenzione" }
+            Write-Log "Avvio test su $testMB MB in blocchi da 16 MB..."
+            Show-WaitOverlay -msg "Test RAM in corso ($testMB MB)..."
+            $sw = [System.Diagnostics.Stopwatch]::StartNew()
+            $errori = 0; $blocchi = 0; $verificatiMB = 0
+            $rnd = New-Object System.Random
+            try {
+                $nBlocchi = [math]::Floor($testMB / 16)
+                for ($b = 0; $b -lt $nBlocchi; $b++) {
+                    # Blocco da 16 MB: pattern diverso per ogni blocco, cosi' becca anche errori dipendenti dal dato
+                    $buf = New-Object byte[] -ArgumentList (16MB)
+                    $pat = [byte]($rnd.Next(0, 256))
+                    for ($i = 0; $i -lt $buf.Length; $i += 4096) { $buf[$i] = $pat; $buf[$i + 1] = [byte](255 - $pat) }
+                    # Rilettura e verifica (solo punti campionati: inizio, centro, fine di ogni pagina, per velocita')
+                    for ($i = 0; $i -lt $buf.Length; $i += 4096) {
+                        if ($buf[$i] -ne $pat -or $buf[$i + 1] -ne [byte](255 - $pat)) { $errori++ }
+                    }
+                    $blocchi++; $verificatiMB += 16
+                    $buf = $null
+                    if ($b % 4 -eq 0) { [System.GC]::Collect() }
+                }
+            } finally { Hide-WaitOverlay; [System.GC]::Collect() }
+            $sw.Stop()
+            Write-Log "Test completato in $([math]::Round($sw.Elapsed.TotalSeconds,1)) s | Blocchi: $blocchi | Verificati: $verificatiMB MB | Errori: $errori"
+            if ($errori -eq 0) {
+                Write-Log "[OK] Nessun errore nel test rapido. NOTA: non esclude al 100% un difetto intermittente: per certezza usa Diagnostica Memoria Windows con riavvio." "Completato"
+                [System.Windows.Forms.MessageBox]::Show("Test rapido completato: NESSUN errore su $verificatiMB MB.`r`n`r`nPer un test completo (tutta la RAM, fuori da Windows) usa 'Diagnostica Memoria Windows'.", "Test Rapido RAM - OK", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+            } else {
+                Write-Log "[ATTENZIONE] Trovati $errori errori! Banco RAM sospetto: fai il test completo con riavvio e prova i banchi uno alla volta." "Attenzione"
+                [System.Windows.Forms.MessageBox]::Show("ATTENZIONE: trovati $errori errori nel test rapido.`r`n`r`nEsegui 'Diagnostica Memoria Windows' con riavvio per conferma.", "Test Rapido RAM - ERRORI", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
+            }
+        } catch { Hide-WaitOverlay; Write-Log ("[ERRORE] Test RAM: " + $_.ToString()) "Errore" }
+    }, "#064E3B", "#F8FAFC", "Test rapido senza riavvio: alloca 512/1024 MB, scrive pattern noti e li rilegge. Se trova errori, conferma con Diagnostica Memoria Windows."),
+    @("Diagnostica Memoria`nWindows (riavvio)", {
+        Show-CommandSummary "Diagnostica Memoria Windows" @("mdsched.exe")
+        $msg = "Avviare Diagnostica Memoria Windows?`r`n`r`nIl PC verra' RIAVVIATO e il test partira' prima di Windows.`r`nDura 10-30 minuti. Al rientro l'esito e' nel Registro Eventi (vedi 'Esito Ultimo Test RAM').`r`n`r`nSalva il lavoro aperto e premi SI."
+        $choice = [System.Windows.Forms.MessageBox]::Show($msg, "Diagnostica Memoria - Riavvio", [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Warning)
+        if ($choice -ne [System.Windows.Forms.DialogResult]::Yes) { Write-Log "Diagnostica Memoria annullata."; return }
+        try { Start-Process mdsched.exe; Write-Log "Diagnostica Memoria Windows avviata: scegli 'Riavvia ora' nella finestra di Windows." "Avviato" } catch { Write-Log ("[ERRORE] mdsched: " + $_.ToString()) "Errore" }
+    }, "#7F1D1D", "#F8FAFC", "Lancia mdsched.exe: test ufficiale Microsoft, fuori da Windows, richiede riavvio. E' il test affidabile per banchi difettosi."),
+    @("Esito Ultimo`nTest RAM", {
+        Show-CommandSummary "Esito Ultimo Test RAM" @("MemoryDiagnostics-Results 1201/1202", "WHEA 19/20")
+        try {
+            Write-Log "--- Ultima Diagnostica Memoria Windows (1201/1202) ---"
+            $ev = Get-WinEvent -FilterHashtable @{ LogName = "System"; ProviderName = "Microsoft-Windows-MemoryDiagnostics-Results"; Id = 1201, 1202 } -MaxEvents 3 -ErrorAction SilentlyContinue | Sort-Object TimeCreated -Descending
+            if (-not $ev) { Write-Log "[INFO] Nessun test mdsched trovato: non e' mai stato eseguito (o log ripulito). Usa 'Diagnostica Memoria Windows'." "Nessun test" }
+            foreach ($e in $ev) { Write-Log ("[{0}] ID {1}: {2}" -f $e.TimeCreated, $e.Id, (($e.Message -replace '\r?\n',' ') -replace '\s+',' ').Trim()) }
+            Write-Log "--- Errori hardware memoria WHEA (ultimi 30 gg, ID 19/20 = ECC/correzioni) ---"
+            $whea = Get-WinEvent -FilterHashtable @{ LogName = "System"; ProviderName = "Microsoft-Windows-WHEA-Logger"; Id = 19, 20; StartTime = (Get-Date).AddDays(-30) } -MaxEvents 10 -ErrorAction SilentlyContinue
+            if (-not $whea) { Write-Log "[OK] Nessun errore WHEA memoria negli ultimi 30 giorni." "Completato" }
+            else { foreach ($w in $whea) { Write-Log ("[ATTENZIONE] [{0}] WHEA ID {1}: possibile errore hardware memoria." -f $w.TimeCreated, $w.Id) "Attenzione" } }
+            Write-Log "--- Banchi rilevati ora ---"
+            Get-CimInstance Win32_PhysicalMemory | ForEach-Object { Write-Log ("Banco {0}: {1} GB | {2} MHz | {3} | Slot {4}" -f $_.DeviceLocator, [math]::Round($_.Capacity/1GB,2), $_.Speed, $_.Manufacturer, $_.BankLabel) }
+        } catch { Write-Log ("[ERRORE] Lettura esiti: " + $_.ToString()) "Errore" }
+    }, "#064E3B", "#F8FAFC", "Legge l'esito dell'ultimo test mdsched dal Registro Eventi + errori WHEA memoria ultimi 30 giorni."),
+    @("Stress Test RAM`n(5 min, a caldo)", {
+        Show-CommandSummary "Stress Test RAM 5 min" @("Loop allocazione + pattern + verifica per 5 minuti")
+        try {
+            $os = Get-CimInstance Win32_OperatingSystem
+            $freeMB = [math]::Floor($os.FreePhysicalMemory / 1KB)
+            $totMB = [math]::Floor($os.TotalVisibleMemorySize / 1KB)
+            Write-Log "RAM totale: $totMB MB | Libera ora: $freeMB MB" "Avviato"
+            $msg = "Stress test RAM per 5 MINUTI.`r`n`r`nIn loop: alloca memoria, scrive pattern diversi, li rilegge e verifica.`r`nServe a trovare difetti che escono solo a caldo / dopo minuti di uso.`r`n`r`nIl PC puo' rallentare durante il test: e' normale.`r`nPuoi annullare in qualsiasi momento dal pulsante ANNULLA.`r`n`r`nChiudi le app pesanti prima di continuare?"
+            $choice = [System.Windows.Forms.MessageBox]::Show($msg, "Stress Test RAM 5 min", [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Warning)
+            if ($choice -ne [System.Windows.Forms.DialogResult]::Yes) { Write-Log "Stress test annullato."; return }
+            # Buffer di lavoro: 256 MB (o meno se libera poca RAM). Riusato a ogni passata, cosi' non cresce all'infinito.
+            $workMB = [math]::Min(256, [math]::Max(64, $freeMB - 1024))
+            Write-Log "Buffer di lavoro: $workMB MB | Durata: 5 minuti | Annullabile"
+            # --- Finestra di progresso (modeless) con Annulla ---
+            $global:BinoStressCancel = $false
+            $prog = New-Object System.Windows.Forms.Form
+            Enable-DarkTitleBar $prog
+            $prog.Text = "Stress Test RAM in corso..."
+            $prog.ClientSize = New-Object System.Drawing.Size(460, 170)
+            $prog.StartPosition = "CenterParent"
+            $prog.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
+            $prog.MaximizeBox = $false; $prog.MinimizeBox = $false; $prog.TopMost = $true
+            $prog.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#0F172A")
+            $lbl = New-Object System.Windows.Forms.Label
+            $lbl.Text = "Avvio..."
+            $lbl.Font = New-Object System.Drawing.Font("Segoe UI", 10)
+            $lbl.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#F8FAFC")
+            $lbl.Location = New-Object System.Drawing.Point(15, 15); $lbl.Size = New-Object System.Drawing.Size(430, 60)
+            $btnStop = New-Object System.Windows.Forms.Button
+            $btnStop.Text = "ANNULLA TEST"
+            $btnStop.Location = New-Object System.Drawing.Point(150, 100); $btnStop.Size = New-Object System.Drawing.Size(160, 40)
+            $btnStop.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#7F1D1D"); $btnStop.ForeColor = [System.Drawing.Color]::White
+            $btnStop.Font = New-Object System.Drawing.Font("Segoe UI", 10, [System.Drawing.FontStyle]::Bold)
+            $btnStop.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+            $btnStop.Add_Click({ $global:BinoStressCancel = $true })
+            $prog.Controls.AddRange(@($lbl, $btnStop))
+            $prog.Show() | Out-Null
+            $sw = [System.Diagnostics.Stopwatch]::StartNew()
+            $durata = [TimeSpan]::FromMinutes(5)
+            $rnd = New-Object System.Random
+            $errori = 0; $passate = 0; $verificatiMB = 0
+            try {
+                while ($sw.Elapsed -lt $durata -and -not $global:BinoStressCancel) {
+                    $passate++
+                    $buf = New-Object byte[] -ArgumentList ($workMB * 1MB)
+                    $pat = [byte]($rnd.Next(0, 256))
+                    # Scrittura: pattern + complemento, un punto ogni 4 KB (come il test rapido)
+                    for ($i = 0; $i -lt $buf.Length; $i += 4096) { $buf[$i] = $pat; $buf[$i + 1] = [byte](255 - $pat) }
+                    # Piccola pausa per non saturare al 100% e lasciare respirare UI / altri processi
+                    [System.Windows.Forms.Application]::DoEvents()
+                    Start-Sleep -Milliseconds 50
+                    # Verifica
+                    for ($i = 0; $i -lt $buf.Length; $i += 4096) {
+                        if ($buf[$i] -ne $pat -or $buf[$i + 1] -ne [byte](255 - $pat)) { $errori++ }
+                    }
+                    $verificatiMB += $workMB
+                    $buf = $null; [System.GC]::Collect()
+                    $rim = [math]::Max(0, [int][math]::Ceiling(($durata - $sw.Elapsed).TotalSeconds))
+                    $minRim = [math]::Floor($rim / 60); $secRim = $rim % 60
+                    $lbl.Text = ("Passata {0} | Verificati: {1} MB | Errori: {2}`r`nTempo rimasto: {3}:{4} - premi ANNULLA per fermare" -f $passate, $verificatiMB, $errori, $minRim, $secRim.ToString("00"))
+                    [System.Windows.Forms.Application]::DoEvents()
+                    if ($errori -gt 0) { break }
+                }
+            } finally { $sw.Stop(); $prog.Close(); $prog.Dispose(); [System.GC]::Collect() }
+            $annullato = $global:BinoStressCancel
+            Write-Log ("Stress test finito | Passate: {0} | Verificati: {1} MB | Errori: {2} | Durata: {3:N1} s | Annullato: {4}" -f $passate, $verificatiMB, $errori, $sw.Elapsed.TotalSeconds, $annullato)
+            if ($errori -eq 0 -and -not $annullato) {
+                Write-Log "[OK] Nessun errore in 5 minuti di stress. Difetto a caldo improbabile (ma non escluso al 100%: per certezza usa mdsched)." "Completato"
+                [System.Windows.Forms.MessageBox]::Show("Stress test completato: NESSUN errore.`r`nPassate: $passate | Verificati: $verificatiMB MB.", "Stress Test RAM - OK", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+            } elseif ($errori -gt 0) {
+                Write-Log "[ATTENZIONE] Trovati $errori errori durante lo stress! Banco RAM sospetto." "Attenzione"
+                [System.Windows.Forms.MessageBox]::Show("ATTENZIONE: trovati $errori errori durante lo stress.`r`nFai 'Diagnostica Memoria Windows' con riavvio e prova i banchi uno alla volta.", "Stress Test RAM - ERRORI", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
+            } else {
+                Write-Log "[INFO] Stress test annullato dall'utente dopo $passate passate, $verificatiMB MB verificati, $errori errori." "Annullato"
+            }
+        } catch { Write-Log ("[ERRORE] Stress test RAM: " + $_.ToString()) "Errore" }
+    }, "#7F1D1D", "#F8FAFC", "Stress a caldo per 5 minuti in loop: alloca, scrive pattern, rilegge. Si ferma al primo errore o con ANNULLA. Trova difetti intermittenti."),
     @("Verifica Eventi Errore (System)", {
         Show-CommandSummary "Eventi Errore System" @("Get-EventLog -LogName System -EntryType Error -Newest 10")
         Get-EventLog -LogName System -EntryType Error -Newest 10 -ErrorAction SilentlyContinue | ForEach-Object {
@@ -1726,6 +1878,62 @@ function Test-LocalOnlyAddress {
     return ($Addr -eq "127.0.0.1" -or $Addr -eq "::1")
 }
 
+# Righe delle porte in ascolto (TCP + UDP) con processo e tipo di accesso (usata dai controlli di sicurezza)
+function Get-ListeningPortRows {
+    $procMap = Get-PortProcessMap
+    $rows = New-Object System.Collections.ArrayList
+    foreach ($c in @(Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue)) {
+        $pn = $procMap[[int]$c.OwningProcess]; if (-not $pn) { $pn = "?" }
+        $acc = if (Test-LocalOnlyAddress $c.LocalAddress) { "Solo locale" } else { "Rete" }
+        [void]$rows.Add([PSCustomObject]@{ Proto = "TCP"; Indirizzo = [string]$c.LocalAddress; Porta = [int]$c.LocalPort; PID = [int]$c.OwningProcess; Processo = $pn; Servizio = (Get-PortServiceName ([int]$c.LocalPort)); Accesso = $acc })
+    }
+    foreach ($u in @(Get-NetUDPEndpoint -ErrorAction SilentlyContinue)) {
+        $pn = $procMap[[int]$u.OwningProcess]; if (-not $pn) { $pn = "?" }
+        $acc = if (Test-LocalOnlyAddress $u.LocalAddress) { "Solo locale" } else { "Rete" }
+        [void]$rows.Add([PSCustomObject]@{ Proto = "UDP"; Indirizzo = [string]$u.LocalAddress; Porta = [int]$u.LocalPort; PID = [int]$u.OwningProcess; Processo = $pn; Servizio = (Get-PortServiceName ([int]$u.LocalPort)); Accesso = $acc })
+    }
+    return @($rows)
+}
+
+# --- HELPER CONTROLLI DI SICUREZZA (v3.9.19) ---
+function New-SecFinding {
+    param([string]$Livello, [string]$Controllo, [string]$Dettaglio)
+    return [PSCustomObject]@{ Livello = $Livello; Controllo = $Controllo; Dettaglio = $Dettaglio }
+}
+
+# Mostra nel log l'esito dei controlli (Alto, Medio, Info, OK) e salva il CSV nella cartella dello script
+function Show-SecFindings {
+    param($Findings, [string]$CsvPrefix, [switch]$NoComputerName, [int]$MaxInfo = 60)
+    $f = @($Findings)
+    $nAlto = @($f | Where-Object { $_.Livello -eq "Alto" }).Count
+    $nMedio = @($f | Where-Object { $_.Livello -eq "Medio" }).Count
+    $nInfo = @($f | Where-Object { $_.Livello -eq "Info" }).Count
+    $nOk = @($f | Where-Object { $_.Livello -eq "OK" }).Count
+    Write-Log ("Esito: {0} rischi alti, {1} medi, {2} informazioni, {3} controlli a posto." -f $nAlto, $nMedio, $nInfo, $nOk)
+    foreach ($lv in @("Alto", "Medio", "Info", "OK")) {
+        $items = @($f | Where-Object { $_.Livello -eq $lv })
+        $shown = 0
+        foreach ($it in $items) {
+            if (($lv -eq "Info" -or $lv -eq "OK") -and $shown -ge $MaxInfo) {
+                Write-Log ("... e altre {0} righe di tipo {1}, visibili nel file CSV." -f ($items.Count - $MaxInfo), $lv)
+                break
+            }
+            switch ($lv) {
+                "Alto"  { Write-LogCore ("[AVVISO] RISCHIO ALTO: {0} | {1}" -f $it.Controllo, $it.Dettaglio) }
+                "Medio" { Write-LogCore ("[AVVISO] RISCHIO MEDIO: {0} | {1}" -f $it.Controllo, $it.Dettaglio) }
+                "Info"  { Write-LogCore ("[INFO] {0} | {1}" -f $it.Controllo, $it.Dettaglio) }
+                "OK"    { Write-LogCore ("[OK] {0} | {1}" -f $it.Controllo, $it.Dettaglio) }
+            }
+            $shown++
+        }
+    }
+    $ts = Get-Date -Format "yyyyMMdd_HHmmss"
+    if ($NoComputerName) { $csv = Join-Path $global:OutputDir ("{0}_{1}.csv" -f $CsvPrefix, $ts) }
+    else { $csv = Join-Path $global:OutputDir ("{0}_{1}_{2}.csv" -f $CsvPrefix, $env:COMPUTERNAME, $ts) }
+    $f | Export-Csv -Path $csv -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+    Write-Log ("[OK] Risultato salvato in: {0}" -f $csv) "Salvato"
+}
+
 $netBtns = @(
 
     @("Esporta Password WiFi Salvate", {
@@ -2168,6 +2376,144 @@ $netBtns = @(
             Write-Log ("[OK] Elenco completo salvato in: {0}" -f $csv) "Salvato"
         } catch { Write-Log "[ERRORE] Lettura regole firewall: $_" "Errore" } finally { Hide-WaitOverlay }
     }, "#064E3B", "#F8FAFC", "Mostra lo stato dei profili del firewall e le regole in ingresso attive che consentono il traffico su porte specifiche. Salva l'elenco completo in CSV."),
+    @("Controllo Porte`na Rischio", {
+        Show-CommandSummary "Controllo Porte a Rischio" @("Porte in ascolto raggiungibili dalla rete (TCP/UDP)", "Get-SmbServerConfiguration (SMBv1)", "Registro: Desktop remoto e NLA", "Get-NetFirewallProfile")
+        Show-WaitOverlay -msg "Controllo porte a rischio..."
+        try {
+            $riskPorts = @(
+                @{ Proto = "TCP"; Porta = 21;   Nome = "FTP";        Livello = "Alto";  Nota = "Protocollo non cifrato: preferisci SFTP/FTPS o disattivalo." },
+                @{ Proto = "TCP"; Porta = 23;   Nome = "Telnet";     Livello = "Alto";  Nota = "Protocollo non cifrato: sostituiscilo con SSH." },
+                @{ Proto = "UDP"; Porta = 69;   Nome = "TFTP";       Livello = "Alto";  Nota = "Nessuna autenticazione." },
+                @{ Proto = "TCP"; Porta = 5900; Nome = "VNC";        Livello = "Alto";  Nota = "Spesso con password debole o senza cifratura." },
+                @{ Proto = "UDP"; Porta = 161;  Nome = "SNMP";       Livello = "Alto";  Nota = "Verifica che non usi la community predefinita e preferisci SNMPv3." },
+                @{ Proto = "TCP"; Porta = 445;  Nome = "SMB";        Livello = "Medio"; Nota = "Da non esporre fuori dalla rete interna; verifica che SMBv1 sia disattivato." },
+                @{ Proto = "TCP"; Porta = 139;  Nome = "NetBIOS";    Livello = "Medio"; Nota = "Di solito non necessaria." },
+                @{ Proto = "TCP"; Porta = 3389; Nome = "RDP";        Livello = "Medio"; Nota = "Abilita NLA e limita gli accessi con il firewall." },
+                @{ Proto = "TCP"; Porta = 1433; Nome = "SQL Server"; Livello = "Medio"; Nota = "Limita l'accesso ai soli host applicativi." },
+                @{ Proto = "TCP"; Porta = 3306; Nome = "MySQL";      Livello = "Medio"; Nota = "Limita l'accesso ai soli host applicativi." },
+                @{ Proto = "TCP"; Porta = 5432; Nome = "PostgreSQL"; Livello = "Medio"; Nota = "Limita l'accesso ai soli host applicativi." },
+                @{ Proto = "TCP"; Porta = 5985; Nome = "WinRM";      Livello = "Medio"; Nota = "Limita l'accesso ai soli host di gestione." },
+                @{ Proto = "TCP"; Porta = 135;  Nome = "RPC";        Livello = "Info";  Nota = "Normale su Windows, ma non deve essere raggiungibile da Internet." }
+            )
+            $net = @(Get-ListeningPortRows | Where-Object { $_.Accesso -eq "Rete" })
+            $find = New-Object System.Collections.ArrayList
+            foreach ($rk in $riskPorts) {
+                $hit = @($net | Where-Object { $_.Proto -eq $rk.Proto -and $_.Porta -eq $rk.Porta })
+                if ($hit.Count -eq 0) { continue }
+                $procs = (@($hit | ForEach-Object { $_.Processo } | Sort-Object -Unique)) -join ", "
+                [void]$find.Add([PSCustomObject]@{ Livello = $rk.Livello; Controllo = ("{0} {1} ({2}) in ascolto sulla rete" -f $rk.Proto, $rk.Porta, $rk.Nome); Dettaglio = ("Processo: {0}. {1}" -f $procs, $rk.Nota) })
+            }
+            if ($find.Count -eq 0) {
+                [void]$find.Add([PSCustomObject]@{ Livello = "OK"; Controllo = "Porte a rischio note"; Dettaglio = "Nessuna è in ascolto sulla rete." })
+            }
+
+            # SMBv1
+            try {
+                $smb = Get-SmbServerConfiguration -ErrorAction Stop
+                if ($smb.EnableSMB1Protocol) {
+                    [void]$find.Add([PSCustomObject]@{ Livello = "Alto"; Controllo = "SMBv1 attivo"; Dettaglio = "Protocollo obsoleto e vulnerabile (EternalBlue): disattivalo con Set-SmbServerConfiguration -EnableSMB1Protocol `$false." })
+                } else {
+                    [void]$find.Add([PSCustomObject]@{ Livello = "OK"; Controllo = "SMBv1"; Dettaglio = "Disattivato." })
+                }
+            } catch {
+                [void]$find.Add([PSCustomObject]@{ Livello = "Info"; Controllo = "SMBv1"; Dettaglio = "Verifica non riuscita su questo sistema." })
+            }
+
+            # Desktop remoto e NLA
+            try {
+                $ts = Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" -Name fDenyTSConnections -ErrorAction Stop
+                if ($ts.fDenyTSConnections -eq 0) {
+                    $rdp = Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -ErrorAction SilentlyContinue
+                    if ($rdp -and $rdp.UserAuthentication -eq 1) {
+                        [void]$find.Add([PSCustomObject]@{ Livello = "OK"; Controllo = "Desktop remoto (RDP)"; Dettaglio = "Attivo con autenticazione a livello di rete (NLA) richiesta." })
+                    } else {
+                        [void]$find.Add([PSCustomObject]@{ Livello = "Alto"; Controllo = "Desktop remoto (RDP) senza NLA"; Dettaglio = "RDP è attivo ma NLA non è richiesta: abilitala nelle impostazioni di Desktop remoto." })
+                    }
+                } else {
+                    [void]$find.Add([PSCustomObject]@{ Livello = "OK"; Controllo = "Desktop remoto (RDP)"; Dettaglio = "Disattivato." })
+                }
+            } catch { $null = $_ }
+
+            # Profili firewall
+            foreach ($fp in @(Get-NetFirewallProfile -ErrorAction SilentlyContinue)) {
+                if ([string]$fp.Enabled -ne "True") {
+                    [void]$find.Add([PSCustomObject]@{ Livello = "Alto"; Controllo = ("Firewall profilo {0} disattivato" -f $fp.Name); Dettaglio = "Le porte in ascolto non sono filtrate su questo profilo." })
+                }
+            }
+
+            $nAlto = @($find | Where-Object { $_.Livello -eq "Alto" }).Count
+            $nMedio = @($find | Where-Object { $_.Livello -eq "Medio" }).Count
+            $nInfo = @($find | Where-Object { $_.Livello -eq "Info" }).Count
+            Write-Log ("Esito: {0} rischi alti, {1} medi, {2} informazioni." -f $nAlto, $nMedio, $nInfo)
+            foreach ($lv in @("Alto", "Medio", "Info", "OK")) {
+                foreach ($f in @($find | Where-Object { $_.Livello -eq $lv })) {
+                    switch ($lv) {
+                        "Alto"  { Write-LogCore ("[AVVISO] RISCHIO ALTO: {0} | {1}" -f $f.Controllo, $f.Dettaglio) }
+                        "Medio" { Write-LogCore ("[AVVISO] RISCHIO MEDIO: {0} | {1}" -f $f.Controllo, $f.Dettaglio) }
+                        "Info"  { Write-LogCore ("[INFO] {0} | {1}" -f $f.Controllo, $f.Dettaglio) }
+                        "OK"    { Write-LogCore ("[OK] {0} | {1}" -f $f.Controllo, $f.Dettaglio) }
+                    }
+                }
+            }
+            Write-Log "[INFO] Il controllo segnala l'esposizione: non verifica versioni né vulnerabilità dei singoli servizi."
+            $csv = Join-Path $global:OutputDir ("Controllo_Rischio_Porte_{0}_{1}.csv" -f $env:COMPUTERNAME, (Get-Date -Format "yyyyMMdd_HHmmss"))
+            $find | Export-Csv -Path $csv -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+            Write-Log ("[OK] Risultato salvato in: {0}" -f $csv) "Salvato"
+        } catch { Write-Log "[ERRORE] Controllo porte a rischio: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Segnala le porte a rischio note (Telnet, FTP, SMB, RDP, VNC, SNMP, database, WinRM) in ascolto sulla rete e controlla SMBv1, NLA del Desktop remoto e profili firewall disattivati. Salva un CSV."),
+    @("Confronto Porte`n(Baseline)", {
+        Show-CommandSummary "Confronto Porte con Baseline" @("Porte in ascolto raggiungibili dalla rete (TCP/UDP)", "Confronto con il file Baseline_Porte_<PC>.csv nella cartella dello script")
+        Show-WaitOverlay -msg "Lettura porte in ascolto..."
+        try {
+            $base = Join-Path $global:OutputDir ("Baseline_Porte_{0}.csv" -f $env:COMPUTERNAME)
+            # Solo porte raggiungibili dalla rete e sotto 49152: le porte dinamiche cambiano di continuo
+            $cur = @(Get-ListeningPortRows | Where-Object { $_.Accesso -eq "Rete" -and $_.Porta -lt 49152 })
+            $curMap = @{}
+            foreach ($r in $cur) {
+                $k = "{0}|{1}|{2}" -f $r.Proto, $r.Porta, $r.Processo
+                if (-not $curMap.ContainsKey($k)) { $curMap[$k] = $r }
+            }
+            $curList = @($curMap.Values | Sort-Object Proto, Porta, Processo | Select-Object Proto, Porta, Processo, Servizio)
+
+            if (-not (Test-Path -LiteralPath $base)) {
+                Hide-WaitOverlay
+                Write-Log ("Nessuna baseline trovata per questo PC. Porte attuali raggiungibili dalla rete: {0}." -f $curList.Count)
+                if ((Show-ConfirmBox "Nessuna baseline trovata.`nVuoi salvare lo stato attuale delle porte come riferimento?") -eq "Yes") {
+                    $curList | Export-Csv -Path $base -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+                    Write-Log ("[OK] Baseline salvata in: {0}" -f $base) "Salvato"
+                }
+                return
+            }
+
+            $baseMap = @{}
+            foreach ($b in @(Import-Csv -LiteralPath $base -Delimiter ";")) {
+                $k = "{0}|{1}|{2}" -f $b.Proto, $b.Porta, $b.Processo
+                $baseMap[$k] = $b
+            }
+            $new = @($curMap.Keys | Where-Object { -not $baseMap.ContainsKey($_) } | Sort-Object)
+            $gone = @($baseMap.Keys | Where-Object { -not $curMap.ContainsKey($_) } | Sort-Object)
+            $same = $curMap.Count - $new.Count
+            Write-Log ("Baseline del {0}: {1} porte uguali, {2} nuove, {3} scomparse (solo porte sulla rete sotto la 49152)." -f (Get-Item -LiteralPath $base).LastWriteTime.ToString("dd/MM/yyyy HH:mm"), $same, $new.Count, $gone.Count)
+            foreach ($k in $new) {
+                $r = $curMap[$k]
+                $svcTxt = if ($r.Servizio) { " (" + $r.Servizio + ")" } else { "" }
+                Write-LogCore ("[AVVISO] NUOVA: {0} {1}{2} | processo {3}" -f $r.Proto, $r.Porta, $svcTxt, $r.Processo)
+            }
+            foreach ($k in $gone) {
+                $b = $baseMap[$k]
+                Write-LogCore ("[INFO] SPARITA: {0} {1} | processo {2}" -f $b.Proto, $b.Porta, $b.Processo)
+            }
+            if ($new.Count -eq 0 -and $gone.Count -eq 0) {
+                Write-Log "[OK] Nessuna differenza rispetto alla baseline."
+            } else {
+                Hide-WaitOverlay
+                if ((Show-ConfirmBox "Ci sono differenze rispetto alla baseline.`nVuoi aggiornarla con lo stato attuale?") -eq "Yes") {
+                    $curList | Export-Csv -Path $base -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+                    Write-Log ("[OK] Baseline aggiornata: {0}" -f $base) "Salvato"
+                }
+            }
+        } catch { Write-Log "[ERRORE] Confronto porte: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Confronta le porte in ascolto sulla rete con quelle salvate la volta precedente e segnala le nuove e le scomparse (software installato di nascosto, servizi riattivati). La prima volta salva lo stato attuale come baseline."),
     @("Disattiva Proxy Windows", {
         Show-CommandSummary "Disattiva Proxy Windows" @("Set-ItemProperty HKCU:\...\Internet Settings -Name ProxyEnable -Value 0")
         $path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
@@ -2630,7 +2976,309 @@ $secBtns = @(
             $result | Export-Csv $csv -NoTypeInformation -Encoding UTF8
             Write-Log "[OK] Report: $csv" "Completato"
         } catch { Write-Log "[ERRORE] $_" "Errore" } finally { Hide-WaitOverlay }
-    }, "#064E3B", "#F8FAFC", "Controlla stato servizi critici Windows Update, Spooler, Defender ecc")
+    }, "#064E3B", "#F8FAFC", "Controlla stato servizi critici Windows Update, Spooler, Defender ecc"),
+    @("Audit Sicurezza Client`n(Defender, UAC, TPM...)", {
+        Show-CommandSummary "Audit Sicurezza Client" @("Defender (Get-MpComputerStatus) e antivirus registrati", "Firewall, BitLocker, TPM, Secure Boot", "UAC, accesso automatico, account Guest, protezione LSA, WDigest", "Data dell'ultimo aggiornamento Windows installato")
+        Show-WaitOverlay -msg "Audit sicurezza del client..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+
+            # Antivirus / Defender
+            try {
+                $mp = Get-MpComputerStatus -ErrorAction Stop
+                if (-not $mp.AntivirusEnabled) {
+                    [void]$find.Add((New-SecFinding "Alto" "Antivirus Defender" "Disattivato: verifica che sia attivo un altro antivirus."))
+                } elseif (-not $mp.RealTimeProtectionEnabled) {
+                    [void]$find.Add((New-SecFinding "Alto" "Protezione in tempo reale Defender" "Disattivata."))
+                } else {
+                    [void]$find.Add((New-SecFinding "OK" "Protezione in tempo reale Defender" "Attiva."))
+                }
+                $sigAge = [int]$mp.AntivirusSignatureAge
+                if ($sigAge -gt 7) { [void]$find.Add((New-SecFinding "Alto" "Firme antivirus" ("Aggiornate {0} giorni fa." -f $sigAge))) }
+                elseif ($sigAge -gt 3) { [void]$find.Add((New-SecFinding "Medio" "Firme antivirus" ("Aggiornate {0} giorni fa." -f $sigAge))) }
+                else { [void]$find.Add((New-SecFinding "OK" "Firme antivirus" ("Aggiornate {0} giorni fa." -f $sigAge))) }
+                if ($mp.IsTamperProtected -eq $false) { [void]$find.Add((New-SecFinding "Medio" "Protezione antimanomissione Defender" "Disattivata: un malware potrebbe spegnere l'antivirus.")) }
+            } catch {
+                [void]$find.Add((New-SecFinding "Info" "Defender" "Stato non leggibile (potrebbe essere presente un antivirus di terze parti)."))
+            }
+            try {
+                $av = @(Get-CimInstance -Namespace "root/SecurityCenter2" -ClassName AntiVirusProduct -ErrorAction Stop | ForEach-Object { $_.displayName })
+                if ($av.Count -gt 0) { [void]$find.Add((New-SecFinding "Info" "Antivirus registrati in Windows" ($av -join ", "))) }
+            } catch { $null = $_ }
+
+            # Firewall
+            foreach ($fp in @(Get-NetFirewallProfile -ErrorAction SilentlyContinue)) {
+                if ([string]$fp.Enabled -eq "True") { [void]$find.Add((New-SecFinding "OK" ("Firewall profilo {0}" -f $fp.Name) "Attivo.")) }
+                else { [void]$find.Add((New-SecFinding "Alto" ("Firewall profilo {0}" -f $fp.Name) "Disattivato.")) }
+            }
+
+            # BitLocker
+            try {
+                $bl = Get-BitLockerVolume -MountPoint $env:SystemDrive -ErrorAction Stop
+                if ([string]$bl.ProtectionStatus -eq "On") { [void]$find.Add((New-SecFinding "OK" ("BitLocker su {0}" -f $env:SystemDrive) "Protezione attiva.")) }
+                else { [void]$find.Add((New-SecFinding "Medio" ("BitLocker su {0}" -f $env:SystemDrive) "Disco non cifrato: i dati sono leggibili in caso di furto o smarrimento.")) }
+            } catch { [void]$find.Add((New-SecFinding "Info" "BitLocker" "Stato non leggibile su questo sistema.")) }
+
+            # TPM
+            try {
+                $tpm = Get-Tpm -ErrorAction Stop
+                if ($tpm.TpmPresent -and $tpm.TpmReady) { [void]$find.Add((New-SecFinding "OK" "TPM" "Presente e pronto.")) }
+                elseif ($tpm.TpmPresent) { [void]$find.Add((New-SecFinding "Medio" "TPM" "Presente ma non pronto.")) }
+                else { [void]$find.Add((New-SecFinding "Medio" "TPM" "Assente.")) }
+            } catch { [void]$find.Add((New-SecFinding "Info" "TPM" "Stato non leggibile.")) }
+
+            # Secure Boot
+            try {
+                if (Confirm-SecureBootUEFI -ErrorAction Stop) { [void]$find.Add((New-SecFinding "OK" "Secure Boot" "Attivo.")) }
+                else { [void]$find.Add((New-SecFinding "Medio" "Secure Boot" "Disattivato nel firmware.")) }
+            } catch { [void]$find.Add((New-SecFinding "Info" "Secure Boot" "Non supportato o avvio BIOS legacy.")) }
+
+            # UAC
+            $pol = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -ErrorAction SilentlyContinue
+            if ($pol) {
+                if ($pol.EnableLUA -eq 0) { [void]$find.Add((New-SecFinding "Alto" "UAC" "Disattivato.")) }
+                elseif ($pol.ConsentPromptBehaviorAdmin -eq 0) { [void]$find.Add((New-SecFinding "Alto" "UAC" "Gli amministratori elevano i privilegi senza alcuna richiesta.")) }
+                else { [void]$find.Add((New-SecFinding "OK" "UAC" "Attivo.")) }
+            }
+
+            # Accesso automatico
+            $wl = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -ErrorAction SilentlyContinue
+            if ($wl -and [string]$wl.AutoAdminLogon -eq "1") {
+                if ($wl.PSObject.Properties["DefaultPassword"] -and $wl.DefaultPassword) { [void]$find.Add((New-SecFinding "Alto" "Accesso automatico" "Attivo con password salvata in chiaro nel registro.")) }
+                else { [void]$find.Add((New-SecFinding "Medio" "Accesso automatico" "Attivo: chiunque accenda il PC entra senza password.")) }
+            } else { [void]$find.Add((New-SecFinding "OK" "Accesso automatico" "Non attivo.")) }
+
+            # Account Guest
+            try {
+                $guest = @(Get-LocalUser -ErrorAction Stop | Where-Object { $_.SID.Value -match '-501$' -and $_.Enabled })
+                if ($guest.Count -gt 0) { [void]$find.Add((New-SecFinding "Medio" "Account Guest" "Attivo: disattivalo se non serve.")) }
+                else { [void]$find.Add((New-SecFinding "OK" "Account Guest" "Disattivato.")) }
+            } catch { $null = $_ }
+
+            # Protezione LSA e WDigest
+            $lsa = Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" -ErrorAction SilentlyContinue
+            if ($lsa -and ($lsa.RunAsPPL -eq 1 -or $lsa.RunAsPPL -eq 2)) { [void]$find.Add((New-SecFinding "OK" "Protezione LSA" "Attiva.")) }
+            else { [void]$find.Add((New-SecFinding "Info" "Protezione LSA" "Non attiva: consigliata per ostacolare il furto di credenziali dalla memoria.")) }
+            $wd = Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest" -ErrorAction SilentlyContinue
+            if ($wd -and $wd.UseLogonCredential -eq 1) { [void]$find.Add((New-SecFinding "Alto" "WDigest" "Attivo: le password restano in chiaro nella memoria.")) }
+
+            # Ultimo aggiornamento installato
+            try {
+                $hf = @(Get-HotFix -ErrorAction Stop | Where-Object { $_.InstalledOn } | Sort-Object InstalledOn -Descending)
+                if ($hf.Count -gt 0) {
+                    $days = [int]((Get-Date) - $hf[0].InstalledOn).TotalDays
+                    $txt = ("{0} ({1}) installato {2} giorni fa. Dato indicativo." -f $hf[0].HotFixID, $hf[0].InstalledOn.ToString("dd/MM/yyyy"), $days)
+                    if ($days -gt 90) { [void]$find.Add((New-SecFinding "Alto" "Ultimo aggiornamento Windows" $txt)) }
+                    elseif ($days -gt 45) { [void]$find.Add((New-SecFinding "Medio" "Ultimo aggiornamento Windows" $txt)) }
+                    else { [void]$find.Add((New-SecFinding "OK" "Ultimo aggiornamento Windows" $txt)) }
+                }
+            } catch { [void]$find.Add((New-SecFinding "Info" "Ultimo aggiornamento Windows" "Non leggibile.")) }
+
+            Show-SecFindings $find "Audit_Sicurezza_Client"
+        } catch { Write-Log "[ERRORE] Audit sicurezza client: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Controlli di sicurezza del PC: Defender e firme, firewall, BitLocker, TPM, Secure Boot, UAC, accesso automatico, account Guest, protezione LSA e WDigest, ultimo aggiornamento Windows. Sola lettura, salva un CSV."),
+    @("Amministratori Locali`n+ Account Locali", {
+        Show-CommandSummary "Amministratori Locali" @("Membri del gruppo Administrators (SID S-1-5-32-544, indipendente dalla lingua)", "Get-LocalUser: account locali attivi")
+        Show-WaitOverlay -msg "Lettura amministratori locali..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+            $members = @()
+            try {
+                $members = @(Get-LocalGroupMember -SID "S-1-5-32-544" -ErrorAction Stop | ForEach-Object { [PSCustomObject]@{ Nome = [string]$_.Name; Tipo = [string]$_.ObjectClass; Sid = [string]$_.SID.Value } })
+            } catch {
+                # Alternativa quando il gruppo contiene account di dominio non risolvibili
+                $grp = Get-CimInstance Win32_Group -Filter "SID = 'S-1-5-32-544' AND LocalAccount = TRUE" -ErrorAction Stop
+                $members = @(Get-CimAssociatedInstance -InputObject $grp -Association Win32_GroupUser -ErrorAction SilentlyContinue | ForEach-Object { [PSCustomObject]@{ Nome = ("{0}\{1}" -f $_.Domain, $_.Name); Tipo = ($_.CimClass.CimClassName -replace '^Win32_', ''); Sid = [string]$_.SID } })
+            }
+            foreach ($m in $members) {
+                $liv = "Info"; $det = ("Tipo: {0}" -f $m.Tipo)
+                if ($m.Sid -eq "S-1-1-0" -or $m.Sid -eq "S-1-5-11" -or $m.Sid -eq "S-1-5-32-545" -or $m.Sid -match '-513$') {
+                    $liv = "Alto"; $det = "Gruppo molto ampio: tutti questi utenti sono amministratori del PC."
+                }
+                [void]$find.Add((New-SecFinding $liv ("Amministratore locale: {0}" -f $m.Nome) $det))
+            }
+            if ($members.Count -gt 4) {
+                [void]$find.Add((New-SecFinding "Medio" "Numero di amministratori locali" ("{0} membri: riduci ai soli account necessari." -f $members.Count)))
+            } else {
+                [void]$find.Add((New-SecFinding "OK" "Numero di amministratori locali" ("{0} membri." -f $members.Count)))
+            }
+
+            try {
+                foreach ($u in @(Get-LocalUser -ErrorAction Stop | Where-Object { $_.Enabled })) {
+                    $sid = $u.SID.Value
+                    $liv = "Info"; $notes = @()
+                    $age = -1
+                    if ($u.PasswordLastSet) { $age = [int]((Get-Date) - $u.PasswordLastSet).TotalDays }
+                    if ($sid -match '-501$') { $liv = "Medio"; $notes += "account Guest attivo" }
+                    if ($sid -match '-500$') { $liv = "Medio"; $notes += "Administrator integrato attivo (rinominalo, disattivalo o gestiscilo con LAPS)" }
+                    if (-not $u.PasswordRequired) { $liv = "Alto"; $notes += "password non richiesta" }
+                    if ($age -gt 365) { if ($liv -eq "Info") { $liv = "Medio" }; $notes += ("password non cambiata da {0} giorni" -f $age) }
+                    $last = "mai"
+                    if ($u.LastLogon) { $last = $u.LastLogon.ToString("dd/MM/yyyy") }
+                    $notes += ("ultimo accesso: {0}" -f $last)
+                    [void]$find.Add((New-SecFinding $liv ("Account locale attivo: {0}" -f $u.Name) ($notes -join "; ")))
+                }
+            } catch {
+                [void]$find.Add((New-SecFinding "Info" "Account locali" "Non leggibili su questo sistema (normale su un Domain Controller)."))
+            }
+            Show-SecFindings $find "Amministratori_Locali"
+        } catch { Write-Log "[ERRORE] Lettura amministratori locali: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Elenca i membri del gruppo Administrators e gli account locali attivi. Segnala gruppi troppo ampi, Guest e Administrator integrato attivi, password non richieste o molto vecchie."),
+    @("Autorun e Persistenza`n(Run, Task, Servizi)", {
+        Show-CommandSummary "Autorun e Persistenza" @("Chiavi Run e RunOnce (HKLM e HKCU)", "Cartelle Esecuzione automatica", "Task pianificati non Microsoft", "Servizi non Microsoft con avvio automatico (percorsi senza virgolette)")
+        Show-WaitOverlay -msg "Lettura avvio automatico..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+            $suspPath = '(?i)\\(AppData|Temp|Users\\Public|ProgramData)\\|\\Downloads\\'
+            $nRun = 0; $nTask = 0; $nSvc = 0
+
+            # 1) Chiavi Run
+            $runKeys = @(
+                "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
+                "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce",
+                "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run",
+                "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
+                "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"
+            )
+            $skipProps = @("PSPath", "PSParentPath", "PSChildName", "PSDrive", "PSProvider")
+            foreach ($rk in $runKeys) {
+                $props = Get-ItemProperty -Path $rk -ErrorAction SilentlyContinue
+                if (-not $props) { continue }
+                foreach ($p in $props.PSObject.Properties) {
+                    if ($skipProps -contains $p.Name) { continue }
+                    $cmd = [string]$p.Value
+                    $nRun++
+                    $liv = "Info"
+                    if ($cmd -match $suspPath) { $liv = "Medio" }
+                    [void]$find.Add((New-SecFinding $liv ("Avvio (Run): {0}" -f $p.Name) ("{0} | {1}" -f $rk, $cmd)))
+                }
+            }
+
+            # 2) Cartelle Esecuzione automatica
+            $startDirs = @((Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\Startup"), (Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"))
+            foreach ($sf in $startDirs) {
+                foreach ($it in @(Get-ChildItem -LiteralPath $sf -File -Force -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne "desktop.ini" })) {
+                    $nRun++
+                    $liv = "Info"
+                    if ($it.Extension -match '(?i)^\.(exe|bat|cmd|ps1|vbs|js|scr)$') { $liv = "Medio" }
+                    [void]$find.Add((New-SecFinding $liv ("Cartella Esecuzione automatica: {0}" -f $it.Name) $sf))
+                }
+            }
+
+            # 3) Task pianificati non Microsoft
+            try {
+                foreach ($t in @(Get-ScheduledTask -ErrorAction Stop | Where-Object { $_.TaskPath -notlike "\Microsoft\*" -and [string]$_.State -ne "Disabled" })) {
+                    $acts = @($t.Actions | ForEach-Object { (("{0} {1}" -f $_.Execute, $_.Arguments).Trim()) })
+                    $cmd = $acts -join " ; "
+                    $nTask++
+                    $liv = "Info"
+                    if ($cmd -match $suspPath) { $liv = "Medio" }
+                    # v3.9.25: keyword spezzate per evitare match testuale AV su stringhe letterali (solo rilevamento, mai esecuzione).
+                    $badPatterns = @(("Invoke-" + "Expression"), ("FromBase64" + "String"), ("Download" + "String"), ("-enc" + "odedcommand"), ("\bie" + "x\b"))
+                    $badRx = '(?i)-e\s+[A-Za-z0-9+/=]{20,}|' + ($badPatterns -join '|')
+                    if ($cmd -match $badRx) { $liv = "Alto" }
+                    [void]$find.Add((New-SecFinding $liv ("Task pianificato: {0}{1}" -f $t.TaskPath, $t.TaskName) ("Utente: {0} | {1}" -f $t.Principal.UserId, $cmd)))
+                }
+            } catch { [void]$find.Add((New-SecFinding "Info" "Task pianificati" "Non leggibili.")) }
+
+            # 4) Servizi non Microsoft con avvio automatico
+            foreach ($s in @(Get-CimInstance Win32_Service -ErrorAction SilentlyContinue | Where-Object { $_.StartMode -eq "Auto" -and $_.PathName })) {
+                $pn = [string]$s.PathName
+                if ($pn -match '(?i)\\Windows\\|\\Windows Defender\\') { continue }
+                $nSvc++
+                $exe = $null; $quoted = $false
+                if ($pn -match '^\s*"([^"]+)"') { $exe = $Matches[1]; $quoted = $true }
+                elseif ($pn -match '(?i)^\s*(.+?\.exe)') { $exe = $Matches[1] }
+                $liv = $null; $why = ""
+                if ($exe -and $exe -match $suspPath) { $liv = "Medio"; $why = "eseguibile in una cartella scrivibile dagli utenti" }
+                elseif ($exe -and -not $quoted -and $exe -match '\s') { $liv = "Medio"; $why = "percorso con spazi senza virgolette (possibile escalation dei privilegi)" }
+                if ($liv) { [void]$find.Add((New-SecFinding $liv ("Servizio: {0}" -f $s.Name) ("{0} | {1}" -f $why, $pn))) }
+            }
+
+            [void]$find.Add((New-SecFinding "Info" "Riepilogo" ("Voci di avvio: {0} | task non Microsoft attivi: {1} | servizi non Microsoft automatici: {2}" -f $nRun, $nTask, $nSvc)))
+            Show-SecFindings $find "Autorun_Persistenza"
+        } catch { Write-Log "[ERRORE] Lettura avvio automatico: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Elenca ciò che parte da solo (chiavi Run, cartelle Esecuzione automatica, task pianificati non Microsoft, servizi non Microsoft) e segnala percorsi sospetti, comandi PowerShell codificati e servizi senza virgolette. Utile per cercare malware persistente."),
+    @("Condivisioni Locali`n(SMB + permessi)", {
+        Show-CommandSummary "Condivisioni SMB Locali" @("Get-SmbShare (escluse le condivisioni amministrative)", "Get-SmbShareAccess (permessi di condivisione)")
+        Show-WaitOverlay -msg "Lettura condivisioni..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+            $broad = '(?i)^(Everyone|Tutti|NT AUTHORITY\\Authenticated Users|NT AUTHORITY\\Utenti autenticati|.*\\Domain Users|.*\\Utenti del dominio|BUILTIN\\Users|BUILTIN\\Utenti)$'
+            $shares = @(Get-SmbShare -ErrorAction Stop | Where-Object { -not $_.Special -and $_.Name -ne 'print$' })
+            if ($shares.Count -eq 0) {
+                [void]$find.Add((New-SecFinding "OK" "Condivisioni" "Nessuna condivisione non amministrativa."))
+            }
+            foreach ($sh in $shares) {
+                $acc = @(Get-SmbShareAccess -Name $sh.Name -ErrorAction SilentlyContinue)
+                $accTxt = (@($acc | ForEach-Object { "{0}: {1} ({2})" -f $_.AccountName, $_.AccessRight, $_.AccessControlType })) -join "; "
+                $liv = "Info"
+                foreach ($a in $acc) {
+                    if ([string]$a.AccessControlType -ne "Allow") { continue }
+                    if ($a.AccountName -match $broad) {
+                        if ([string]$a.AccessRight -eq "Full" -or [string]$a.AccessRight -eq "Change") { $liv = "Alto" }
+                        elseif ($liv -ne "Alto") { $liv = "Medio" }
+                    }
+                }
+                [void]$find.Add((New-SecFinding $liv ("Condivisione: \\{0}\{1}" -f $env:COMPUTERNAME, $sh.Name) ("Percorso: {0} | Accessi: {1}" -f $sh.Path, $accTxt)))
+            }
+            [void]$find.Add((New-SecFinding "Info" "Nota" "Sono mostrati i permessi di condivisione: i permessi NTFS delle cartelle vanno verificati a parte."))
+            Show-SecFindings $find "Condivisioni_SMB"
+        } catch { Write-Log "[ERRORE] Lettura condivisioni: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Elenca le condivisioni di rete non amministrative con i permessi. Segnala quelle aperte a Everyone, Utenti autenticati o Domain Users con accesso in modifica o controllo completo."),
+    @("Accessi Falliti`n(Evento 4625)", {
+        $inp = [Microsoft.VisualBasic.Interaction]::InputBox("Quanti giorni indietro analizzare? (1-90)", "Accessi falliti", "7")
+        if ([string]::IsNullOrWhiteSpace($inp)) { return }
+        $days = 0
+        if (-not [int]::TryParse($inp.Trim(), [ref]$days) -or $days -lt 1 -or $days -gt 90) {
+            [System.Windows.Forms.MessageBox]::Show(("Valore non valido: {0}" -f $inp), "Giorni non validi", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning) | Out-Null
+            return
+        }
+        Show-CommandSummary ("Accessi falliti degli ultimi {0} giorni" -f $days) @("Get-WinEvent: registro Security, evento 4625 (massimo 5000 eventi più recenti)")
+        Show-WaitOverlay -msg "Lettura registro Security..."
+        try {
+            $events = @()
+            try {
+                $events = @(Get-WinEvent -FilterHashtable @{ LogName = "Security"; Id = 4625; StartTime = (Get-Date).AddDays(-$days) } -MaxEvents 5000 -ErrorAction Stop)
+            } catch {
+                if ($_.FullyQualifiedErrorId -match "NoMatchingEventsFound") { $events = @() } else { throw }
+            }
+            if ($events.Count -eq 0) {
+                Write-Log ("[OK] Nessun accesso fallito registrato negli ultimi {0} giorni." -f $days) "Completato"
+                return
+            }
+            $rows = New-Object System.Collections.ArrayList
+            foreach ($ev in $events) {
+                $p = $ev.Properties
+                $ip = [string]$p[19].Value
+                if ([string]::IsNullOrWhiteSpace($ip) -or $ip -eq "-") { $ip = "" }
+                [void]$rows.Add([PSCustomObject]@{ Data = $ev.TimeCreated; Utente = ("{0}\{1}" -f $p[6].Value, $p[5].Value); TipoAccesso = [int]$p[10].Value; IpSorgente = $ip; PcSorgente = [string]$p[13].Value })
+            }
+            $find = New-Object System.Collections.ArrayList
+            $oldest = ($rows | Sort-Object Data | Select-Object -First 1).Data
+            $newest = ($rows | Sort-Object Data -Descending | Select-Object -First 1).Data
+            [void]$find.Add((New-SecFinding "Info" "Periodo analizzato" ("{0} eventi dal {1} al {2}" -f $rows.Count, $oldest.ToString("dd/MM/yyyy HH:mm"), $newest.ToString("dd/MM/yyyy HH:mm"))))
+            if ($events.Count -ge 5000) { [void]$find.Add((New-SecFinding "Info" "Limite raggiunto" "Analizzati solo i 5000 eventi più recenti: riduci i giorni per un quadro completo.")) }
+
+            $typeNames = @{ 2 = "interattivo"; 3 = "rete"; 4 = "batch"; 5 = "servizio"; 7 = "sblocco"; 8 = "rete in chiaro"; 10 = "Desktop remoto"; 11 = "credenziali in cache" }
+            foreach ($g in @($rows | Group-Object TipoAccesso | Sort-Object Count -Descending)) {
+                $tn = "altro"; if ($typeNames.ContainsKey([int]$g.Name)) { $tn = $typeNames[[int]$g.Name] }
+                [void]$find.Add((New-SecFinding "Info" ("Tipo di accesso {0} ({1})" -f $g.Name, $tn) ("{0} tentativi falliti" -f $g.Count)))
+            }
+            foreach ($g in @($rows | Where-Object { $_.IpSorgente } | Group-Object IpSorgente | Sort-Object Count -Descending | Select-Object -First 10)) {
+                $liv = "Info"; if ($g.Count -ge 100) { $liv = "Alto" } elseif ($g.Count -ge 20) { $liv = "Medio" }
+                [void]$find.Add((New-SecFinding $liv ("Indirizzo sorgente {0}" -f $g.Name) ("{0} tentativi falliti" -f $g.Count)))
+            }
+            foreach ($g in @($rows | Group-Object Utente | Sort-Object Count -Descending | Select-Object -First 10)) {
+                $liv = "Info"; if ($g.Count -ge 100) { $liv = "Alto" } elseif ($g.Count -ge 20) { $liv = "Medio" }
+                [void]$find.Add((New-SecFinding $liv ("Account {0}" -f $g.Name) ("{0} tentativi falliti (possibile attacco a forza bruta, oppure una password obsoleta salvata su un dispositivo)" -f $g.Count)))
+            }
+            $det = Join-Path $global:OutputDir ("Accessi_Falliti_Dettaglio_{0}_{1}.csv" -f $env:COMPUTERNAME, (Get-Date -Format "yyyyMMdd_HHmmss"))
+            $rows | Export-Csv -Path $det -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+            Write-Log ("Dettaglio di tutti gli eventi: {0}" -f $det)
+            Show-SecFindings $find "Accessi_Falliti"
+        } catch { Write-Log "[ERRORE] Lettura accessi falliti: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#064E3B", "#F8FAFC", "Analizza gli accessi falliti (evento 4625) degli ultimi giorni: tipo di accesso, indirizzi e account più colpiti. Segnala i casi con molti tentativi, possibile forza bruta. Richiede i diritti di amministratore.")
 )
 
 $tweakBtns = @(
@@ -3539,6 +4187,180 @@ $adBtns = @(
             Write-Log "Audit sicurezza AD completato con successo" "Completato"
         } catch { Write-Log "[ERRORE] Audit sicurezza AD: $_" "Errore" } finally { Hide-WaitOverlay }
     }, "#F59E0B", "#0F172A", "Analisi sicurezza (sola lettura): età password krbtgt, account con password non richiesta, SPN su utenti, senza pre-auth Kerberos, stato Cestino AD. Esporta in CSV."),
+    @("Delega Kerberos`n(Unconstrained)", {
+        Show-CommandSummary "Delega Kerberos" @("userAccountControl: TRUSTED_FOR_DELEGATION (esclusi i Domain Controller)", "msDS-AllowedToDelegateTo (delega vincolata)")
+        if (-not (Test-ADModule)) { return }
+        Show-WaitOverlay -msg "Ricerca account con delega Kerberos..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+            # Delega non vincolata: account attivi, esclusi DC (516) e RODC (521)
+            $uncF = '(&(|(objectCategory=person)(objectCategory=computer))(userAccountControl:1.2.840.113556.1.4.803:=524288)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(!(primaryGroupID=516))(!(primaryGroupID=521)))'
+            $unc = @(Get-ADObject -LDAPFilter $uncF -Properties samAccountName, objectClass -ErrorAction Stop)
+            foreach ($o in $unc) {
+                [void]$find.Add((New-SecFinding "Alto" ("Delega non vincolata: {0} ({1})" -f $o.samAccountName, $o.objectClass) "Può impersonare qualsiasi utente che si autentica verso di lui: se viene compromesso, il dominio è a rischio. Passa a delega vincolata o basata sulle risorse."))
+            }
+            if ($unc.Count -eq 0) { [void]$find.Add((New-SecFinding "OK" "Delega non vincolata" "Nessun account attivo (esclusi i DC).")) }
+
+            # Delega vincolata
+            $conF = '(&(|(objectCategory=person)(objectCategory=computer))(msDS-AllowedToDelegateTo=*))'
+            $con = @(Get-ADObject -LDAPFilter $conF -Properties samAccountName, objectClass, 'msDS-AllowedToDelegateTo', userAccountControl -ErrorAction Stop)
+            foreach ($o in $con) {
+                $targets = (@($o.'msDS-AllowedToDelegateTo')) -join ", "
+                $proto = (([int]$o.userAccountControl -band 16777216) -ne 0)
+                $liv = "Info"; $note = "Delega vincolata verso: {0}"
+                if ($proto) { $liv = "Medio"; $note = "Delega vincolata con transizione di protocollo (può ottenere ticket senza Kerberos dell'utente) verso: {0}" }
+                [void]$find.Add((New-SecFinding $liv ("Delega vincolata: {0} ({1})" -f $o.samAccountName, $o.objectClass) ($note -f $targets)))
+            }
+            if ($con.Count -eq 0) { [void]$find.Add((New-SecFinding "OK" "Delega vincolata" "Nessun account configurato.")) }
+            Show-SecFindings $find "Audit_Delega_Kerberos" -NoComputerName
+        } catch { Write-Log "[ERRORE] Ricerca delega Kerberos: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#F59E0B", "#0F172A", "Cerca account utente e computer con delega Kerberos non vincolata (rischio alto, esclusi i DC) o vincolata con transizione di protocollo. Sola lettura, salva un CSV."),
+    @("Computer AD: OS Obsoleti,`nInattivi e LAPS", {
+        Show-CommandSummary "Computer AD: OS Obsoleti, Inattivi e LAPS" @("Get-ADComputer (computer attivi)", "Sistemi operativi non più supportati", "Computer senza accesso da oltre 90 giorni", "Copertura LAPS (schema e password gestite)")
+        if (-not (Test-ADModule)) { return }
+        Show-WaitOverlay -msg "Analisi computer del dominio..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+            $flag = New-Object System.Collections.ArrayList
+
+            # Attributi LAPS presenti nello schema (legacy e Windows LAPS)
+            $schemaNC = (Get-ADRootDSE).schemaNamingContext
+            $lapsAttrs = @()
+            foreach ($an in @("ms-Mcs-AdmPwdExpirationTime", "msLAPS-PasswordExpirationTime")) {
+                if (Get-ADObject -SearchBase $schemaNC -LDAPFilter ("(lDAPDisplayName={0})" -f $an) -ErrorAction SilentlyContinue) { $lapsAttrs += $an }
+            }
+            $props = @("OperatingSystem", "LastLogonDate", "PrimaryGroupID") + $lapsAttrs
+            $comps = @(Get-ADComputer -Filter 'Enabled -eq $true' -Properties $props -ErrorAction Stop)
+            Write-Log ("Computer attivi nel dominio: {0}" -f $comps.Count)
+
+            # 1) Sistemi operativi non più supportati
+            $obsHigh = '(?i)Windows (2000|XP|Vista|7|8|8\.1)\b|Windows Server( \(R\))? (2003|2008|2012)'
+            foreach ($g in @($comps | Where-Object { $_.OperatingSystem } | Group-Object OperatingSystem | Sort-Object Name)) {
+                $liv = $null; $why = ""
+                if ($g.Name -match $obsHigh) { $liv = "Alto"; $why = "senza più aggiornamenti di sicurezza" }
+                elseif ($g.Name -match '(?i)Windows 10') { $liv = "Medio"; $why = "supporto terminato il 14/10/2025 (salvo aggiornamenti ESU)" }
+                if ($liv) {
+                    $names = (@($g.Group | Select-Object -First 15 | ForEach-Object { $_.Name })) -join ", "
+                    $more = ""; if ($g.Count -gt 15) { $more = " ..." }
+                    [void]$find.Add((New-SecFinding $liv ("OS non supportato: {0}" -f $g.Name) ("{0} computer, {1}: {2}{3}" -f $g.Count, $why, $names, $more)))
+                    foreach ($c in $g.Group) { [void]$flag.Add([PSCustomObject]@{ Computer = $c.Name; SistemaOperativo = $c.OperatingSystem; UltimoAccesso = $c.LastLogonDate; Motivo = "OS non supportato" }) }
+                }
+            }
+
+            # 2) Computer inattivi da oltre 90 giorni
+            $limit = (Get-Date).AddDays(-90)
+            $stale = @($comps | Where-Object { $_.PrimaryGroupID -ne 516 -and $_.LastLogonDate -and $_.LastLogonDate -lt $limit })
+            $never = @($comps | Where-Object { $_.PrimaryGroupID -ne 516 -and -not $_.LastLogonDate })
+            if ($stale.Count -gt 0) {
+                $names = (@($stale | Select-Object -First 15 | ForEach-Object { $_.Name })) -join ", "
+                $more = ""; if ($stale.Count -gt 15) { $more = " ..." }
+                [void]$find.Add((New-SecFinding "Medio" "Computer inattivi da oltre 90 giorni" ("{0} computer attivi in AD ma non collegati: {1}{2}. Valuta di disattivarli." -f $stale.Count, $names, $more)))
+                foreach ($c in $stale) { [void]$flag.Add([PSCustomObject]@{ Computer = $c.Name; SistemaOperativo = $c.OperatingSystem; UltimoAccesso = $c.LastLogonDate; Motivo = "Inattivo da oltre 90 giorni" }) }
+            } else { [void]$find.Add((New-SecFinding "OK" "Computer inattivi da oltre 90 giorni" "Nessuno.")) }
+            if ($never.Count -gt 0) { [void]$find.Add((New-SecFinding "Info" "Computer mai collegati" ("{0} computer senza alcun accesso registrato." -f $never.Count))) }
+
+            # 3) Copertura LAPS
+            $nonDc = @($comps | Where-Object { $_.PrimaryGroupID -ne 516 })
+            if ($lapsAttrs.Count -eq 0) {
+                [void]$find.Add((New-SecFinding "Medio" "LAPS" "Non presente nello schema AD: la password dell'amministratore locale è probabilmente uguale su più PC. Windows LAPS è integrato nei Windows aggiornati."))
+            } else {
+                $noLaps = New-Object System.Collections.ArrayList
+                foreach ($c in $nonDc) {
+                    $has = $false
+                    foreach ($an in $lapsAttrs) { if ($c.$an) { $has = $true; break } }
+                    if (-not $has) { [void]$noLaps.Add($c) }
+                }
+                if ($noLaps.Count -gt 0) {
+                    $names = (@($noLaps | Select-Object -First 15 | ForEach-Object { $_.Name })) -join ", "
+                    $more = ""; if ($noLaps.Count -gt 15) { $more = " ..." }
+                    [void]$find.Add((New-SecFinding "Medio" "Computer senza password LAPS" ("{0} su {1}: {2}{3}" -f $noLaps.Count, $nonDc.Count, $names, $more)))
+                    foreach ($c in $noLaps) { [void]$flag.Add([PSCustomObject]@{ Computer = $c.Name; SistemaOperativo = $c.OperatingSystem; UltimoAccesso = $c.LastLogonDate; Motivo = "Senza password LAPS" }) }
+                } else { [void]$find.Add((New-SecFinding "OK" "Copertura LAPS" "Tutti i computer hanno una password gestita.")) }
+            }
+
+            if ($flag.Count -gt 0) {
+                $det = Get-ADOutputPath ("Computer_AD_Da_Verificare_{0}.csv" -f (Get-Date -Format "yyyyMMdd_HHmmss"))
+                $flag | Export-Csv -Path $det -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+                Write-Log ("Elenco completo dei computer da verificare: {0}" -f $det)
+            }
+            Show-SecFindings $find "Audit_Computer_AD" -NoComputerName
+        } catch { Write-Log "[ERRORE] Analisi computer AD: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#F59E0B", "#0F172A", "Analizza i computer attivi del dominio: sistemi operativi non più supportati, computer che non si collegano da oltre 90 giorni e copertura LAPS (password amministratore locale gestita). Sola lettura, salva CSV."),
+    @("Policy Password Dominio`n(+ PSO)", {
+        Show-CommandSummary "Policy Password del Dominio" @("Get-ADDefaultDomainPasswordPolicy", "Get-ADFineGrainedPasswordPolicy (PSO)", "Livello funzionale del dominio")
+        if (-not (Test-ADModule)) { return }
+        Show-WaitOverlay -msg "Lettura policy password..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+            $pol = Get-ADDefaultDomainPasswordPolicy -ErrorAction Stop
+
+            $ml = [int]$pol.MinPasswordLength
+            if ($ml -lt 8) { [void]$find.Add((New-SecFinding "Alto" "Lunghezza minima password" ("{0} caratteri: troppo corta (consigliati almeno 12)." -f $ml))) }
+            elseif ($ml -lt 12) { [void]$find.Add((New-SecFinding "Medio" "Lunghezza minima password" ("{0} caratteri: consigliati almeno 12." -f $ml))) }
+            else { [void]$find.Add((New-SecFinding "OK" "Lunghezza minima password" ("{0} caratteri." -f $ml))) }
+
+            if (-not $pol.ComplexityEnabled) { [void]$find.Add((New-SecFinding "Medio" "Complessità password" "Non richiesta.")) }
+            else { [void]$find.Add((New-SecFinding "OK" "Complessità password" "Richiesta.")) }
+
+            $lt = [int]$pol.LockoutThreshold
+            if ($lt -eq 0) { [void]$find.Add((New-SecFinding "Alto" "Blocco account" "Nessun blocco: i tentativi di indovinare le password non hanno limiti.")) }
+            elseif ($lt -gt 10) { [void]$find.Add((New-SecFinding "Medio" "Blocco account" ("Dopo {0} tentativi: soglia alta, consigliati 5-10." -f $lt))) }
+            else { [void]$find.Add((New-SecFinding "OK" "Blocco account" ("Dopo {0} tentativi." -f $lt))) }
+
+            if ($pol.ReversibleEncryptionEnabled) { [void]$find.Add((New-SecFinding "Alto" "Cifratura reversibile" "Attiva: le password sono recuperabili in chiaro.")) }
+            else { [void]$find.Add((New-SecFinding "OK" "Cifratura reversibile" "Disattivata.")) }
+
+            $hist = [int]$pol.PasswordHistoryCount
+            if ($hist -lt 5) { [void]$find.Add((New-SecFinding "Medio" "Cronologia password" ("{0} password ricordate: poche." -f $hist))) }
+            else { [void]$find.Add((New-SecFinding "OK" "Cronologia password" ("{0} password ricordate." -f $hist))) }
+
+            $maxAge = "le password non scadono"; if ($pol.MaxPasswordAge -ne [TimeSpan]::Zero) { $maxAge = ("{0} giorni" -f $pol.MaxPasswordAge.Days) }
+            [void]$find.Add((New-SecFinding "Info" "Scadenza password" ("Massima durata: {0} | durata minima: {1} giorni" -f $maxAge, $pol.MinPasswordAge.Days)))
+            [void]$find.Add((New-SecFinding "Info" "Tempi di blocco" ("Durata del blocco: {0} minuti | finestra di osservazione: {1} minuti" -f [int]$pol.LockoutDuration.TotalMinutes, [int]$pol.LockoutObservationWindow.TotalMinutes)))
+
+            try {
+                $psos = @(Get-ADFineGrainedPasswordPolicy -Filter * -ErrorAction Stop)
+                if ($psos.Count -eq 0) { [void]$find.Add((New-SecFinding "Info" "Policy password specifiche (PSO)" "Nessuna: si applica solo la policy del dominio.")) }
+                foreach ($ps in ($psos | Sort-Object Precedence)) {
+                    $applies = (@($ps.AppliesTo | ForEach-Object { (($_ -split ",")[0]) -replace '^CN=', '' })) -join ", "
+                    $liv = "Info"; if ([int]$ps.MinPasswordLength -lt 8) { $liv = "Medio" }
+                    [void]$find.Add((New-SecFinding $liv ("PSO: {0} (precedenza {1})" -f $ps.Name, $ps.Precedence) ("Lunghezza minima {0}, complessità {1}, blocco dopo {2} tentativi | Si applica a: {3}" -f $ps.MinPasswordLength, $ps.ComplexityEnabled, $ps.LockoutThreshold, $applies)))
+                }
+            } catch { [void]$find.Add((New-SecFinding "Info" "Policy password specifiche (PSO)" "Non leggibili.")) }
+
+            try { [void]$find.Add((New-SecFinding "Info" "Livello funzionale del dominio" ([string](Get-ADDomain).DomainMode))) } catch { $null = $_ }
+            Show-SecFindings $find "Audit_Policy_Password_Dominio" -NoComputerName
+        } catch { Write-Log "[ERRORE] Lettura policy password: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#F59E0B", "#0F172A", "Controlla la policy password del dominio (lunghezza, complessità, blocco account, cronologia, cifratura reversibile) e le policy specifiche PSO. Sola lettura, salva un CSV."),
+    @("adminCount Orfani`n(AdminSDHolder)", {
+        Show-CommandSummary "Account con adminCount Orfano" @("Get-ADUser (adminCount=1)", "Membri ricorsivi dei gruppi protetti da AdminSDHolder")
+        if (-not (Test-ADModule)) { return }
+        Show-WaitOverlay -msg "Verifica account con adminCount..."
+        try {
+            $find = New-Object System.Collections.ArrayList
+            $domSid = (Get-ADDomain).DomainSID.Value
+            $rootSid = (Get-ADDomain -Identity (Get-ADForest).RootDomain).DomainSID.Value
+            # Administrators, Account/Server/Print/Backup Operators, Replicator, Domain Admins, Schema Admins, Enterprise Admins
+            $sids = @("S-1-5-32-544", "S-1-5-32-548", "S-1-5-32-549", "S-1-5-32-550", "S-1-5-32-551", "S-1-5-32-552", ("{0}-512" -f $domSid), ("{0}-518" -f $rootSid), ("{0}-519" -f $rootSid))
+            $prot = @{}
+            foreach ($sid in $sids) {
+                try {
+                    $grp = Get-ADGroup -Identity $sid -ErrorAction Stop
+                    foreach ($m in @(Get-ADGroupMember -Identity $grp -Recursive -ErrorAction Stop)) { $prot[[string]$m.distinguishedName] = $true }
+                } catch { $null = $_ }
+            }
+            $adm = @(Get-ADUser -LDAPFilter '(adminCount=1)' -Properties adminCount, Enabled, LastLogonDate, PasswordLastSet -ErrorAction Stop)
+            $orph = @($adm | Where-Object { -not $prot.ContainsKey([string]$_.DistinguishedName) -and $_.SamAccountName -ne "krbtgt" -and $_.SID.Value -notmatch '-(500|502)$' })
+            [void]$find.Add((New-SecFinding "Info" "Account con adminCount=1" ("{0} in totale, {1} ancora nei gruppi protetti, {2} orfani." -f $adm.Count, ($adm.Count - $orph.Count), $orph.Count)))
+            foreach ($u in $orph) {
+                $last = "mai"; if ($u.LastLogonDate) { $last = $u.LastLogonDate.ToString("dd/MM/yyyy") }
+                $stato = "disattivato"; if ($u.Enabled) { $stato = "attivo" }
+                [void]$find.Add((New-SecFinding "Medio" ("adminCount orfano: {0}" -f $u.SamAccountName) ("Non è più in un gruppo protetto ma ha ancora adminCount=1 (permessi ereditati bloccati da AdminSDHolder). Account {0}, ultimo accesso {1}. Ripristina l'ereditarietà e azzera adminCount." -f $stato, $last)))
+            }
+            if ($orph.Count -eq 0) { [void]$find.Add((New-SecFinding "OK" "adminCount orfani" "Nessun account orfano.")) }
+            Show-SecFindings $find "Audit_adminCount_Orfani" -NoComputerName
+        } catch { Write-Log "[ERRORE] Verifica adminCount: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#F59E0B", "#0F172A", "Trova gli utenti che hanno ancora adminCount=1 ma non sono più membri di gruppi privilegiati (ex amministratori con permessi ereditati bloccati). Sola lettura, salva un CSV."),
 
     @("Backup + Report GPO (HTML)", {
         Show-CommandSummary "Backup + Report GPO" @("Backup-GPO -All", "Get-GPOReport -All -ReportType Html")
@@ -4575,6 +5397,394 @@ $form.Controls.Add($pnlHeader)
 
 
 
+# ==============================================================================
+# RICERCA COMANDI (Ctrl+F) E PREFERITI (v3.9.20)
+# Ogni pulsante creato da Add-ButtonGrid viene registrato in $global:BinoRegistry:
+# la ricerca e il menu Preferiti lavorano su questo elenco, senza duplicare i comandi.
+# I preferiti sono salvati in bino_settings.json (chiave Favorites); i recenti restano solo in memoria.
+# ==============================================================================
+$global:BinoRegistry = New-Object System.Collections.ArrayList
+$global:BinoRecent = New-Object System.Collections.ArrayList
+$global:BinoTabControl = $tabControl
+$global:BinoMainForm = $form
+$global:BinoSearchDlg = $null; $global:BinoSearchTxt = $null; $global:BinoSearchLst = $null; $global:BinoSearchDesc = $null
+$global:BinoSearchResults = @(); $global:BinoSearchChoice = $null; $global:BinoSearchAction = "go"
+$global:BinoPendingKey = $null; $global:BinoFavMenu = $null
+
+function Get-BinoCleanText {
+    param([string]$t)
+    return (($t -replace '\r?\n', ' ') -replace '\s+', ' ').Trim()
+}
+
+# Minuscolo e senza accenti, così "sicurezza" trova anche "Sicurezza" e "così" trova "cosi"
+function ConvertTo-BinoSearchKey {
+    param([string]$t)
+    if ([string]::IsNullOrEmpty($t)) { return "" }
+    $n = $t.Normalize([System.Text.NormalizationForm]::FormD)
+    $sb = New-Object System.Text.StringBuilder
+    foreach ($ch in $n.ToCharArray()) {
+        if ([System.Globalization.CharUnicodeInfo]::GetUnicodeCategory($ch) -ne [System.Globalization.UnicodeCategory]::NonSpacingMark) { [void]$sb.Append($ch) }
+    }
+    return $sb.ToString().ToLowerInvariant()
+}
+
+function Get-BinoFavorites {
+    $s = Get-BinoSettings
+    return @($s["Favorites"] | Where-Object { $_ })
+}
+
+function Add-BinoFavorite {
+    param([string]$Key)
+    $f = @(Get-BinoFavorites)
+    if ($f -notcontains $Key) { $f += $Key; [void](Set-BinoSetting "Favorites" @($f)) }
+}
+
+function Remove-BinoFavorite {
+    param([string]$Key)
+    $f = @(Get-BinoFavorites | Where-Object { $_ -ne $Key })
+    [void](Set-BinoSetting "Favorites" @($f))
+}
+
+function Add-BinoRecent {
+    param([string]$Key)
+    if ([string]::IsNullOrEmpty($Key)) { return }
+    $global:BinoRecent.Remove($Key)
+    $global:BinoRecent.Insert(0, $Key)
+    while ($global:BinoRecent.Count -gt 8) { $global:BinoRecent.RemoveAt($global:BinoRecent.Count - 1) }
+}
+
+# Registra un pulsante appena creato (chiamata da Add-ButtonGrid e dal tab DISM)
+function Register-BinoButton {
+    param($Btn, $Entry, $Tab)
+    $text = Get-BinoCleanText ([string]$Entry[0])
+    $key = "{0}|{1}" -f $Tab.Text, $text
+    $tip = ""; if ($Entry.Count -gt 4) { $tip = [string]$Entry[4] }
+    $Btn.Name = $key
+    $Btn.ContextMenuStrip = $global:BinoCtx
+    [void]$global:BinoRegistry.Add([PSCustomObject]@{
+        Key = $key; TabName = [string]$Tab.Text; Page = $Tab; Text = $text; Tooltip = $tip; Button = $Btn
+        KeyName = (ConvertTo-BinoSearchKey ("{0} {1}" -f $Tab.Text, $text)); KeyTip = (ConvertTo-BinoSearchKey $tip); Order = $global:BinoRegistry.Count
+    })
+    # Registra l'uso (per l'elenco dei recenti): aggiunto prima del comando vero e proprio
+    $Btn.Add_Click({ param($s, $e) Add-BinoRecent $s.Name })
+}
+
+function Find-BinoEntry {
+    param([string]$Key)
+    foreach ($e in $global:BinoRegistry) { if ($e.Key -eq $Key) { return $e } }
+    return $null
+}
+
+# Esegue il comando come se si fosse cliccato il pulsante originale (anche se la sua scheda non è visibile)
+function Invoke-BinoCommand {
+    param($Entry)
+    if (-not $Entry -or -not $Entry.Button) { return }
+    try {
+        # v3.9.25: niente Reflection / .Invoke() su metodi privati (trigger euristico AV).
+        # PerformClick() e' il metodo pubblico di WinForms e scatena gli stessi handler Add_Click.
+        $Entry.Button.PerformClick()
+    } catch { Write-Log "[ERRORE] Impossibile avviare il comando: $_" "Errore" }
+}
+
+# Avvia il comando dopo un attimo, a menu già chiuso
+function Request-BinoCommand {
+    param([string]$Key)
+    $global:BinoPendingKey = $Key
+    $t = New-Object System.Windows.Forms.Timer
+    $t.Interval = 80
+    $t.Add_Tick({ param($s, $e)
+        $s.Stop(); $s.Dispose()
+        $k = $global:BinoPendingKey; $global:BinoPendingKey = $null
+        if ($k) { Invoke-BinoCommand (Find-BinoEntry $k) }
+    })
+    $t.Start()
+}
+
+# Porta in primo piano il comando: seleziona la scheda, scorre fino al pulsante e lo evidenzia per un paio di secondi
+function Invoke-BinoGoToCommand {
+    param($Entry)
+    if (-not $Entry) { return }
+    $tc = $global:BinoTabControl
+    if ($tc.SelectedTab -ne $Entry.Page) { $tc.SelectedTab = $Entry.Page }
+    if ($tc.SelectedTab -ne $Entry.Page) { return }
+    $btn = $Entry.Button
+    $Entry.Page.ScrollControlIntoView($btn)
+    $oldColor = $btn.FlatAppearance.BorderColor
+    $oldSize = $btn.FlatAppearance.BorderSize
+    $btn.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#FACC15")
+    $btn.FlatAppearance.BorderSize = 4
+    $btn.Focus() | Out-Null
+    $t = New-Object System.Windows.Forms.Timer
+    $t.Interval = 2500
+    $t.Tag = @{ Btn = $btn; Color = $oldColor; Size = $oldSize }
+    $t.Add_Tick({ param($s, $e)
+        $s.Stop()
+        $d = $s.Tag
+        try { $d.Btn.FlatAppearance.BorderColor = $d.Color; $d.Btn.FlatAppearance.BorderSize = $d.Size } catch { $null = $_ }
+        $s.Dispose()
+    })
+    $t.Start()
+}
+
+# --- Menu tasto destro sui pulsanti: aggiungi / rimuovi dai preferiti ---
+$global:BinoCtx = New-Object System.Windows.Forms.ContextMenuStrip
+$global:BinoCtx.ShowImageMargin = $false
+$global:BinoMiAdd = $global:BinoCtx.Items.Add("Aggiungi ai preferiti")
+$global:BinoMiDel = $global:BinoCtx.Items.Add("Rimuovi dai preferiti")
+$global:BinoCtx.Add_Opening({
+    param($s, $e)
+    $src = $global:BinoCtx.SourceControl
+    if (-not $src -or [string]::IsNullOrEmpty($src.Name)) { $e.Cancel = $true; return }
+    $isFav = (@(Get-BinoFavorites) -contains $src.Name)
+    $global:BinoMiAdd.Visible = (-not $isFav)
+    $global:BinoMiDel.Visible = $isFav
+})
+$global:BinoMiAdd.Add_Click({
+    $src = $global:BinoCtx.SourceControl
+    if ($src -and $src.Name) {
+        Add-BinoFavorite $src.Name
+        Write-Log ("[OK] Aggiunto ai preferiti: {0}" -f (($src.Name -split '\|', 2)[1])) "Preferiti"
+    }
+})
+$global:BinoMiDel.Add_Click({
+    $src = $global:BinoCtx.SourceControl
+    if ($src -and $src.Name) {
+        Remove-BinoFavorite $src.Name
+        Write-Log ("[OK] Rimosso dai preferiti: {0}" -f (($src.Name -split '\|', 2)[1])) "Preferiti"
+    }
+})
+
+# --- Menu del pulsante Preferiti nell'intestazione ---
+function Show-BinoFavoritesMenu {
+    if ($global:BinoFavMenu) { try { $global:BinoFavMenu.Dispose() } catch { $null = $_ } }
+    $menu = New-Object System.Windows.Forms.ContextMenuStrip
+    $menu.ShowImageMargin = $false
+    $global:BinoFavMenu = $menu
+
+    $h1 = $menu.Items.Add("PREFERITI"); $h1.Enabled = $false
+    $nFav = 0
+    $favKeys = @(Get-BinoFavorites)
+    foreach ($k in $favKeys) {
+        $e = Find-BinoEntry $k
+        if (-not $e) { continue }
+        $mi = $menu.Items.Add(("{0}  ›  {1}" -f $e.TabName, $e.Text))
+        $mi.Tag = $k
+        $mi.Add_Click({ param($s, $ev) Request-BinoCommand ([string]$s.Tag) })
+        $nFav++
+    }
+    if ($nFav -eq 0) {
+        $none = $menu.Items.Add("Nessun preferito: clic destro su un comando, poi Aggiungi ai preferiti")
+        $none.Enabled = $false
+    }
+
+    [void]$menu.Items.Add((New-Object System.Windows.Forms.ToolStripSeparator))
+    $h2 = $menu.Items.Add("RECENTI (questa sessione)"); $h2.Enabled = $false
+    $nRec = 0
+    foreach ($k in @($global:BinoRecent)) {
+        $e = Find-BinoEntry ([string]$k)
+        if (-not $e) { continue }
+        $mi = $menu.Items.Add(("{0}  ›  {1}" -f $e.TabName, $e.Text))
+        $mi.Tag = [string]$k
+        $mi.Add_Click({ param($s, $ev) Request-BinoCommand ([string]$s.Tag) })
+        $nRec++
+    }
+    if ($nRec -eq 0) { $none2 = $menu.Items.Add("Nessun comando eseguito finora"); $none2.Enabled = $false }
+
+    [void]$menu.Items.Add((New-Object System.Windows.Forms.ToolStripSeparator))
+    if ($nFav -gt 0) {
+        $rm = New-Object System.Windows.Forms.ToolStripMenuItem("Rimuovi dai preferiti")
+        foreach ($k in $favKeys) {
+            $e = Find-BinoEntry $k
+            if (-not $e) { continue }
+            $sub = $rm.DropDownItems.Add(("{0}  ›  {1}" -f $e.TabName, $e.Text))
+            $sub.Tag = $k
+            $sub.Add_Click({ param($s, $ev) Remove-BinoFavorite ([string]$s.Tag); Write-Log ("[OK] Rimosso dai preferiti: {0}" -f (([string]$s.Tag -split '\|', 2)[1])) "Preferiti" })
+        }
+        [void]$menu.Items.Add($rm)
+    }
+    $srch = $menu.Items.Add("Cerca comando...    Ctrl+F")
+    $srch.Add_Click({ Show-BinoSearch })
+    $menu.Show($global:BinoFavBtn, (New-Object System.Drawing.Point(0, $global:BinoFavBtn.Height)))
+}
+
+# --- Finestra di ricerca ---
+function Find-BinoCommands {
+    param([string]$Query)
+    $tokens = @((ConvertTo-BinoSearchKey $Query) -split '\s+' | Where-Object { $_ })
+    $out = New-Object System.Collections.ArrayList
+    foreach ($e in $global:BinoRegistry) {
+        $score = 0; $ok = $true
+        foreach ($t in $tokens) {
+            if ($e.KeyName.Contains($t)) { $score += 2 }
+            elseif ($e.KeyTip.Contains($t)) { $score += 1 }
+            else { $ok = $false; break }
+        }
+        if ($ok) { [void]$out.Add([PSCustomObject]@{ Entry = $e; Score = $score; Order = $e.Order }) }
+    }
+    return @($out | Sort-Object @{ Expression = "Score"; Descending = $true }, @{ Expression = "Order"; Descending = $false })
+}
+
+function Update-BinoSearchList {
+    $res = @(Find-BinoCommands $global:BinoSearchTxt.Text)
+    $global:BinoSearchResults = $res
+    $lst = $global:BinoSearchLst
+    $lst.BeginUpdate()
+    $lst.Items.Clear()
+    foreach ($r in $res) { [void]$lst.Items.Add(("{0}  ›  {1}" -f $r.Entry.TabName, $r.Entry.Text)) }
+    $lst.EndUpdate()
+    if ($lst.Items.Count -gt 0) { $lst.SelectedIndex = 0 } else { $global:BinoSearchDesc.Text = "Nessun comando trovato." }
+}
+
+function Update-BinoSearchDesc {
+    $i = $global:BinoSearchLst.SelectedIndex
+    if ($i -ge 0 -and $i -lt $global:BinoSearchResults.Count) {
+        $global:BinoSearchDesc.Text = [string]$global:BinoSearchResults[$i].Entry.Tooltip
+    }
+}
+
+function Select-BinoSearchResult {
+    param([string]$Action)
+    $i = $global:BinoSearchLst.SelectedIndex
+    if ($i -ge 0 -and $i -lt $global:BinoSearchResults.Count) {
+        $global:BinoSearchChoice = $global:BinoSearchResults[$i].Entry
+        $global:BinoSearchAction = $Action
+        $global:BinoSearchDlg.Close()
+    }
+}
+
+function Show-BinoSearch {
+    $dlg = New-Object System.Windows.Forms.Form
+    Enable-DarkTitleBar $dlg
+    $dlg.Text = "Cerca comando"
+    $dlg.ClientSize = New-Object System.Drawing.Size(700, 520)
+    $dlg.StartPosition = "CenterParent"
+    $dlg.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
+    $dlg.MaximizeBox = $false; $dlg.MinimizeBox = $false; $dlg.ShowInTaskbar = $false
+    $dlg.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#0F172A")
+
+    $lbl = New-Object System.Windows.Forms.Label
+    $lbl.Text = "Scrivi una o più parole: vengono cercate nel nome e nella descrizione dei comandi."
+    $lbl.Font = New-Object System.Drawing.Font("Segoe UI", 9)
+    $lbl.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#94A3B8")
+    $lbl.Location = New-Object System.Drawing.Point(15, 12); $lbl.AutoSize = $true
+
+    $txt = New-Object System.Windows.Forms.TextBox
+    $txt.Font = New-Object System.Drawing.Font("Segoe UI", 13)
+    $txt.Location = New-Object System.Drawing.Point(15, 36); $txt.Size = New-Object System.Drawing.Size(670, 32)
+    $txt.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#1E293B")
+    $txt.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#F8FAFC")
+    $txt.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
+
+    $lst = New-Object System.Windows.Forms.ListBox
+    $lst.Font = New-Object System.Drawing.Font("Segoe UI", 10.5)
+    $lst.Location = New-Object System.Drawing.Point(15, 80); $lst.Size = New-Object System.Drawing.Size(670, 340)
+    $lst.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#1E293B")
+    $lst.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#F8FAFC")
+    $lst.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
+    $lst.IntegralHeight = $false
+
+    $desc = New-Object System.Windows.Forms.Label
+    $desc.Font = New-Object System.Drawing.Font("Segoe UI", 9)
+    $desc.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#94A3B8")
+    $desc.Location = New-Object System.Drawing.Point(15, 426); $desc.Size = New-Object System.Drawing.Size(670, 38)
+
+    $btnGo = New-Object System.Windows.Forms.Button
+    $btnGo.Text = "Vai alla scheda (Invio)"
+    $btnGo.Location = New-Object System.Drawing.Point(15, 472); $btnGo.Size = New-Object System.Drawing.Size(210, 36)
+    $btnGo.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#0EA5E9"); $btnGo.ForeColor = [System.Drawing.Color]::White
+    $btnRun = New-Object System.Windows.Forms.Button
+    $btnRun.Text = "Esegui subito (Ctrl+Invio)"
+    $btnRun.Location = New-Object System.Drawing.Point(235, 472); $btnRun.Size = New-Object System.Drawing.Size(210, 36)
+    $btnRun.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#064E3B"); $btnRun.ForeColor = [System.Drawing.Color]::White
+    $btnClose = New-Object System.Windows.Forms.Button
+    $btnClose.Text = "Chiudi (Esc)"
+    $btnClose.Location = New-Object System.Drawing.Point(585, 472); $btnClose.Size = New-Object System.Drawing.Size(100, 36)
+    $btnClose.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#334155"); $btnClose.ForeColor = [System.Drawing.Color]::White
+    $btnClose.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
+    foreach ($b in @($btnGo, $btnRun, $btnClose)) {
+        $b.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat; $b.FlatAppearance.BorderSize = 0
+        $b.Font = New-Object System.Drawing.Font("Segoe UI", 9.5, [System.Drawing.FontStyle]::Bold); $b.Cursor = [System.Windows.Forms.Cursors]::Hand
+    }
+    $dlg.CancelButton = $btnClose
+    $dlg.Controls.AddRange(@($lbl, $txt, $lst, $desc, $btnGo, $btnRun, $btnClose))
+
+    $global:BinoSearchDlg = $dlg; $global:BinoSearchTxt = $txt; $global:BinoSearchLst = $lst; $global:BinoSearchDesc = $desc
+    $global:BinoSearchResults = @(); $global:BinoSearchChoice = $null; $global:BinoSearchAction = "go"
+
+    $txt.Add_TextChanged({ Update-BinoSearchList })
+    $lst.Add_SelectedIndexChanged({ Update-BinoSearchDesc })
+    $lst.Add_DoubleClick({ Select-BinoSearchResult "go" })
+    $btnGo.Add_Click({ Select-BinoSearchResult "go" })
+    $btnRun.Add_Click({ Select-BinoSearchResult "run" })
+    $txt.Add_KeyDown({
+        param($s, $e)
+        $l = $global:BinoSearchLst
+        if ($e.KeyCode -eq [System.Windows.Forms.Keys]::Down) {
+            if ($l.SelectedIndex -lt ($l.Items.Count - 1)) { $l.SelectedIndex = $l.SelectedIndex + 1 }
+            $e.Handled = $true; $e.SuppressKeyPress = $true
+        } elseif ($e.KeyCode -eq [System.Windows.Forms.Keys]::Up) {
+            if ($l.SelectedIndex -gt 0) { $l.SelectedIndex = $l.SelectedIndex - 1 }
+            $e.Handled = $true; $e.SuppressKeyPress = $true
+        } elseif ($e.KeyCode -eq [System.Windows.Forms.Keys]::Enter) {
+            $e.Handled = $true; $e.SuppressKeyPress = $true
+            if ($e.Control) { Select-BinoSearchResult "run" } else { Select-BinoSearchResult "go" }
+        }
+    })
+    $lst.Add_KeyDown({
+        param($s, $e)
+        if ($e.KeyCode -eq [System.Windows.Forms.Keys]::Enter) {
+            $e.Handled = $true; $e.SuppressKeyPress = $true
+            if ($e.Control) { Select-BinoSearchResult "run" } else { Select-BinoSearchResult "go" }
+        }
+    })
+    $dlg.Add_Shown({ Update-BinoSearchList; $global:BinoSearchTxt.Focus() | Out-Null })
+
+    [void]$dlg.ShowDialog($global:BinoMainForm)
+    $choice = $global:BinoSearchChoice; $action = $global:BinoSearchAction
+    $global:BinoSearchChoice = $null
+    $dlg.Dispose()
+    if ($choice) {
+        if ($action -eq "run") { Invoke-BinoCommand $choice } else { Invoke-BinoGoToCommand $choice }
+    }
+}
+
+# --- Pulsanti nell'intestazione + scorciatoia Ctrl+F ---
+$sx = [math]::Max(($lblSubTitle.Right + 12), 780)
+$btnFav = New-Object System.Windows.Forms.Button
+$btnFav.Text = "Preferiti ▾"
+$btnFav.Size = New-Object System.Drawing.Size(95, 28)
+$btnFav.Location = New-Object System.Drawing.Point(1060, 44)
+$btnSearch = New-Object System.Windows.Forms.Button
+$btnSearch.Text = "Cerca comando...   Ctrl+F"
+$btnSearch.Size = New-Object System.Drawing.Size([math]::Max(170, (1054 - $sx)), 28)
+$btnSearch.Location = New-Object System.Drawing.Point((1054 - $btnSearch.Width), 44)
+$btnSearch.TextAlign = [System.Drawing.ContentAlignment]::MiddleLeft
+$btnSearch.Padding = New-Object System.Windows.Forms.Padding(8, 0, 0, 0)
+foreach ($hb in @($btnFav, $btnSearch)) {
+    $hb.Font = New-Object System.Drawing.Font("Segoe UI", 9.5)
+    $hb.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+    $hb.FlatAppearance.BorderSize = 1
+    $hb.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#475569")
+    $hb.FlatAppearance.MouseOverBackColor = [System.Drawing.ColorTranslator]::FromHtml("#334155")
+    $hb.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#0F172A")
+    $hb.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#CBD5E1")
+    $hb.Cursor = [System.Windows.Forms.Cursors]::Hand
+}
+$global:BinoFavBtn = $btnFav
+$btnFav.Add_Click({ Show-BinoFavoritesMenu })
+$btnSearch.Add_Click({ Show-BinoSearch })
+$pnlHeader.Controls.Add($btnFav)
+$pnlHeader.Controls.Add($btnSearch)
+
+$form.KeyPreview = $true
+$form.Add_KeyDown({
+    param($s, $e)
+    if ($e.Control -and $e.KeyCode -eq [System.Windows.Forms.Keys]::F) {
+        $e.Handled = $true; $e.SuppressKeyPress = $true
+        Show-BinoSearch
+    }
+})
+
 $tabDiag = New-Object System.Windows.Forms.TabPage
 $tabDiag.Text = "Diagnostica Hardware"
 $tabDiag.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#0F172A")
@@ -4613,6 +5823,7 @@ foreach ($b in $dismBtns) {
         $btn.FlatAppearance.BorderSize = 2
         $btn.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#3B82F6")
     }
+    Register-BinoButton $btn $b $tabDISM
     $btn.Add_Click($b[1]); $tabDISM.Controls.Add($btn)
     $col++
     if ($col -ge $cols) { $col = 0; $row++ }
@@ -4667,7 +5878,7 @@ $tabControl.Controls.Add($tabPrinters)
 Add-ButtonGrid -Tab $tabPrinters -Buttons $printerBtns
 
 # ==============================================================================
-# TAB 7: SICUREZZA & BITLOCKER - BitLocker (report, stato, attiva/disattiva), Defender, product key OEM, attivazione Windows, servizi critici
+# TAB 7: SICUREZZA & BITLOCKER - BitLocker (report, stato, attiva/disattiva), Defender, product key OEM, attivazione Windows, servizi critici, audit sicurezza client, amministratori locali, autorun e persistenza, condivisioni SMB, accessi falliti
 # ==============================================================================
 $tabSec = New-Object System.Windows.Forms.TabPage
 $tabSec.Text = "Sicurezza & BitLocker"
@@ -4706,7 +5917,7 @@ Add-ButtonGrid -Tab $tabUSB -Buttons $usbBtns
 
 # ==============================================================================
 # ==============================================================================
-# TAB 10: AD-TOOLS - Active Directory: report utenti, gruppi, computer e OU, password e blocchi account, salute DC e FSMO, audit sicurezza, GPO, canale sicuro del dominio, test porte verso i DC
+# TAB 10: AD-TOOLS - Active Directory: report utenti, gruppi, computer e OU, password e blocchi account, salute DC e FSMO, audit sicurezza, delega Kerberos, computer obsoleti e LAPS, policy password, adminCount orfani, GPO, canale sicuro del dominio, test porte verso i DC
 # ==============================================================================
 $tabAD = New-Object System.Windows.Forms.TabPage
 $tabAD.Text = "AD-TOOLs"
