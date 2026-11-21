@@ -1,8 +1,8 @@
-﻿# ==============================================================================
+# ==============================================================================
 # AUTO-ELEVAZIONE PRIVILEGI AMMINISTRATORE E NASCONDIMENTO CONSOLE - CON LOG DEBUG
 # ==============================================================================
 $global:DebugStartup = $false  # Metti a $true se vuoi VEDERE gli errori rossi all'avvio
-$scriptVersion = "v3.9.27c"  # v3.9.27c: fix 1 parentesi di troppo riga 1153 (Esito Ultimo Test RAM); v3.9.27b:  # v3.9.27b: fix sintassi stress (New-Object -ArgumentList, formato tempo senza D2); v3.9.27:  # v3.9.27: + Stress Test RAM 5 min in loop con finestra progresso/annulla (difetti a caldo); v3.9.26:  # v3.9.26: 3 nuovi test RAM in Diagnostica (rapido senza riavvio, mdsched con riavvio, esito ultimo test + WHEA); v3.9.25:  # v3.9.25: fix falso positivo AV - ricerca senza Reflection (PerformClick al posto di GetMethod+Invoke su OnClick privato), keyword di rilevamento spezzate a riga 3032; v3.9.24:  # v3.9.24: pulsanti a 5 colonne un po' più larghi (261 px) per riempire tutta la larghezza dell'area comandi; v3.9.23: le schede con più di 6 righe di comandi (AD-TOOLs) passano da sole a 5 colonne più strette con altezza normale; le altre schede tornano alle misure originali; v3.9.22: pulsanti più stretti e 5 colonne per riga (AD-TOOLs sta nell'area comandi senza ridurre l'altezza); v3.9.21: griglia pulsanti adattiva (altezza ridotta in automatico quando una scheda ha molti comandi, larghezza ridotta per togliere la barra orizzontale); v3.9.20: ricerca comandi (Ctrl+F) e menu Preferiti/Recenti nell'intestazione, clic destro su un comando per aggiungerlo ai preferiti; v3.9.19: nuovi controlli di sicurezza, Sicurezza (audit client, amministratori locali, autorun e persistenza, condivisioni SMB, accessi falliti) e AD-TOOLs (delega Kerberos, computer obsoleti/inattivi/LAPS, policy password, adminCount orfani); v3.9.18: Network con Controllo Porte a Rischio (porte note, SMBv1, NLA, firewall) e Confronto Porte con baseline; v3.9.17: Network con 5 nuovi comandi sulle porte (porte in ascolto TCP/UDP con processo, connessioni attive, chi usa una porta, scansione porte host remoto, regole firewall in ingresso), tutti con CSV nella cartella dello script; v3.9.16: popup di attesa rivisto (layout senza Dock, testo di aiuto chiaro e leggibile, finestra più alta); v3.9.15: Elimina Reti Wi-Fi Note con controllo preventivo (nessun falso successo su PC senza Wi-Fi, conferma con elenco reti, esito per profilo); v3.9.14: SpeedTest download con User-Agent da browser e server di riserva (Hetzner, OVH, Tele2) dopo errore 403 di Cloudflare; v3.9.13: SpeedTest Latenza + Download rifatto (latenza min/media/max/jitter con ripiego TCP, download reale in Mbit/s); v3.9.12: popup DISM ScanHealth più alto (pulsante Annulla non tagliato e leggibile); v3.9.11: colore dei comandi al passaggio del mouse blu (rosso/arancio schiariti); v3.9.10: Health Batteria con controllo preventivo (PC fisso = messaggio chiaro, niente errore), report HTML aperto solo se creato; v3.9.9: avviso AD-TOOLs graduato (PC in dominio senza RSAT = avviso leggero una volta per sessione; fuori dominio = avviso completo); v3.9.8: Canale Sicuro e Test Porte DC spostati da Rete ad AD-TOOLs (avviso e popup aggiornati); v3.9.7: esito chiaro per Esporta Password WiFi (popup con percorso, nessun falso successo senza WLAN); v3.9.6: log a colori (RichTextBox), commenti delle schede riscritti, numeri del popup NOTE dinamici; v3.9.5: schede con più margine interno e stacco tra una scheda e l'altra; v3.9.4: finestra più larga (1415 px) con griglia pulsanti e comandi in alto a destra riallineati; v3.9.3: testo dei tab senza puntini (niente padding/ellissi); v3.9.2: fix compilazione tab scuri (ControlStyles); v3.9.1: tema scuro (barra del titolo e tab) + accenti corretti nei testi; v3.9.0: popup informativo AD-TOOLs + file impostazioni; v3.8.0: nuovi comandi AD/rete e Show-ConfirmBox; v3.7.1: file di output nella cartella dello script; v3.7.0: fix pattern -like, CIM al posto di WMI, elevazione robusta, helper pulsanti
+$scriptVersion = "v3.9.32"  # v3.9.32: Inventario PC Completo (Ticket) spostato da Utility di Sistema a Diagnostica Hardware e rinominato Inventario PC Rapido (Ticket); Diagnostica Hardware: comandi di test e report in azzurro (verdi i controlli rapidi, rossi i critici), hover azzurro più scuro; tutti i tab (tranne Diagnostica Hardware) con comandi disposti per colore: verdi e azzurri a sinistra, bianchi e arancio al centro, rossi a destra; v3.9.31: nuovo comando Inventario PC Dettagliato in Diagnostica Hardware (sistema, BIOS, CPU, RAM per modulo, dischi, volumi, schede video, monitor, rete, sicurezza, aggiornamenti, software) con report HTML e CSV; v3.9.30: da .exe (PS2EXE) cartella output, logo, sfondo e file info sempre nella cartella dell'exe (prima finivano in %TEMP%); v3.9.29: output nella cartella dell'exe se compilato con PS2EXE; Salva Log in TXT con gestione errori; v3.9.28: Controllo Porte a Rischio con raggiungibilità reale (porte in ascolto incrociate con le regole firewall per profilo attivo, livelli adeguati, CSV Porte_Raggiungibili); v3.9.27e: intestazione, campo Cerca/Preferiti davanti al titolo e titolo alzato di 4 px (niente sovrapposizione); v3.9.27d: fix Preferiti/Recenti e Ctrl+Invio su comandi di altre schede (PerformClick richiede scheda visibile); v3.9.27c: fix 1 parentesi di troppo riga 1153 (Esito Ultimo Test RAM); v3.9.27b:  # v3.9.27b: fix sintassi stress (New-Object -ArgumentList, formato tempo senza D2); v3.9.27:  # v3.9.27: + 10:13 21/11/2026 5 min in loop con finestra progresso/annulla (difetti a caldo); v3.9.26:  # v3.9.26: 3 nuovi test RAM in Diagnostica (rapido senza riavvio, mdsched con riavvio, esito ultimo test + WHEA); v3.9.25:  # v3.9.25: fix falso positivo AV - ricerca senza Reflection (PerformClick al posto di GetMethod+Invoke su OnClick privato), keyword di rilevamento spezzate a riga 3032; v3.9.24:  # v3.9.24: pulsanti a 5 colonne un po' più larghi (261 px) per riempire tutta la larghezza dell'area comandi; v3.9.23: le schede con più di 6 righe di comandi (AD-TOOLs) passano da sole a 5 colonne più strette con altezza normale; le altre schede tornano alle misure originali; v3.9.22: pulsanti più stretti e 5 colonne per riga (AD-TOOLs sta nell'area comandi senza ridurre l'altezza); v3.9.21: griglia pulsanti adattiva (altezza ridotta in automatico quando una scheda ha molti comandi, larghezza ridotta per togliere la barra orizzontale); v3.9.20: ricerca comandi (Ctrl+F) e menu Preferiti/Recenti nell'intestazione, clic destro su un comando per aggiungerlo ai preferiti; v3.9.19: nuovi controlli di sicurezza, Sicurezza (audit client, amministratori locali, autorun e persistenza, condivisioni SMB, accessi falliti) e AD-TOOLs (delega Kerberos, computer obsoleti/inattivi/LAPS, policy password, adminCount orfani); v3.9.18: Network con Controllo Porte a Rischio (porte note, SMBv1, NLA, firewall) e Confronto Porte con baseline; v3.9.17: Network con 5 nuovi comandi sulle porte (porte in ascolto TCP/UDP con processo, connessioni attive, chi usa una porta, scansione porte host remoto, regole firewall in ingresso), tutti con CSV nella cartella dello script; v3.9.16: popup di attesa rivisto (layout senza Dock, testo di aiuto chiaro e leggibile, finestra più alta); v3.9.15: Elimina Reti Wi-Fi Note con controllo preventivo (nessun falso successo su PC senza Wi-Fi, conferma con elenco reti, esito per profilo); v3.9.14: SpeedTest download con User-Agent da browser e server di riserva (Hetzner, OVH, Tele2) dopo errore 403 di Cloudflare; v3.9.13: SpeedTest Latenza + Download rifatto (latenza min/media/max/jitter con ripiego TCP, download reale in Mbit/s); v3.9.12: popup DISM ScanHealth più alto (pulsante Annulla non tagliato e leggibile); v3.9.11: colore dei comandi al passaggio del mouse blu (rosso/arancio schiariti); v3.9.10: Health Batteria con controllo preventivo (PC fisso = messaggio chiaro, niente errore), report HTML aperto solo se creato; v3.9.9: avviso AD-TOOLs graduato (PC in dominio senza RSAT = avviso leggero una volta per sessione; fuori dominio = avviso completo); v3.9.8: Canale Sicuro e Test Porte DC spostati da Rete ad AD-TOOLs (avviso e popup aggiornati); v3.9.7: esito chiaro per Esporta Password WiFi (popup con percorso, nessun falso successo senza WLAN); v3.9.6: log a colori (RichTextBox), commenti delle schede riscritti, numeri del popup NOTE dinamici; v3.9.5: schede con più margine interno e stacco tra una scheda e l'altra; v3.9.4: finestra più larga (1415 px) con griglia pulsanti e comandi in alto a destra riallineati; v3.9.3: testo dei tab senza puntini (niente padding/ellissi); v3.9.2: fix compilazione tab scuri (ControlStyles); v3.9.1: tema scuro (barra del titolo e tab) + accenti corretti nei testi; v3.9.0: popup informativo AD-TOOLs + file impostazioni; v3.8.0: nuovi comandi AD/rete e Show-ConfirmBox; v3.7.1: file di output nella cartella dello script; v3.7.0: fix pattern -like, CIM al posto di WMI, elevazione robusta, helper pulsanti
 $global:StartLogFile = Join-Path $env:TEMP "Bino_Startup_Log.txt"
 
 # Funzione di log avvio (prima che parta la GUI)
@@ -125,6 +125,20 @@ Write-StartLog "Admin OK - procedo"
 $global:OutputDir = $null
 try { if ($ScriptPath) { $global:OutputDir = Split-Path -Parent $ScriptPath } } catch { $null = $_ }
 if (-not $global:OutputDir) { $global:OutputDir = $PSScriptRoot }
+# v3.9.30: se lo strumento e' compilato in .exe (PS2EXE) la cartella di riferimento e' SEMPRE quella dell'eseguibile
+# ($PSScriptRoot e $PSCommandPath in PS2EXE non sono affidabili e finivano per far usare %TEMP%).
+$global:RunMode = "script .ps1"
+try {
+    $exePath = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
+    $exeName = [System.IO.Path]::GetFileNameWithoutExtension($exePath)
+    if ($exePath -and $exeName -notmatch '^(powershell|pwsh|powershell_ise)$') {
+        $exeDir = Split-Path -Parent $exePath
+        if ($exeDir) { $global:OutputDir = $exeDir; $global:RunMode = "eseguibile .exe" }
+    }
+} catch { $null = $_ }
+# Cartella dell'applicazione (script o exe): usata anche per logo, sfondo e file info
+$global:AppDir = $global:OutputDir
+if (-not $global:AppDir) { $global:AppDir = (Get-Location).Path }
 function Test-DirWritable {
     param([string]$Dir)
     if (-not $Dir -or -not (Test-Path -LiteralPath $Dir -PathType Container)) { return $false }
@@ -404,12 +418,103 @@ function Show-ConfirmBox {
 }
 
 # --- HELPER: griglia pulsanti standard (sostituisce i cicli foreach duplicati per ogni tab) ---
+# Posizione del colore nella scala "dal piu' sicuro al piu' critico":
+# 0 verdi, 1 azzurri/blu, 2 bianchi, 3 arancio/ambra, 4 rossi (colori non previsti: come i bianchi).
+function Get-ButtonColorRank {
+    param($Button)
+    $rank = @{
+        "#064E3B" = 0; "#10B981" = 0
+        "#0EA5E9" = 1; "#1E3A8A" = 1; "#1E40AF" = 1; "#0F766E" = 1; "#0E7490" = 1
+        "#CBD5E1" = 2; "#F8FAFC" = 2
+        "#78350F" = 3; "#F59E0B" = 3
+        "#7F1D1D" = 4
+    }
+    $c = if ($Button.Count -gt 2) { [string]$Button[2] } else { "#064E3B" }
+    if ($rank.ContainsKey($c)) { return [int]$rank[$c] }
+    return 2
+}
+
+# Ordina i comandi per colore, mantenendo l'ordine originale dentro ogni colore.
+function Sort-ButtonsByColor {
+    param($Buttons)
+    $sorted = New-Object System.Collections.ArrayList
+    foreach ($grp in 0..4) {
+        foreach ($b in $Buttons) {
+            if ((Get-ButtonColorRank $b) -eq $grp) { [void]$sorted.Add($b) }
+        }
+    }
+    return ,$sorted
+}
+
+# Calcola colonna e riga di ogni comando (gia' ordinato per colore). Tre zone: 0 = verdi e azzurri (sinistra),
+# 1 = bianchi e arancio (centro), 2 = rossi (destra).
+# 1) Se possibile ogni zona occupa colonne tutte sue (scelgo il numero minimo di righe che non lascia comandi
+#    "orfani" soli in una colonna). 2) Altrimenti i rossi hanno comunque le loro colonne a destra e le altre
+#    due zone scorrono di seguito. 3) Se nemmeno questo basta, tutto scorre in colonne dall'alto in basso.
+function Get-ColorGridPositions {
+    param($Sorted, [int]$Cols, [int]$MaxRows = 6)
+    $n = @($Sorted).Count
+    $zoneOf = New-Object 'int[]' $n
+    $posCol = New-Object 'int[]' $n
+    $posRow = New-Object 'int[]' $n
+    $cnt = @(0, 0, 0)
+    for ($k = 0; $k -lt $n; $k++) {
+        $rk = Get-ButtonColorRank $Sorted[$k]
+        $zn = if ($rk -le 1) { 0 } elseif ($rk -le 3) { 1 } else { 2 }
+        $zoneOf[$k] = $zn
+        $cnt[$zn]++
+    }
+    $minRows = [int][math]::Ceiling([double]$n / $Cols)
+    $maxR = [math]::Max($minRows, $MaxRows)
+
+    # 1) zone in colonne separate
+    for ($R = $minRows; $R -le $maxR; $R++) {
+        $total = 0; $orphans = 0
+        foreach ($zn in 0..2) {
+            if ($cnt[$zn] -eq 0) { continue }
+            $c = [int][math]::Ceiling([double]$cnt[$zn] / $R)
+            $total += $c
+            if ($c -gt 1 -and ($cnt[$zn] - (($c - 1) * $R)) -eq 1) { $orphans++ }
+        }
+        if ($total -le $Cols -and $orphans -eq 0) {
+            $starts = @(0, 0, 0); $acc = 0
+            foreach ($zn in 0..2) { $starts[$zn] = $acc; $acc += [int][math]::Ceiling([double]$cnt[$zn] / $R) }
+            $seen = @(0, 0, 0)
+            for ($k = 0; $k -lt $n; $k++) {
+                $zn = $zoneOf[$k]; $j = $seen[$zn]; $seen[$zn]++
+                $posCol[$k] = $starts[$zn] + [int][math]::Floor($j / $R)
+                $posRow[$k] = $j % $R
+            }
+            return @{ Col = $posCol; Row = $posRow }
+        }
+    }
+
+    # 2) rossi in colonne proprie a destra, le altre zone di seguito
+    $R = $minRows
+    $flow = $cnt[0] + $cnt[1]
+    $cf = [int][math]::Ceiling([double]$flow / $R)
+    $cr = [int][math]::Ceiling([double]$cnt[2] / $R)
+    if (($cf + $cr) -le $Cols) {
+        $f = 0; $q = 0
+        for ($k = 0; $k -lt $n; $k++) {
+            if ($zoneOf[$k] -eq 2) { $posCol[$k] = $cf + [int][math]::Floor($q / $R); $posRow[$k] = $q % $R; $q++ }
+            else { $posCol[$k] = [int][math]::Floor($f / $R); $posRow[$k] = $f % $R; $f++ }
+        }
+        return @{ Col = $posCol; Row = $posRow }
+    }
+
+    # 3) tutto di seguito, per colonne
+    for ($k = 0; $k -lt $n; $k++) { $posCol[$k] = [int][math]::Floor($k / $R); $posRow[$k] = $k % $R }
+    return @{ Col = $posCol; Row = $posRow }
+}
+
 function Add-ButtonGrid {
     param(
         [Parameter(Mandatory)]$Tab,
         [Parameter(Mandatory)]$Buttons,
         [int]$Cols = 4, [int]$BtnW = 325, [int]$BtnH = 58,
-        [int]$GapX = 340, [int]$GapY = 66, [int]$StartX = 15, [int]$StartY = 10
+        [int]$GapX = 340, [int]$GapY = 66, [int]$StartX = 15, [int]$StartY = 10,
+        [switch]$ByColor
     )
     # L'area comandi mostra circa 6 righe senza barre di scorrimento. Se con le colonne standard servirebbero
     # più righe (es. AD-TOOLs), passa a 5 colonne più strette mantenendo l'altezza normale dei pulsanti.
@@ -418,10 +523,18 @@ function Add-ButtonGrid {
         # 5 colonne: il bordo destro arriva a 1360 px, come le schede a 4 colonne
         $Cols = 5; $BtnW = 261; $GapX = 271
     }
+    # Con -ByColor i comandi vengono raggruppati per colore e disposti per colonne (vedi Get-ColorGridPositions):
+    # verdi/azzurri a sinistra, bianchi e arancio al centro, rossi sulla destra.
+    if ($ByColor) {
+        $Buttons = Sort-ButtonsByColor $Buttons
+        $gridPos = Get-ColorGridPositions $Buttons $Cols
+    }
     $i = 0
     foreach ($b in $Buttons) {
-        $x = $StartX + (($i % $Cols) * $GapX)
-        $y = $StartY + ([math]::Floor($i / $Cols) * $GapY)
+        if ($ByColor) { $col = $gridPos.Col[$i]; $row = $gridPos.Row[$i] }
+        else { $col = $i % $Cols; $row = [int][math]::Floor($i / $Cols) }
+        $x = $StartX + ($col * $GapX)
+        $y = $StartY + ($row * $GapY)
         $bg = if ($b.Count -gt 2) { $b[2] } else { "#064E3B" }
         $fg = if ($b.Count -gt 3) { $b[3] } else { "#F8FAFC" }
         $tooltip = if ($b.Count -gt 4) { $b[4] } else { "" }
@@ -903,12 +1016,14 @@ function New-CustomButton {
     if ($bgColor -eq "#064E3B") { $btn.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#10B981") }
     elseif ($bgColor -eq "#78350F") { $btn.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#F59E0B") }
     elseif ($bgColor -eq "#7F1D1D") { $btn.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#DC2626") }
+    elseif ($bgColor -eq "#0EA5E9") { $btn.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#38BDF8") }
     else { $btn.FlatAppearance.BorderColor = [System.Drawing.ColorTranslator]::FromHtml("#334155") }
 
     # Colore al passaggio del mouse / al click: i comandi verdi diventano blu, gli altri schiariscono il proprio colore
     if ($bgColor -eq "#064E3B") { $hoverHex = "#2563EB"; $downHex = "#1E40AF" }
     elseif ($bgColor -eq "#78350F") { $hoverHex = "#B45309"; $downHex = "#92400E" }
     elseif ($bgColor -eq "#7F1D1D") { $hoverHex = "#B91C1C"; $downHex = "#991B1B" }
+    elseif ($bgColor -eq "#0EA5E9") { $hoverHex = "#0284C7"; $downHex = "#0369A1" }
     else { $hoverHex = "#2563EB"; $downHex = "#1E40AF" }
     $btn.FlatAppearance.MouseOverBackColor = [System.Drawing.ColorTranslator]::FromHtml($hoverHex)
     $btn.FlatAppearance.MouseDownBackColor = [System.Drawing.ColorTranslator]::FromHtml($downHex)
@@ -972,7 +1087,7 @@ function Set-RegistryWithCheck {
 }
 
 # ==============================================================================
-# TAB 1: DIAGNOSTICA HARDWARE - batteria, dischi e SMART, RAM, CPU, TPM, Secure Boot, BIOS, driver, test velocità disco
+# TAB 1: DIAGNOSTICA HARDWARE - batteria, dischi e SMART, RAM, CPU, TPM, Secure Boot, BIOS, driver, test velocità disco, inventario PC (rapido per ticket e dettagliato)
 # ==============================================================================
 
 
@@ -1025,7 +1140,7 @@ $diagBtns = @(
                 Write-Log "[AVVISO] Il report HTML non è stato generato da powercfg (codice $LASTEXITCODE)." "Attenzione"
             }
         } catch { Write-Log "[ERRORE] Analisi batteria non riuscita: $($_.Exception.Message)" "Errore" } finally { Hide-WaitOverlay }
-    }, "#064E3B", "#F8FAFC", "Genera report usura batteria (powercfg) e calcola percentuale di degrado. Apre HTML dettagliato. Sui PC fissi segnala che non c'è nessuna batteria."),
+    }, "#0EA5E9", "#FFFFFF", "Genera report usura batteria (powercfg) e calcola percentuale di degrado. Apre HTML dettagliato. Sui PC fissi segnala che non c'è nessuna batteria."),
     @("Controllo Status Batterie (Laptop)", {
         Show-CommandSummary "Status Batterie (Laptop)" @("Get-CimInstance Win32_Battery")
         $bat = Get-CimInstance Win32_Battery -ErrorAction SilentlyContinue
@@ -1078,7 +1193,7 @@ $diagBtns = @(
             Write-Log (Get-Content $tmp -Raw -ErrorAction SilentlyContinue) "Risultato"
             Write-Log "[OK] Test completato" "Completato"
         } catch { Write-Log "[ERRORE] $_" "Errore" } finally { Hide-WaitOverlay }
-    }, "#064E3B", "#F8FAFC", "Esegue winsat disk per benchmark lettura/scrittura disco C:"),
+    }, "#0EA5E9", "#FFFFFF", "Esegue winsat disk per benchmark lettura/scrittura disco C:"),
     @("Info Sistema e Hardware", {
         Show-CommandSummary "Info Sistema e Hardware" @("Get-CimInstance Win32_OperatingSystem", "Get-CimInstance Win32_ComputerSystem")
         $os = Get-CimInstance Win32_OperatingSystem
@@ -1092,51 +1207,16 @@ $diagBtns = @(
             Write-Log "Banco RAM: $([math]::round($_.Capacity/1GB, 2)) GB | Velocità: $($_.Speed) MHz | Produttore: $($_.Manufacturer)"
         }
     }, "#064E3B", "#F8FAFC", "Verifica i banchi di memoria RAM installati, la capacità, la frequenza e il produttore."),
-    @("Test Rapido RAM`n(senza riavvio)", {
-        Show-CommandSummary "Test Rapido RAM" @("Allocazione + pattern write/read + verifica")
+    @("Controllo Versione BIOS", {
+        Show-CommandSummary "Controllo Versione BIOS" @("Get-CimInstance Win32_BIOS")
         try {
-            $os = Get-CimInstance Win32_OperatingSystem
-            $freeMB = [math]::Floor($os.FreePhysicalMemory / 1KB)
-            $totMB = [math]::Floor($os.TotalVisibleMemorySize / 1KB)
-            Write-Log "RAM totale: $totMB MB | Libera ora: $freeMB MB" "Avviato"
-            # Di default testiamo 512 MB (o meno se ne e' libera poca): sicuro, non blocca il PC.
-            # L'utente puo' scegliere 256 / 512 / 1024.
-            $scelta = [System.Windows.Forms.MessageBox]::Show("Test rapido RAM senza riavvio.`r`n`r`nVerra' allocata memoria, scritta con pattern noti e riletta per verificare errori.`r`nNon modifica file, non riavvia.`r`n`r`nSI = test da 512 MB (consigliato)`r`nNO = test da 1024 MB`r`nANNULLA = esci", "Test Rapido RAM", [System.Windows.Forms.MessageBoxButtons]::YesNoCancel, [System.Windows.Forms.MessageBoxIcon]::Question)
-            if ($scelta -eq [System.Windows.Forms.DialogResult]::Cancel) { Write-Log "Test annullato dall'utente."; return }
-            $testMB = if ($scelta -eq [System.Windows.Forms.DialogResult]::No) { 1024 } else { 512 }
-            if ($testMB -gt ($freeMB - 512)) { $testMB = [math]::Max(128, $freeMB - 512); Write-Log "[INFO] Memoria libera bassa, riduco test a $testMB MB." "Attenzione" }
-            Write-Log "Avvio test su $testMB MB in blocchi da 16 MB..."
-            Show-WaitOverlay -msg "Test RAM in corso ($testMB MB)..."
-            $sw = [System.Diagnostics.Stopwatch]::StartNew()
-            $errori = 0; $blocchi = 0; $verificatiMB = 0
-            $rnd = New-Object System.Random
-            try {
-                $nBlocchi = [math]::Floor($testMB / 16)
-                for ($b = 0; $b -lt $nBlocchi; $b++) {
-                    # Blocco da 16 MB: pattern diverso per ogni blocco, cosi' becca anche errori dipendenti dal dato
-                    $buf = New-Object byte[] -ArgumentList (16MB)
-                    $pat = [byte]($rnd.Next(0, 256))
-                    for ($i = 0; $i -lt $buf.Length; $i += 4096) { $buf[$i] = $pat; $buf[$i + 1] = [byte](255 - $pat) }
-                    # Rilettura e verifica (solo punti campionati: inizio, centro, fine di ogni pagina, per velocita')
-                    for ($i = 0; $i -lt $buf.Length; $i += 4096) {
-                        if ($buf[$i] -ne $pat -or $buf[$i + 1] -ne [byte](255 - $pat)) { $errori++ }
-                    }
-                    $blocchi++; $verificatiMB += 16
-                    $buf = $null
-                    if ($b % 4 -eq 0) { [System.GC]::Collect() }
-                }
-            } finally { Hide-WaitOverlay; [System.GC]::Collect() }
-            $sw.Stop()
-            Write-Log "Test completato in $([math]::Round($sw.Elapsed.TotalSeconds,1)) s | Blocchi: $blocchi | Verificati: $verificatiMB MB | Errori: $errori"
-            if ($errori -eq 0) {
-                Write-Log "[OK] Nessun errore nel test rapido. NOTA: non esclude al 100% un difetto intermittente: per certezza usa Diagnostica Memoria Windows con riavvio." "Completato"
-                [System.Windows.Forms.MessageBox]::Show("Test rapido completato: NESSUN errore su $verificatiMB MB.`r`n`r`nPer un test completo (tutta la RAM, fuori da Windows) usa 'Diagnostica Memoria Windows'.", "Test Rapido RAM - OK", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
-            } else {
-                Write-Log "[ATTENZIONE] Trovati $errori errori! Banco RAM sospetto: fai il test completo con riavvio e prova i banchi uno alla volta." "Attenzione"
-                [System.Windows.Forms.MessageBox]::Show("ATTENZIONE: trovati $errori errori nel test rapido.`r`n`r`nEsegui 'Diagnostica Memoria Windows' con riavvio per conferma.", "Test Rapido RAM - ERRORI", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
-            }
-        } catch { Hide-WaitOverlay; Write-Log ("[ERRORE] Test RAM: " + $_.ToString()) "Errore" }
-    }, "#064E3B", "#F8FAFC", "Test rapido senza riavvio: alloca 512/1024 MB, scrive pattern noti e li rilegge. Se trova errori, conferma con Diagnostica Memoria Windows."),
+            $biosVer = (Get-CimInstance Win32_BIOS).SMBIOSBIOSVersion
+            Write-Log "[INFO] Versione BIOS (SMBIOS): $biosVer" "Completato"
+            [System.Windows.Forms.MessageBox]::Show("Versione BIOS rilevata:`r`n`r`n$biosVer", "Versione BIOS", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+        } catch {
+            Write-Log "[ERRORE] Impossibile leggere la versione del BIOS: $_" "Errore"
+        }
+    }, "#064E3B", "#F8FAFC", "Mostra la versione esatta del BIOS/UEFI attualmente installata sulla scheda madre."),
     @("Diagnostica Memoria`nWindows (riavvio)", {
         Show-CommandSummary "Diagnostica Memoria Windows" @("mdsched.exe")
         $msg = "Avviare Diagnostica Memoria Windows?`r`n`r`nIl PC verra' RIAVVIATO e il test partira' prima di Windows.`r`nDura 10-30 minuti. Al rientro l'esito e' nel Registro Eventi (vedi 'Esito Ultimo Test RAM').`r`n`r`nSalva il lavoro aperto e premi SI."
@@ -1158,7 +1238,24 @@ $diagBtns = @(
             Write-Log "--- Banchi rilevati ora ---"
             Get-CimInstance Win32_PhysicalMemory | ForEach-Object { Write-Log ("Banco {0}: {1} GB | {2} MHz | {3} | Slot {4}" -f $_.DeviceLocator, [math]::Round($_.Capacity/1GB,2), $_.Speed, $_.Manufacturer, $_.BankLabel) }
         } catch { Write-Log ("[ERRORE] Lettura esiti: " + $_.ToString()) "Errore" }
-    }, "#064E3B", "#F8FAFC", "Legge l'esito dell'ultimo test mdsched dal Registro Eventi + errori WHEA memoria ultimi 30 giorni."),
+    }, "#0EA5E9", "#FFFFFF", "Legge l'esito dell'ultimo test mdsched dal Registro Eventi + errori WHEA memoria ultimi 30 giorni."),
+    @("Verifica Eventi Errore (System)", {
+        Show-CommandSummary "Eventi Errore System" @("Get-EventLog -LogName System -EntryType Error -Newest 10")
+        Get-EventLog -LogName System -EntryType Error -Newest 10 -ErrorAction SilentlyContinue | ForEach-Object {
+            Write-Log "[$($_.TimeGenerated)] Sorgente: $($_.Source) | EventID: $($_.EventID) | MSG: $($_.Message.SubString(0, [math]::Min(60, $_.Message.Length)))"
+        }
+    }, "#064E3B", "#F8FAFC", "Estrae gli ultimi 10 errori critici registrati dal sistema operativo nel registro eventi."),
+    @("Status Processore / CPU", {
+        Show-CommandSummary "Status Processore / CPU" @("Get-CimInstance Win32_Processor")
+        $cpu = Get-CimInstance Win32_Processor
+        Write-Log "CPU: $($cpu.Name) | Core: $($cpu.NumberOfCores) | Logici: $($cpu.NumberOfLogicalProcessors) | MaxSpeed: $($cpu.MaxClockSpeed) MHz"
+    }, "#064E3B", "#F8FAFC", "Mostra le specifiche tecniche del processore (Core fisici, logici e velocità massima)."),
+    @("Lista Processi ad Alto Uso RAM", {
+        Show-CommandSummary "Processi Alto Uso RAM" @("Get-Process | Sort-Object WorkingSet64 -Descending | Select -First 10")
+        Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10 | ForEach-Object {
+            Write-Log "Processo: $($_.Name) | RAM Usata: $([math]::round($_.WorkingSet64/1MB, 2)) MB"
+        }
+    }, "#064E3B", "#F8FAFC", "Elenca i primi 10 processi di Windows che stanno consumando più memoria RAM in questo momento."),
     @("Stress Test RAM`n(5 min, a caldo)", {
         Show-CommandSummary "Stress Test RAM 5 min" @("Loop allocazione + pattern + verifica per 5 minuti")
         try {
@@ -1236,23 +1333,6 @@ $diagBtns = @(
             }
         } catch { Write-Log ("[ERRORE] Stress test RAM: " + $_.ToString()) "Errore" }
     }, "#7F1D1D", "#F8FAFC", "Stress a caldo per 5 minuti in loop: alloca, scrive pattern, rilegge. Si ferma al primo errore o con ANNULLA. Trova difetti intermittenti."),
-    @("Verifica Eventi Errore (System)", {
-        Show-CommandSummary "Eventi Errore System" @("Get-EventLog -LogName System -EntryType Error -Newest 10")
-        Get-EventLog -LogName System -EntryType Error -Newest 10 -ErrorAction SilentlyContinue | ForEach-Object {
-            Write-Log "[$($_.TimeGenerated)] Sorgente: $($_.Source) | EventID: $($_.EventID) | MSG: $($_.Message.SubString(0, [math]::Min(60, $_.Message.Length)))"
-        }
-    }, "#064E3B", "#F8FAFC", "Estrae gli ultimi 10 errori critici registrati dal sistema operativo nel registro eventi."),
-    @("Status Processore / CPU", {
-        Show-CommandSummary "Status Processore / CPU" @("Get-CimInstance Win32_Processor")
-        $cpu = Get-CimInstance Win32_Processor
-        Write-Log "CPU: $($cpu.Name) | Core: $($cpu.NumberOfCores) | Logici: $($cpu.NumberOfLogicalProcessors) | MaxSpeed: $($cpu.MaxClockSpeed) MHz"
-    }, "#064E3B", "#F8FAFC", "Mostra le specifiche tecniche del processore (Core fisici, logici e velocità massima)."),
-    @("Lista Processi ad Alto Uso RAM", {
-        Show-CommandSummary "Processi Alto Uso RAM" @("Get-Process | Sort-Object WorkingSet64 -Descending | Select -First 10")
-        Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10 | ForEach-Object {
-            Write-Log "Processo: $($_.Name) | RAM Usata: $([math]::round($_.WorkingSet64/1MB, 2)) MB"
-        }
-    }, "#064E3B", "#F8FAFC", "Elenca i primi 10 processi di Windows che stanno consumando più memoria RAM in questo momento."),
     @("Verifica Modello e Seriale PC", {
         Show-CommandSummary "Verifica Modello e Seriale PC" @("Get-CimInstance Win32_BIOS")
         $bios = Get-CimInstance Win32_BIOS
@@ -1296,16 +1376,51 @@ $diagBtns = @(
             [System.Windows.Forms.MessageBox]::Show("Impossibile verificare Secure Boot. Il sistema potrebbe essere in modalità Legacy o non supportata.", "Avviso", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
         }
     }, "#064E3B", "#F8FAFC", "Verifica se la funzione di sicurezza Secure Boot è attiva a livello UEFI."),
-    @("Controllo Versione BIOS", {
-        Show-CommandSummary "Controllo Versione BIOS" @("Get-CimInstance Win32_BIOS")
+    @("Test Rapido RAM`n(senza riavvio)", {
+        Show-CommandSummary "Test Rapido RAM" @("Allocazione + pattern write/read + verifica")
         try {
-            $biosVer = (Get-CimInstance Win32_BIOS).SMBIOSBIOSVersion
-            Write-Log "[INFO] Versione BIOS (SMBIOS): $biosVer" "Completato"
-            [System.Windows.Forms.MessageBox]::Show("Versione BIOS rilevata:`r`n`r`n$biosVer", "Versione BIOS", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
-        } catch {
-            Write-Log "[ERRORE] Impossibile leggere la versione del BIOS: $_" "Errore"
-        }
-    }, "#064E3B", "#F8FAFC", "Mostra la versione esatta del BIOS/UEFI attualmente installata sulla scheda madre."),
+            $os = Get-CimInstance Win32_OperatingSystem
+            $freeMB = [math]::Floor($os.FreePhysicalMemory / 1KB)
+            $totMB = [math]::Floor($os.TotalVisibleMemorySize / 1KB)
+            Write-Log "RAM totale: $totMB MB | Libera ora: $freeMB MB" "Avviato"
+            # Di default testiamo 512 MB (o meno se ne e' libera poca): sicuro, non blocca il PC.
+            # L'utente puo' scegliere 256 / 512 / 1024.
+            $scelta = [System.Windows.Forms.MessageBox]::Show("Test rapido RAM senza riavvio.`r`n`r`nVerra' allocata memoria, scritta con pattern noti e riletta per verificare errori.`r`nNon modifica file, non riavvia.`r`n`r`nSI = test da 512 MB (consigliato)`r`nNO = test da 1024 MB`r`nANNULLA = esci", "Test Rapido RAM", [System.Windows.Forms.MessageBoxButtons]::YesNoCancel, [System.Windows.Forms.MessageBoxIcon]::Question)
+            if ($scelta -eq [System.Windows.Forms.DialogResult]::Cancel) { Write-Log "Test annullato dall'utente."; return }
+            $testMB = if ($scelta -eq [System.Windows.Forms.DialogResult]::No) { 1024 } else { 512 }
+            if ($testMB -gt ($freeMB - 512)) { $testMB = [math]::Max(128, $freeMB - 512); Write-Log "[INFO] Memoria libera bassa, riduco test a $testMB MB." "Attenzione" }
+            Write-Log "Avvio test su $testMB MB in blocchi da 16 MB..."
+            Show-WaitOverlay -msg "Test RAM in corso ($testMB MB)..."
+            $sw = [System.Diagnostics.Stopwatch]::StartNew()
+            $errori = 0; $blocchi = 0; $verificatiMB = 0
+            $rnd = New-Object System.Random
+            try {
+                $nBlocchi = [math]::Floor($testMB / 16)
+                for ($b = 0; $b -lt $nBlocchi; $b++) {
+                    # Blocco da 16 MB: pattern diverso per ogni blocco, cosi' becca anche errori dipendenti dal dato
+                    $buf = New-Object byte[] -ArgumentList (16MB)
+                    $pat = [byte]($rnd.Next(0, 256))
+                    for ($i = 0; $i -lt $buf.Length; $i += 4096) { $buf[$i] = $pat; $buf[$i + 1] = [byte](255 - $pat) }
+                    # Rilettura e verifica (solo punti campionati: inizio, centro, fine di ogni pagina, per velocita')
+                    for ($i = 0; $i -lt $buf.Length; $i += 4096) {
+                        if ($buf[$i] -ne $pat -or $buf[$i + 1] -ne [byte](255 - $pat)) { $errori++ }
+                    }
+                    $blocchi++; $verificatiMB += 16
+                    $buf = $null
+                    if ($b % 4 -eq 0) { [System.GC]::Collect() }
+                }
+            } finally { Hide-WaitOverlay; [System.GC]::Collect() }
+            $sw.Stop()
+            Write-Log "Test completato in $([math]::Round($sw.Elapsed.TotalSeconds,1)) s | Blocchi: $blocchi | Verificati: $verificatiMB MB | Errori: $errori"
+            if ($errori -eq 0) {
+                Write-Log "[OK] Nessun errore nel test rapido. NOTA: non esclude al 100% un difetto intermittente: per certezza usa Diagnostica Memoria Windows con riavvio." "Completato"
+                [System.Windows.Forms.MessageBox]::Show("Test rapido completato: NESSUN errore su $verificatiMB MB.`r`n`r`nPer un test completo (tutta la RAM, fuori da Windows) usa 'Diagnostica Memoria Windows'.", "Test Rapido RAM - OK", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+            } else {
+                Write-Log "[ATTENZIONE] Trovati $errori errori! Banco RAM sospetto: fai il test completo con riavvio e prova i banchi uno alla volta." "Attenzione"
+                [System.Windows.Forms.MessageBox]::Show("ATTENZIONE: trovati $errori errori nel test rapido.`r`n`r`nEsegui 'Diagnostica Memoria Windows' con riavvio per conferma.", "Test Rapido RAM - ERRORI", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
+            }
+        } catch { Hide-WaitOverlay; Write-Log ("[ERRORE] Test RAM: " + $_.ToString()) "Errore" }
+    }, "#0EA5E9", "#FFFFFF", "Test rapido senza riavvio: alloca 512/1024 MB, scrive pattern noti e li rilegge. Se trova errori, conferma con Diagnostica Memoria Windows."),
     @("Verifica Driver Firmati e WHQL", {
         Show-CommandSummary "Verifica Driver Firmati e WHQL" @("sigverif", "Get-CimInstance Win32_PnPSignedDriver", "Genera report nella cartella dello script")
         try {
@@ -1361,7 +1476,7 @@ DETTAGLIO DRIVER NON FIRMATI
             Write-Log "[ERRORE] Verifica Driver: $_" "Errore"
             [System.Windows.Forms.MessageBox]::Show("Errore durante la generazione del report: $_", "Errore", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
         }
-    }, "#064E3B", "#F8FAFC", "Verifica la presenza di driver non firmati e genera report TXT+CSV nella cartella dello script."),
+    }, "#0EA5E9", "#FFFFFF", "Verifica la presenza di driver non firmati e genera report TXT+CSV nella cartella dello script."),
     
     @("Verifica Stato Driver (driverquery /V)", {
         Show-CommandSummary "Verifica Stato Driver - Equivalente driverquery /V" @("Get-CimInstance Win32_SystemDriver | Select Name, DisplayName, State, StartMode, PathName")
@@ -1410,7 +1525,7 @@ Totale driver: $($sysDrivers.Count)
         } catch {
             Write-Log "[ERRORE] Verifica Stato Driver /V: $_" "Errore"
         }
-    }, "#0E7490", "#F8FAFC", "Equivalente PowerShell moderno di driverquery /v - Mostra stato (Running/Stopped), modalità avvio (Auto/Manual) e percorso di tutti i driver kernel."),
+    }, "#0EA5E9", "#FFFFFF", "Equivalente PowerShell moderno di driverquery /v - Mostra stato (Running/Stopped), modalità avvio (Auto/Manual) e percorso di tutti i driver kernel."),
 
     @("Report Completo Driver V+SI Integrato", {
         Show-CommandSummary "Report Completo V+SI Integrato" @("Get-CimInstance Win32_SystemDriver + Win32_PnPEntity + Win32_PnPSignedDriver - Join per Stato e Firma")
@@ -1506,7 +1621,7 @@ Legenda: /V = Stato, ModalitaAvvio, Percorso | /SI = IsSigned, Firmatario, Versi
             Write-Log "[ERRORE] Report V+SI: $_" "Errore"
             [System.Windows.Forms.MessageBox]::Show("Errore report V+SI:`r`n$_", "Errore", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
         }
-    }, "#064E3B", "#F8FAFC", "REPORT DEFINITIVO che unisce driverquery /V (Stato/Avvio/Percorso) + driverquery /SI (Firma WHQL, Produttore, Versione, INF) in un unico CSV/TXT nella cartella dello script. Trova driver non firmati in esecuzione."),
+    }, "#0EA5E9", "#FFFFFF", "REPORT DEFINITIVO che unisce driverquery /V (Stato/Avvio/Percorso) + driverquery /SI (Firma WHQL, Produttore, Versione, INF) in un unico CSV/TXT nella cartella dello script. Trova driver non firmati in esecuzione."),
 
     @("Esporta Tutti i Driver (Backup)", {
         Show-CommandSummary "Esporta Tutti i Driver" @("Export-WindowsDriver -Online -Destination <cartella>", "DISM /Online /Export-Driver /Destination:<cartella>")
@@ -1607,7 +1722,51 @@ Legenda: /V = Stato, ModalitaAvvio, Percorso | /SI = IsSigned, Firmatario, Versi
             Write-Log "[ERRORE] Importazione driver fallita: $_" "Errore"
             [System.Windows.Forms.MessageBox]::Show("Errore durante l'importazione driver:`r`n$_", "Errore", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
         }
-    }, "#7F1D1D", "#F8FAFC", "Installa in blocco tutti i driver presenti in una cartella e sottocartelle tramite pnputil - Usalo per ripristinare un backup.")
+    }, "#7F1D1D", "#F8FAFC", "Installa in blocco tutti i driver presenti in una cartella e sottocartelle tramite pnputil - Usalo per ripristinare un backup."),
+    @("Inventario PC`nDettagliato (HTML + CSV)", {
+        Show-CommandSummary "Inventario PC Dettagliato" @("Get-CimInstance: sistema, BIOS, CPU, RAM, schede video, monitor", "Get-PhysicalDisk / Get-Volume", "Get-NetAdapter / Get-NetIPConfiguration", "Registro: software installato; Win32_QuickFixEngineering: aggiornamenti")
+        Show-WaitOverlay -msg "Raccolta inventario hardware e software..."
+        try {
+            $inv = Get-PCInventory
+            $stamp = Get-Date -Format "yyyyMMdd_HHmmss"
+            $htmlPath = Join-Path $global:OutputDir ("Inventario_PC_{0}_{1}.html" -f $env:COMPUTERNAME, $stamp)
+            $csvPath = Join-Path $global:OutputDir ("Inventario_PC_{0}_{1}.csv" -f $env:COMPUTERNAME, $stamp)
+            (ConvertTo-InventoryHtml -Inv $inv) | Out-File -FilePath $htmlPath -Encoding UTF8
+            Export-InventoryCsv -Inv $inv -Path $csvPath
+            Write-Log ("Inventario completato: {0} sezioni raccolte." -f @($inv.Sezioni).Count)
+            foreach ($kv in @($inv.Sintesi)) { Write-Log ("{0}: {1}" -f $kv.Voce, $kv.Valore) }
+            Write-Log ("[OK] Report HTML salvato in: {0}" -f $htmlPath) "Salvato"
+            Write-Log ("[OK] Dati in formato CSV salvati in: {0}" -f $csvPath) "Salvato"
+            Start-Process $htmlPath -ErrorAction SilentlyContinue
+        } catch { Write-Log "[ERRORE] Inventario PC: $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#0EA5E9", "#FFFFFF", "Raccoglie l'inventario completo del PC (sistema, BIOS, CPU, RAM per modulo, dischi, schede video, monitor, rete, sicurezza, aggiornamenti, software) e crea un report HTML pronto da aprire/stampare e un CSV per i tuoi inventari."),
+
+    @("Inventario PC Rapido (Ticket)", {
+        Show-CommandSummary "Inventario PC Rapido" @("Get-CimInstance Win32_ComputerSystem, Win32_BIOS, Win32_Processor, Win32_PhysicalMemory")
+        Show-WaitOverlay -msg "Generazione inventario..."
+        try {
+            $cs = Get-CimInstance Win32_ComputerSystem; $bios = Get-CimInstance Win32_BIOS; $cpu = Get-CimInstance Win32_Processor
+            $ram = (Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum).Sum /1GB
+            $disks = Get-PhysicalDisk | ForEach-Object { "$($_.FriendlyName) $([math]::Round($_.Size/1GB,0))GB $($_.MediaType)" } | Out-String
+            $out = @"
+===== INVENTARIO PC - $env:COMPUTERNAME - $(Get-Date) =====
+Produttore: $($cs.Manufacturer)
+Modello: $($cs.Model)
+Seriale BIOS: $($bios.SerialNumber)
+CPU: $($cpu.Name) | Core: $($cpu.NumberOfCores) | Thread: $($cpu.NumberOfLogicalProcessors)
+RAM Totale: $([math]::Round($ram,1)) GB
+OS: $((Get-CimInstance Win32_OperatingSystem).Caption) $((Get-CimInstance Win32_OperatingSystem).OSArchitecture)
+Dischi:
+$disks
+Schede Rete: $((Get-NetAdapter | Where-Object Status -eq Up | Select-Object -ExpandProperty Name) -join ", ")
+"@
+            $outFile = Join-Path $global:OutputDir "Inventario_$env:COMPUTERNAME.txt"
+            $out | Out-File $outFile -Encoding utf8
+            Write-Log $out
+            Write-Log "File inventario salvato in: $outFile"
+            Write-Log "Inventario completato con successo" "Completato"
+        } catch { Write-Log "[ERRORE] $_" "Errore" } finally { Hide-WaitOverlay }
+    }, "#0EA5E9", "#FFFFFF", "Crea file di inventario rapido con seriale, CPU, RAM, dischi e OS per ticket assistenza.")
 )
 
 $dismBtns = @(
@@ -1719,34 +1878,6 @@ $dismBtns = @(
 
 $toolBtns = @(
 
-    @("Inventario PC Completo (Ticket)", {
-        Show-CommandSummary "Inventario PC" @("Get-CimInstance Win32_ComputerSystem, Win32_BIOS, Win32_Processor, Win32_PhysicalMemory")
-        Show-WaitOverlay -msg "Generazione inventario..."
-        try {
-            $cs = Get-CimInstance Win32_ComputerSystem; $bios = Get-CimInstance Win32_BIOS; $cpu = Get-CimInstance Win32_Processor
-            $ram = (Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum).Sum /1GB
-            $disks = Get-PhysicalDisk | ForEach-Object { "$($_.FriendlyName) $([math]::Round($_.Size/1GB,0))GB $($_.MediaType)" } | Out-String
-            $out = @"
-===== INVENTARIO PC - $env:COMPUTERNAME - $(Get-Date) =====
-Produttore: $($cs.Manufacturer)
-Modello: $($cs.Model)
-Seriale BIOS: $($bios.SerialNumber)
-CPU: $($cpu.Name) | Core: $($cpu.NumberOfCores) | Thread: $($cpu.NumberOfLogicalProcessors)
-RAM Totale: $([math]::Round($ram,1)) GB
-OS: $((Get-CimInstance Win32_OperatingSystem).Caption) $((Get-CimInstance Win32_OperatingSystem).OSArchitecture)
-Dischi:
-$disks
-Schede Rete: $((Get-NetAdapter | Where-Object Status -eq Up | Select-Object -ExpandProperty Name) -join ", ")
-"@
-            $outFile = Join-Path $global:OutputDir "Inventario_$env:COMPUTERNAME.txt"
-            $out | Out-File $outFile -Encoding utf8
-            Write-Log $out
-            Write-Log "File inventario salvato in: $outFile"
-            Write-Log "Inventario completato con successo" "Completato"
-        } catch { Write-Log "[ERRORE] $_" "Errore" } finally { Hide-WaitOverlay }
-    }, "#0EA5E9", "#FFFFFF", "Crea file di inventario rapido con seriale, CPU, RAM, dischi e OS per ticket assistenza."),
-
-
     @("Gestione Dispositivi", {
         Show-CommandSummary "Gestione Dispositivi" @("devmgmt.msc")
         Start-Process devmgmt.msc
@@ -1848,6 +1979,461 @@ Schede Rete: $((Get-NetAdapter | Where-Object Status -eq Up | Select-Object -Exp
     }, "#064E3B", "#F8FAFC", "Esporta lista software da registry Uninstall in CSV")
 )
 
+# --- INVENTARIO PC COMPLETO (v3.9.31): raccolta dati hardware/software e report HTML + CSV ---
+function Format-InvSize {
+    param($Bytes)
+    if ($null -eq $Bytes) { return "" }
+    $b = 0.0
+    try { $b = [double]$Bytes } catch { return "" }
+    if ($b -le 0) { return "" }
+    if ($b -ge 1TB) { return ("{0:N2} TB" -f ($b / 1TB)) }
+    return ("{0:N1} GB" -f ($b / 1GB))
+}
+
+# Coppia Voce/Valore; restituisce $null se il valore e' vuoto (le righe vuote vengono scartate da Add-InvSection)
+function New-InvKV {
+    param([string]$Voce, $Valore)
+    $v = ""
+    if ($null -ne $Valore) { $v = ([string]$Valore).Trim() }
+    if (-not $v) { return $null }
+    return [PSCustomObject]@{ Voce = $Voce; Valore = $v }
+}
+
+function Add-InvSection {
+    param($List, [string]$Title, $Rows)
+    $r = @($Rows | Where-Object { $null -ne $_ })
+    if ($r.Count -gt 0) { [void]$List.Add([PSCustomObject]@{ Titolo = $Title; Righe = $r }) }
+}
+
+# Testo ASCII dai dati EDID del monitor (array di numeri, 0 = riempimento)
+function ConvertFrom-InvEdid {
+    param($Chars)
+    if (-not $Chars) { return "" }
+    $bytes = @($Chars | Where-Object { [int]$_ -ne 0 } | ForEach-Object { [byte]$_ })
+    if ($bytes.Count -eq 0) { return "" }
+    return ([System.Text.Encoding]::ASCII.GetString([byte[]]$bytes)).Trim()
+}
+
+function Get-InvMemTypeName {
+    param($Code)
+    $map = @{ 20 = "DDR"; 21 = "DDR2"; 24 = "DDR3"; 26 = "DDR4"; 27 = "LPDDR"; 28 = "LPDDR2"; 29 = "LPDDR3"; 30 = "LPDDR4"; 34 = "DDR5"; 35 = "LPDDR5" }
+    $k = 0
+    try { $k = [int]$Code } catch { $k = 0 }
+    if ($map.ContainsKey($k)) { return $map[$k] }
+    return ""
+}
+
+# Raccoglie l'inventario del PC locale. Ogni sezione e' indipendente: se una lettura fallisce le altre proseguono.
+function Get-PCInventory {
+    $sec = New-Object System.Collections.ArrayList
+    $sum = New-Object System.Collections.ArrayList
+    $cs = $null
+    $blMap = @{}
+    $sbTxt = ""; $tpmTxt = ""; $fwMode = "Legacy BIOS (o non rilevabile)"
+
+    # --- Sistema ---
+    try {
+        $cs = Get-CimInstance Win32_ComputerSystem -ErrorAction Stop
+        $bios = Get-CimInstance Win32_BIOS -ErrorAction SilentlyContinue
+        $bb = Get-CimInstance Win32_BaseBoard -ErrorAction SilentlyContinue
+        $csp = Get-CimInstance Win32_ComputerSystemProduct -ErrorAction SilentlyContinue
+        $tipoMap = @{ 1 = "Desktop"; 2 = "Portatile"; 3 = "Workstation"; 4 = "Server aziendale"; 5 = "Server piccolo ufficio"; 8 = "Tablet" }
+        $tipo = ""; $tk = 0
+        try { $tk = [int]$cs.PCSystemType } catch { $tk = 0 }
+        if ($tipoMap.ContainsKey($tk)) { $tipo = $tipoMap[$tk] }
+        $dom = "Gruppo di lavoro: " + $cs.Domain
+        if ($cs.PartOfDomain) { $dom = "Dominio: " + $cs.Domain }
+        $serial = ""; if ($bios) { $serial = [string]$bios.SerialNumber }
+        $uuid = ""; if ($csp) { $uuid = [string]$csp.UUID }
+        $board = ""; $boardSn = ""
+        if ($bb) { $board = ("{0} {1}" -f $bb.Manufacturer, $bb.Product); $boardSn = [string]$bb.SerialNumber }
+        Add-InvSection $sec "Sistema" @(
+            (New-InvKV "Nome PC" $cs.Name)
+            (New-InvKV "Produttore" $cs.Manufacturer)
+            (New-InvKV "Modello" $cs.Model)
+            (New-InvKV "Tipo" $tipo)
+            (New-InvKV "Numero di serie / Service Tag" $serial)
+            (New-InvKV "SKU" $cs.SystemSKUNumber)
+            (New-InvKV "UUID" $uuid)
+            (New-InvKV "Scheda madre" $board)
+            (New-InvKV "Seriale scheda madre" $boardSn)
+            (New-InvKV "Dominio / gruppo di lavoro" $dom)
+            (New-InvKV "Utente connesso" $cs.UserName)
+        )
+        [void]$sum.Add((New-InvKV "Modello" ("{0} {1}" -f $cs.Manufacturer, $cs.Model)))
+        [void]$sum.Add((New-InvKV "Numero di serie" $serial))
+    } catch { $null = $_ }
+
+    # --- Sistema operativo ---
+    try {
+        $os = Get-CimInstance Win32_OperatingSystem -ErrorAction Stop
+        $cv = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -ErrorAction SilentlyContinue
+        $ver = ""
+        if ($cv) { $ver = [string]$cv.DisplayVersion; if (-not $ver) { $ver = [string]$cv.ReleaseId } }
+        $build = [string]$os.BuildNumber
+        if ($cv -and $cv.UBR) { $build = $build + "." + $cv.UBR }
+        $inst = ""; if ($os.InstallDate) { $inst = $os.InstallDate.ToString("dd/MM/yyyy") }
+        $boot = ""; $upTxt = ""
+        if ($os.LastBootUpTime) {
+            $boot = $os.LastBootUpTime.ToString("dd/MM/yyyy HH:mm")
+            $up = (Get-Date) - $os.LastBootUpTime
+            $upTxt = ("{0} giorni {1} ore" -f [int][math]::Floor($up.TotalDays), $up.Hours)
+        }
+        $lic = ""
+        try {
+            $sl = Get-CimInstance SoftwareLicensingProduct -Filter "PartialProductKey IS NOT NULL AND ApplicationID='55c92734-d682-4d71-983e-d6ec3f16059f'" -ErrorAction Stop | Select-Object -First 1
+            if ($sl) {
+                if ([int]$sl.LicenseStatus -eq 1) { $lic = "Windows attivato" } else { $lic = ("Windows NON attivato (stato {0})" -f $sl.LicenseStatus) }
+            }
+        } catch { $null = $_ }
+        Add-InvSection $sec "Sistema operativo" @(
+            (New-InvKV "Sistema operativo" $os.Caption)
+            (New-InvKV "Versione" $ver)
+            (New-InvKV "Build" $build)
+            (New-InvKV "Architettura" $os.OSArchitecture)
+            (New-InvKV "Data installazione" $inst)
+            (New-InvKV "Ultimo avvio" $boot)
+            (New-InvKV "Tempo di attivita'" $upTxt)
+            (New-InvKV "Licenza" $lic)
+            (New-InvKV "Lingua" (@($os.MUILanguages) -join ", "))
+            (New-InvKV "Fuso orario" ([System.TimeZoneInfo]::Local.DisplayName))
+        )
+        [void]$sum.Add((New-InvKV "Sistema operativo" ("{0} {1} (build {2})" -f $os.Caption, $ver, $build)))
+    } catch { $null = $_ }
+
+    # --- BIOS / firmware, Secure Boot, TPM ---
+    try {
+        $bios2 = Get-CimInstance Win32_BIOS -ErrorAction Stop
+        try {
+            $sb = Confirm-SecureBootUEFI -ErrorAction Stop
+            $fwMode = "UEFI"
+            if ($sb) { $sbTxt = "Attivo" } else { $sbTxt = "Disattivato" }
+        } catch { $null = $_ }
+        try {
+            $t = Get-Tpm -ErrorAction Stop
+            if ($t.TpmPresent) {
+                if ($t.TpmReady) { $tpmTxt = "Presente e pronto" } else { $tpmTxt = "Presente, non pronto" }
+                $w = Get-CimInstance -Namespace "root\cimv2\Security\MicrosoftTpm" -ClassName Win32_Tpm -ErrorAction SilentlyContinue
+                if ($w -and $w.SpecVersion) { $tpmTxt = $tpmTxt + " - specifica " + (([string]$w.SpecVersion).Split(",")[0]) }
+            } else { $tpmTxt = "Assente" }
+        } catch { $null = $_ }
+        $biosDate = ""; if ($bios2.ReleaseDate) { $biosDate = $bios2.ReleaseDate.ToString("dd/MM/yyyy") }
+        Add-InvSection $sec "BIOS / Firmware" @(
+            (New-InvKV "Produttore BIOS" $bios2.Manufacturer)
+            (New-InvKV "Versione BIOS" $bios2.SMBIOSBIOSVersion)
+            (New-InvKV "Data BIOS" $biosDate)
+            (New-InvKV "Modalita' di avvio" $fwMode)
+            (New-InvKV "Secure Boot" $sbTxt)
+            (New-InvKV "TPM" $tpmTxt)
+        )
+    } catch { $null = $_ }
+
+    # --- Processore ---
+    try {
+        $rows = foreach ($c in @(Get-CimInstance Win32_Processor -ErrorAction Stop)) {
+            $virt = "Non attiva"; if ($c.VirtualizationFirmwareEnabled) { $virt = "Attiva" }
+            [PSCustomObject]@{ 'Processore' = ([string]$c.Name).Trim(); 'Produttore' = $c.Manufacturer; 'Core' = $c.NumberOfCores; 'Logici' = $c.NumberOfLogicalProcessors; 'MHz max' = $c.MaxClockSpeed; 'Socket' = $c.SocketDesignation; 'Cache L2 (KB)' = $c.L2CacheSize; 'Cache L3 (KB)' = $c.L3CacheSize; 'Virtualizzazione' = $virt }
+        }
+        Add-InvSection $sec "Processore" $rows
+        $first = @($rows)[0]
+        if ($first) { [void]$sum.Add((New-InvKV "Processore" ("{0} ({1} core / {2} thread)" -f $first.Processore, $first.Core, $first.Logici))) }
+    } catch { $null = $_ }
+
+    # --- Memoria RAM ---
+    try {
+        $arr = @(Get-CimInstance Win32_PhysicalMemoryArray -ErrorAction SilentlyContinue)
+        $mods = @(Get-CimInstance Win32_PhysicalMemory -ErrorAction Stop)
+        $slotTot = ($arr | Measure-Object -Property MemoryDevices -Sum).Sum
+        $maxKB = ($arr | Measure-Object -Property MaxCapacity -Sum).Sum
+        $maxTxt = ""; if ($maxKB) { $maxTxt = Format-InvSize ([double]$maxKB * 1KB) }
+        $totTxt = ""; if ($cs) { $totTxt = Format-InvSize $cs.TotalPhysicalMemory }
+        $slotUsed = $mods.Count
+        Add-InvSection $sec "Memoria RAM - riepilogo" @(
+            (New-InvKV "RAM totale" $totTxt)
+            (New-InvKV "Moduli installati" $slotUsed)
+            (New-InvKV "Slot totali" $slotTot)
+            (New-InvKV "Capacita' massima supportata" $maxTxt)
+        )
+        $ff = @{ 8 = "DIMM"; 12 = "SODIMM" }
+        $rows = foreach ($m in $mods) {
+            $fk = 0; try { $fk = [int]$m.FormFactor } catch { $fk = 0 }
+            $form = ""; if ($ff.ContainsKey($fk)) { $form = $ff[$fk] }
+            $cfg = $m.ConfiguredClockSpeed; if (-not $cfg) { $cfg = $m.Speed }
+            [PSCustomObject]@{ 'Slot' = $m.DeviceLocator; 'Banco' = $m.BankLabel; 'Capacita' = (Format-InvSize $m.Capacity); 'Tipo' = (Get-InvMemTypeName $m.SMBIOSMemoryType); 'Formato' = $form; 'MHz nominali' = $m.Speed; 'MHz in uso' = $cfg; 'Produttore' = $m.Manufacturer; 'Codice' = ([string]$m.PartNumber).Trim(); 'Seriale' = ([string]$m.SerialNumber).Trim() }
+        }
+        Add-InvSection $sec "Memoria RAM - moduli" $rows
+        $m0 = @($rows)[0]
+        if ($m0 -and $totTxt) {
+            $desc = ("{0} ({1} moduli" -f $totTxt, $slotUsed)
+            if ($m0.Tipo) { $desc = $desc + " " + $m0.Tipo }
+            if ($m0.'MHz in uso') { $desc = $desc + " a " + $m0.'MHz in uso' + " MHz" }
+            [void]$sum.Add((New-InvKV "Memoria RAM" ($desc + ")")))
+        }
+    } catch { $null = $_ }
+
+    # --- Dischi fisici e volumi ---
+    try {
+        $rows = $null
+        try {
+            $rows = foreach ($d in @(Get-PhysicalDisk -ErrorAction Stop)) {
+                [PSCustomObject]@{ 'Disco' = $d.FriendlyName; 'Tipo' = [string]$d.MediaType; 'Bus' = [string]$d.BusType; 'Dimensione' = (Format-InvSize $d.Size); 'Salute' = [string]$d.HealthStatus; 'Stato operativo' = (@($d.OperationalStatus) -join ", "); 'Seriale' = ([string]$d.SerialNumber).Trim(); 'Firmware' = $d.FirmwareVersion }
+            }
+        } catch {
+            $rows = foreach ($d in @(Get-CimInstance Win32_DiskDrive -ErrorAction Stop)) {
+                [PSCustomObject]@{ 'Disco' = $d.Model; 'Tipo' = ''; 'Bus' = $d.InterfaceType; 'Dimensione' = (Format-InvSize $d.Size); 'Salute' = $d.Status; 'Stato operativo' = ''; 'Seriale' = ([string]$d.SerialNumber).Trim(); 'Firmware' = $d.FirmwareRevision }
+            }
+        }
+        Add-InvSection $sec "Dischi fisici" $rows
+        $dd = @(@($rows) | Where-Object { $_ } | ForEach-Object { ("{0} ({1} {2})" -f $_.Disco, $_.Dimensione, $_.Tipo).Replace("  ", " ").Replace(" )", ")") })
+        if ($dd.Count -gt 0) { [void]$sum.Add((New-InvKV "Dischi" ($dd -join "; "))) }
+    } catch { $null = $_ }
+    try {
+        try { foreach ($b in @(Get-BitLockerVolume -ErrorAction Stop)) { $st = "Non attivo"; if ([string]$b.ProtectionStatus -eq "On") { $st = "Attivo" }; $blMap[[string]$b.MountPoint] = $st } } catch { $null = $_ }
+        $rows = foreach ($v in @(Get-Volume -ErrorAction Stop | Where-Object { $_.DriveType -eq "Fixed" -and $_.Size -gt 0 })) {
+            $unit = "(senza lettera)"; $bl = ""
+            if ($v.DriveLetter) { $unit = ([string]$v.DriveLetter) + ":"; if ($blMap.ContainsKey($unit)) { $bl = $blMap[$unit] } }
+            $pct = ""; if ($v.Size -gt 0) { $pct = [math]::Round(($v.SizeRemaining / $v.Size) * 100, 1) }
+            [PSCustomObject]@{ 'Unita' = $unit; 'Etichetta' = $v.FileSystemLabel; 'File system' = $v.FileSystem; 'Dimensione' = (Format-InvSize $v.Size); 'Libero' = (Format-InvSize $v.SizeRemaining); '% libero' = $pct; 'Salute' = [string]$v.HealthStatus; 'BitLocker' = $bl }
+        }
+        Add-InvSection $sec "Volumi" $rows
+    } catch { $null = $_ }
+
+    # --- Schede video ---
+    try {
+        $vram = @{}
+        try {
+            foreach ($k in @(Get-ChildItem "HKLM:\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}" -ErrorAction Stop | Where-Object { $_.PSChildName -match '^\d{4}$' })) {
+                $pr = Get-ItemProperty -LiteralPath $k.PSPath -ErrorAction SilentlyContinue
+                if ($pr -and $pr.DriverDesc) {
+                    $q = $pr.'HardwareInformation.qwMemorySize'
+                    if ($q -is [byte[]] -and $q.Length -ge 8) { $q = [BitConverter]::ToUInt64($q, 0) }
+                    if ($q) { $vram[[string]$pr.DriverDesc] = [double]$q }
+                }
+            }
+        } catch { $null = $_ }
+        $rows = foreach ($g in @(Get-CimInstance Win32_VideoController -ErrorAction Stop)) {
+            $mem = ""
+            if ($vram.ContainsKey([string]$g.Name)) { $mem = Format-InvSize $vram[[string]$g.Name] } elseif ($g.AdapterRAM) { $mem = Format-InvSize $g.AdapterRAM }
+            $res = ""; if ($g.CurrentHorizontalResolution) { $res = ("{0}x{1} a {2} Hz" -f $g.CurrentHorizontalResolution, $g.CurrentVerticalResolution, $g.CurrentRefreshRate) }
+            $drvDate = ""; if ($g.DriverDate) { $drvDate = $g.DriverDate.ToString("dd/MM/yyyy") }
+            [PSCustomObject]@{ 'Scheda video' = $g.Name; 'Memoria' = $mem; 'Versione driver' = $g.DriverVersion; 'Data driver' = $drvDate; 'Risoluzione attuale' = $res; 'Stato' = $g.Status }
+        }
+        Add-InvSection $sec "Schede video" $rows
+        $gg = @(@($rows) | Where-Object { $_ } | ForEach-Object { if ($_.Memoria) { ("{0} ({1})" -f $_.'Scheda video', $_.Memoria) } else { $_.'Scheda video' } })
+        if ($gg.Count -gt 0) { [void]$sum.Add((New-InvKV "Scheda video" ($gg -join "; "))) }
+    } catch { $null = $_ }
+
+    # --- Monitor ---
+    try {
+        $sizes = @{}
+        try { foreach ($bp in @(Get-CimInstance -Namespace root\wmi -ClassName WmiMonitorBasicDisplayParams -ErrorAction Stop)) { $sizes[[string]$bp.InstanceName] = $bp } } catch { $null = $_ }
+        $rows = foreach ($m in @(Get-CimInstance -Namespace root\wmi -ClassName WmiMonitorID -ErrorAction Stop)) {
+            $inch = ""
+            $bp = $sizes[[string]$m.InstanceName]
+            if ($bp -and $bp.MaxHorizontalImageSize -gt 0) { $inch = ("{0:N1} pollici" -f ([math]::Sqrt([math]::Pow($bp.MaxHorizontalImageSize, 2) + [math]::Pow($bp.MaxVerticalImageSize, 2)) / 2.54)) }
+            [PSCustomObject]@{ 'Produttore' = (ConvertFrom-InvEdid $m.ManufacturerName); 'Modello' = (ConvertFrom-InvEdid $m.UserFriendlyName); 'Seriale' = (ConvertFrom-InvEdid $m.SerialNumberID); 'Anno' = $m.YearOfManufacture; 'Diagonale' = $inch }
+        }
+        Add-InvSection $sec "Monitor" $rows
+    } catch { $null = $_ }
+
+    # --- Rete ---
+    try {
+        $ipc = @{}
+        try { foreach ($i in @(Get-NetIPConfiguration -ErrorAction Stop)) { $ipc[[int]$i.InterfaceIndex] = $i } } catch { $null = $_ }
+        $rows = foreach ($a in @(Get-NetAdapter -Physical -ErrorAction Stop)) {
+            $v4 = ""; $gw = ""; $dns = ""
+            $c = $ipc[[int]$a.ifIndex]
+            if ($c) {
+                $v4 = (@($c.IPv4Address | ForEach-Object { $_.IPAddress }) -join ", ")
+                $gw = (@($c.IPv4DefaultGateway | ForEach-Object { $_.NextHop }) -join ", ")
+                $dns = (@($c.DNSServer | Where-Object { [int]$_.AddressFamily -eq 2 } | ForEach-Object { $_.ServerAddresses }) -join ", ")
+            }
+            $dhcp = ""
+            try { $ni = Get-NetIPInterface -InterfaceIndex $a.ifIndex -AddressFamily IPv4 -ErrorAction Stop; if ([string]$ni.Dhcp -eq "Enabled") { $dhcp = "Si" } else { $dhcp = "No" } } catch { $null = $_ }
+            [PSCustomObject]@{ 'Nome' = $a.Name; 'Descrizione' = $a.InterfaceDescription; 'Stato' = [string]$a.Status; 'Velocita' = $a.LinkSpeed; 'MAC' = $a.MacAddress; 'IPv4' = $v4; 'Gateway' = $gw; 'DNS' = $dns; 'DHCP' = $dhcp }
+        }
+        Add-InvSection $sec "Schede di rete" $rows
+    } catch { $null = $_ }
+
+    # --- Audio ---
+    try {
+        $rows = foreach ($s in @(Get-CimInstance Win32_SoundDevice -ErrorAction Stop)) { [PSCustomObject]@{ 'Dispositivo audio' = $s.Name; 'Produttore' = $s.Manufacturer; 'Stato' = $s.Status } }
+        Add-InvSection $sec "Audio" $rows
+    } catch { $null = $_ }
+
+    # --- Batteria (solo portatili) ---
+    try {
+        $bat = @(Get-CimInstance Win32_Battery -ErrorAction SilentlyContinue)
+        if ($bat.Count -gt 0) {
+            $des = $null; $full = $null
+            try {
+                $des = (Get-CimInstance -Namespace root\wmi -ClassName BatteryStaticData -ErrorAction Stop | Select-Object -First 1).DesignedCapacity
+                $full = (Get-CimInstance -Namespace root\wmi -ClassName BatteryFullChargedCapacity -ErrorAction Stop | Select-Object -First 1).FullChargedCapacity
+            } catch { $null = $_ }
+            $health = ""
+            if ($des -and $full -and [double]$des -gt 0) { $health = ("{0}%" -f [math]::Round(([double]$full / [double]$des) * 100, 1)) }
+            Add-InvSection $sec "Batteria" @(
+                (New-InvKV "Batteria" $bat[0].Name)
+                (New-InvKV "Carica attuale" $(if ($null -ne $bat[0].EstimatedChargeRemaining) { ("{0}%" -f $bat[0].EstimatedChargeRemaining) } else { "" }))
+                (New-InvKV "Capacita' progettata (mWh)" $des)
+                (New-InvKV "Capacita' massima attuale (mWh)" $full)
+                (New-InvKV "Salute stimata" $health)
+            )
+        }
+    } catch { $null = $_ }
+
+    # --- Stampanti ---
+    try {
+        $rows = foreach ($p in @(Get-Printer -ErrorAction Stop)) { [PSCustomObject]@{ 'Stampante' = $p.Name; 'Driver' = $p.DriverName; 'Porta' = $p.PortName } }
+        Add-InvSection $sec "Stampanti installate" $rows
+    } catch { $null = $_ }
+
+    # --- Periferiche con errori ---
+    try {
+        $bad = @(Get-CimInstance Win32_PnPEntity -Filter "ConfigManagerErrorCode <> 0" -ErrorAction Stop)
+        if ($bad.Count -eq 0) {
+            Add-InvSection $sec "Periferiche con errori" @((New-InvKV "Esito" "Nessuna periferica con errori in Gestione dispositivi"))
+        } else {
+            $rows = foreach ($d in $bad) { [PSCustomObject]@{ 'Periferica' = $d.Name; 'Classe' = $d.PNPClass; 'Codice errore' = $d.ConfigManagerErrorCode; 'ID' = $d.DeviceID } }
+            Add-InvSection $sec "Periferiche con errori" $rows
+        }
+    } catch { $null = $_ }
+
+    # --- Sicurezza ---
+    try {
+        $av = ""
+        try { $av = (@(Get-CimInstance -Namespace "root\SecurityCenter2" -ClassName AntivirusProduct -ErrorAction Stop | ForEach-Object { $_.displayName }) -join ", ") } catch { $null = $_ }
+        $def = ""; $defSig = ""
+        try {
+            $mp = Get-MpComputerStatus -ErrorAction Stop
+            if ($mp.RealTimeProtectionEnabled) { $def = "Protezione in tempo reale attiva" } else { $def = "Protezione in tempo reale disattiva" }
+            if ($mp.AntivirusSignatureLastUpdated) { $defSig = $mp.AntivirusSignatureLastUpdated.ToString("dd/MM/yyyy HH:mm") }
+        } catch { $null = $_ }
+        $fwp = ""
+        try { $fwp = (@(Get-NetFirewallProfile -ErrorAction Stop | ForEach-Object { $st = "DISATTIVO"; if ([string]$_.Enabled -eq "True") { $st = "attivo" }; "{0}: {1}" -f (ConvertTo-FwProfileIt ([string]$_.Name)), $st }) -join " | ") } catch { $null = $_ }
+        $blTxt = ""
+        if ($blMap.Count -gt 0) { $blTxt = (@($blMap.Keys | Sort-Object | ForEach-Object { "{0} {1}" -f $_, $blMap[$_] }) -join " | ") }
+        Add-InvSection $sec "Sicurezza" @(
+            (New-InvKV "Antivirus registrato" $av)
+            (New-InvKV "Microsoft Defender" $def)
+            (New-InvKV "Definizioni Defender aggiornate al" $defSig)
+            (New-InvKV "Firewall" $fwp)
+            (New-InvKV "BitLocker" $blTxt)
+            (New-InvKV "Secure Boot" $sbTxt)
+            (New-InvKV "TPM" $tpmTxt)
+        )
+    } catch { $null = $_ }
+
+    # --- Ultimi aggiornamenti Windows ---
+    try {
+        $hf = @(Get-CimInstance Win32_QuickFixEngineering -ErrorAction Stop | Sort-Object InstalledOn -Descending | Select-Object -First 15)
+        $rows = foreach ($h in $hf) {
+            $on = ""; if ($h.InstalledOn) { try { $on = ([datetime]$h.InstalledOn).ToString("dd/MM/yyyy") } catch { $on = [string]$h.InstalledOn } }
+            [PSCustomObject]@{ 'Aggiornamento' = $h.HotFixID; 'Descrizione' = $h.Description; 'Installato il' = $on }
+        }
+        Add-InvSection $sec "Ultimi 15 aggiornamenti Windows" $rows
+    } catch { $null = $_ }
+
+    # --- Software installato ---
+    try {
+        $paths = @("HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*")
+        $apps = @(Get-ItemProperty $paths -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -and -not $_.SystemComponent } | Sort-Object DisplayName, DisplayVersion -Unique)
+        $rows = foreach ($p in $apps) {
+            $idt = [string]$p.InstallDate
+            if ($idt -match '^(\d{4})(\d{2})(\d{2})$') { $idt = ("{0}/{1}/{2}" -f $Matches[3], $Matches[2], $Matches[1]) }
+            [PSCustomObject]@{ 'Programma' = $p.DisplayName; 'Versione' = $p.DisplayVersion; 'Produttore' = $p.Publisher; 'Installato il' = $idt }
+        }
+        Add-InvSection $sec ("Software installato ({0} programmi)" -f $apps.Count) $rows
+    } catch { $null = $_ }
+
+    return [PSCustomObject]@{ Sezioni = @($sec); Sintesi = @($sum | Where-Object { $null -ne $_ }); Data = (Get-Date); PC = $env:COMPUTERNAME }
+}
+
+function ConvertTo-InvHtmlText {
+    param($T)
+    return [System.Net.WebUtility]::HtmlEncode([string]$T)
+}
+
+function ConvertTo-InventoryHtml {
+    param($Inv)
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.AppendLine('<!DOCTYPE html>')
+    [void]$sb.AppendLine('<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">')
+    [void]$sb.AppendLine(("<title>Inventario PC - {0}</title>" -f (ConvertTo-InvHtmlText $Inv.PC)))
+    [void]$sb.AppendLine('<style>')
+    [void]$sb.AppendLine(@'
+:root{--bg:#f8fafc;--fg:#0f172a;--card:#ffffff;--bd:#cbd5e1;--ac:#0369a1;--mut:#475569;--hd:#e2e8f0}
+@media (prefers-color-scheme:dark){:root{--bg:#0f172a;--fg:#e2e8f0;--card:#1e293b;--bd:#334155;--ac:#38bdf8;--mut:#94a3b8;--hd:#334155}}
+body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--fg);margin:0 auto;padding:24px;max-width:1400px}
+h1{color:var(--ac);margin:0 0 4px}.sub{color:var(--mut);margin-bottom:20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px 14px}
+.card b{display:block;color:var(--mut);font-size:12px;text-transform:uppercase;margin-bottom:4px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;margin-bottom:16px}
+h2{margin:0 0 10px;font-size:18px;color:var(--ac)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--bd);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--hd)}th.k{width:260px;font-weight:600}
+.wrap{overflow-x:auto}details summary{cursor:pointer;font-weight:600;color:var(--ac);font-size:18px}
+@media print{body{background:#fff;color:#000}section,.card{break-inside:avoid}}
+'@)
+    [void]$sb.AppendLine('</style></head><body>')
+    [void]$sb.AppendLine(("<h1>Inventario PC - {0}</h1>" -f (ConvertTo-InvHtmlText $Inv.PC)))
+    [void]$sb.AppendLine(("<div class=""sub"">Generato il {0} con Bino Tool {1}</div>" -f $Inv.Data.ToString("dd/MM/yyyy HH:mm"), (ConvertTo-InvHtmlText $scriptVersion)))
+    if (@($Inv.Sintesi).Count -gt 0) {
+        [void]$sb.AppendLine('<div class="cards">')
+        foreach ($k in @($Inv.Sintesi)) { [void]$sb.AppendLine(("<div class=""card""><b>{0}</b>{1}</div>" -f (ConvertTo-InvHtmlText $k.Voce), (ConvertTo-InvHtmlText $k.Valore))) }
+        [void]$sb.AppendLine('</div>')
+    }
+    foreach ($s in @($Inv.Sezioni)) {
+        $rows = @($s.Righe)
+        $props = @($rows[0].PSObject.Properties | ForEach-Object { $_.Name })
+        $isKV = ($props.Count -eq 2 -and $props[0] -eq "Voce" -and $props[1] -eq "Valore")
+        $tb = New-Object System.Text.StringBuilder
+        [void]$tb.AppendLine('<div class="wrap"><table>')
+        if (-not $isKV) {
+            [void]$tb.Append('<tr>')
+            foreach ($pn in $props) { [void]$tb.Append(("<th>{0}</th>" -f (ConvertTo-InvHtmlText $pn))) }
+            [void]$tb.AppendLine('</tr>')
+        }
+        foreach ($r in $rows) {
+            if ($isKV) {
+                [void]$tb.AppendLine(("<tr><th class=""k"">{0}</th><td>{1}</td></tr>" -f (ConvertTo-InvHtmlText $r.Voce), (ConvertTo-InvHtmlText $r.Valore)))
+            } else {
+                [void]$tb.Append('<tr>')
+                foreach ($pn in $props) { [void]$tb.Append(("<td>{0}</td>" -f (ConvertTo-InvHtmlText $r.$pn))) }
+                [void]$tb.AppendLine('</tr>')
+            }
+        }
+        [void]$tb.AppendLine('</table></div>')
+        if ($rows.Count -gt 40) {
+            [void]$sb.AppendLine(("<section><details><summary>{0}</summary>{1}</details></section>" -f (ConvertTo-InvHtmlText $s.Titolo), $tb.ToString()))
+        } else {
+            [void]$sb.AppendLine(("<section><h2>{0}</h2>{1}</section>" -f (ConvertTo-InvHtmlText $s.Titolo), $tb.ToString()))
+        }
+    }
+    [void]$sb.AppendLine('</body></html>')
+    return $sb.ToString()
+}
+
+function Export-InventoryCsv {
+    param($Inv, [string]$Path)
+    $out = New-Object System.Collections.ArrayList
+    foreach ($s in @($Inv.Sezioni)) {
+        $i = 0
+        foreach ($r in @($s.Righe)) {
+            $i++
+            $props = @($r.PSObject.Properties)
+            if ($props.Count -eq 2 -and $props[0].Name -eq "Voce" -and $props[1].Name -eq "Valore") {
+                [void]$out.Add([PSCustomObject]@{ Sezione = $s.Titolo; Elemento = ""; Voce = [string]$r.Voce; Valore = [string]$r.Valore })
+            } else {
+                foreach ($p in $props) { [void]$out.Add([PSCustomObject]@{ Sezione = $s.Titolo; Elemento = $i; Voce = $p.Name; Valore = [string]$p.Value }) }
+            }
+        }
+    }
+    $out | Export-Csv -Path $Path -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+}
+
 # --- HELPER PORTE DI RETE (v3.9.17) ---
 function Get-PortServiceName {
     param([int]$Port)
@@ -1893,6 +2479,149 @@ function Get-ListeningPortRows {
         [void]$rows.Add([PSCustomObject]@{ Proto = "UDP"; Indirizzo = [string]$u.LocalAddress; Porta = [int]$u.LocalPort; PID = [int]$u.OwningProcess; Processo = $pn; Servizio = (Get-PortServiceName ([int]$u.LocalPort)); Accesso = $acc })
     }
     return @($rows)
+}
+
+# --- RAGGIUNGIBILITA' REALE DELLE PORTE (v3.9.28): porte in ascolto incrociate con le regole del firewall ---
+function Test-FwProtoMatch {
+    param([string]$RuleProto, [string]$Proto)
+    $r = $RuleProto.Trim().ToUpper()
+    if (-not $r -or $r -eq "ANY") { return $true }
+    if ($r -eq "6") { $r = "TCP" } elseif ($r -eq "17") { $r = "UDP" }
+    return ($r -eq $Proto)
+}
+
+function Test-FwPortMatch {
+    param($PortList, [int]$Port, [string]$Proto)
+    foreach ($p in @($PortList)) {
+        $t = ([string]$p).Trim()
+        if (-not $t -or $t -eq "Any") { return $true }
+        if ($t -match '^\d+$') { if ([int]$t -eq $Port) { return $true }; continue }
+        if ($t -match '^(\d+)-(\d+)$') { if ($Port -ge [int]$Matches[1] -and $Port -le [int]$Matches[2]) { return $true }; continue }
+        if ($t -eq "RPCEPMap") { if ($Proto -eq "TCP" -and $Port -eq 135) { return $true }; continue }
+        if ($t -eq "RPC") { if ($Proto -eq "TCP" -and $Port -ge 49152) { return $true }; continue }
+    }
+    return $false
+}
+
+function ConvertTo-FwProfileIt {
+    param([string]$Name)
+    if ($Name -eq "Domain") { return "Dominio" }
+    if ($Name -eq "Private") { return "Privata" }
+    if ($Name -eq "Public") { return "Pubblica" }
+    return $Name
+}
+
+# Profili firewall effettivamente in uso (dalle reti connesse); se non rilevabili li considera tutti
+function Get-ActiveFirewallProfileNames {
+    $names = New-Object System.Collections.ArrayList
+    try {
+        foreach ($c in @(Get-NetConnectionProfile -ErrorAction Stop)) {
+            $cat = [string]$c.NetworkCategory
+            $n = "Public"
+            if ($cat -eq "DomainAuthenticated") { $n = "Domain" } elseif ($cat -eq "Private") { $n = "Private" }
+            if (-not $names.Contains($n)) { [void]$names.Add($n) }
+        }
+    } catch { $null = $_ }
+    if ($names.Count -eq 0) { foreach ($n in @("Domain", "Private", "Public")) { [void]$names.Add($n) } }
+    return @($names)
+}
+
+# Per ogni porta in ascolto sulla rete calcola se il firewall la lascia passare, su quali profili attivi e da quali indirizzi.
+# Esito: Raggiungibile (qualsiasi indirizzo), Limitata (solo alcuni indirizzi/sottorete), Bloccata.
+function Get-PortExposure {
+    param($Rows)
+    $res = [PSCustomObject]@{ Disponibile = $false; Profili = @(); Righe = @(); Errore = "" }
+    try {
+        if ($null -eq $Rows) { $Rows = @(Get-ListeningPortRows | Where-Object { $_.Accesso -eq "Rete" }) }
+        $active = @(Get-ActiveFirewallProfileNames)
+        $profState = @{}
+        foreach ($fp in @(Get-NetFirewallProfile -PolicyStore ActiveStore -ErrorAction Stop)) { $profState[[string]$fp.Name] = $fp }
+        $rules = @(Get-NetFirewallRule -PolicyStore ActiveStore -Direction Inbound -Enabled True -ErrorAction Stop | Where-Object { [string]$_.Action -eq "Allow" -or [string]$_.Action -eq "Block" })
+        $pf = @{}; $af = @{}; $df = @{}; $sf = @{}
+        foreach ($f in @(Get-NetFirewallPortFilter -All -PolicyStore ActiveStore -ErrorAction Stop)) { $pf[[string]$f.InstanceID] = $f }
+        foreach ($f in @(Get-NetFirewallApplicationFilter -All -PolicyStore ActiveStore -ErrorAction SilentlyContinue)) { $af[[string]$f.InstanceID] = $f }
+        foreach ($f in @(Get-NetFirewallAddressFilter -All -PolicyStore ActiveStore -ErrorAction SilentlyContinue)) { $df[[string]$f.InstanceID] = $f }
+        foreach ($f in @(Get-NetFirewallServiceFilter -All -PolicyStore ActiveStore -ErrorAction SilentlyContinue)) { $sf[[string]$f.InstanceID] = $f }
+
+        # Regole in forma semplificata (una sola volta)
+        $ri = New-Object System.Collections.ArrayList
+        foreach ($r in $rules) {
+            $key = [string]$r.Name
+            $port = $pf[$key]
+            if (-not $port) { continue }
+            $app = $af[$key]; $adr = $df[$key]; $svc = $sf[$key]
+            if ($app -and $app.Package -and [string]$app.Package -ne "Any") { continue }
+            $prog = "Any"; if ($app -and $app.Program) { $prog = [string]$app.Program }
+            $svcName = "Any"; if ($svc -and $svc.Service) { $svcName = [string]$svc.Service }
+            $ra = ""; if ($adr -and $adr.RemoteAddress) { $ra = (@($adr.RemoteAddress) -join ",") }
+            $remoteAny = ((-not $ra) -or ($ra -match '(^|,)(Any|\*)(,|$)'))
+            [void]$ri.Add([PSCustomObject]@{ Azione = [string]$r.Action; Profilo = [string]$r.Profile; Proto = [string]$port.Protocol; Porte = @($port.LocalPort); Programma = $prog; Servizio = $svcName; RemotoQualsiasi = $remoteAny })
+        }
+
+        # PID -> percorso eseguibile e servizi (per le regole legate a un programma o a un servizio)
+        $pathMap = @{}; $svcMap = @{}
+        foreach ($pr in @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue)) { if ($pr.ExecutablePath) { $pathMap[[int]$pr.ProcessId] = [string]$pr.ExecutablePath } }
+        foreach ($sv in @(Get-CimInstance Win32_Service -ErrorAction SilentlyContinue)) {
+            $k = [int]$sv.ProcessId
+            if ($k -gt 0) {
+                if (-not $svcMap.ContainsKey($k)) { $svcMap[$k] = New-Object System.Collections.ArrayList }
+                [void]$svcMap[$k].Add([string]$sv.Name)
+            }
+        }
+
+        $seen = @{}
+        $out = New-Object System.Collections.ArrayList
+        foreach ($l in @($Rows)) {
+            $dk = "{0}|{1}|{2}" -f $l.Proto, $l.Porta, $l.PID
+            if ($seen.ContainsKey($dk)) { continue }
+            $seen[$dk] = $true
+            $path = $pathMap[[int]$l.PID]
+            $svcs = @(); if ($svcMap.ContainsKey([int]$l.PID)) { $svcs = @($svcMap[[int]$l.PID]) }
+            $parts = New-Object System.Collections.ArrayList
+            $anyWorld = $false; $anyLimited = $false
+            foreach ($pn in $active) {
+                $pnIt = ConvertTo-FwProfileIt $pn
+                $ps = $profState[$pn]
+                if ($ps -and [string]$ps.Enabled -ne "True") {
+                    [void]$parts.Add(("{0}: firewall disattivato" -f $pnIt)); $anyWorld = $true
+                    continue
+                }
+                $blocked = $false; $world = $false; $limited = $false
+                foreach ($r in $ri) {
+                    if ($r.Profilo -notmatch 'Any' -and $r.Profilo -notmatch $pn) { continue }
+                    if (-not (Test-FwProtoMatch $r.Proto $l.Proto)) { continue }
+                    if (-not (Test-FwPortMatch $r.Porte $l.Porta $l.Proto)) { continue }
+                    if ($r.Programma -ne "Any") {
+                        $rp = [Environment]::ExpandEnvironmentVariables($r.Programma)
+                        $okProg = (($rp -eq "System" -and [int]$l.PID -eq 4) -or ($path -and $rp -eq $path))
+                        if (-not $okProg) { continue }
+                    }
+                    if ($r.Servizio -ne "Any") {
+                        if (@($svcs | Where-Object { $_ -eq $r.Servizio }).Count -eq 0) { continue }
+                    }
+                    if ($r.Azione -eq "Block") {
+                        if ($r.RemotoQualsiasi) { $blocked = $true; break }
+                    } elseif ($r.RemotoQualsiasi) { $world = $true } else { $limited = $true }
+                }
+                if ($blocked) {
+                    [void]$parts.Add(("{0}: bloccata" -f $pnIt))
+                } elseif ($world) {
+                    [void]$parts.Add(("{0}: qualsiasi indirizzo" -f $pnIt)); $anyWorld = $true
+                } elseif ($limited) {
+                    [void]$parts.Add(("{0}: indirizzi limitati" -f $pnIt)); $anyLimited = $true
+                } elseif ($ps -and [string]$ps.DefaultInboundAction -eq "Allow") {
+                    [void]$parts.Add(("{0}: consentita (azione predefinita)" -f $pnIt)); $anyWorld = $true
+                } else {
+                    [void]$parts.Add(("{0}: bloccata" -f $pnIt))
+                }
+            }
+            $esito = "Bloccata"
+            if ($anyWorld) { $esito = "Raggiungibile" } elseif ($anyLimited) { $esito = "Limitata" }
+            [void]$out.Add([PSCustomObject]@{ Proto = [string]$l.Proto; Porta = [int]$l.Porta; Processo = [string]$l.Processo; PID = [int]$l.PID; Servizio = [string]$l.Servizio; Esito = $esito; Profili = ($parts -join " | ") })
+        }
+        $res.Disponibile = $true; $res.Profili = @($active); $res.Righe = @($out)
+    } catch { $res.Errore = [string]$_ }
+    return $res
 }
 
 # --- HELPER CONTROLLI DI SICUREZZA (v3.9.19) ---
@@ -2377,7 +3106,7 @@ $netBtns = @(
         } catch { Write-Log "[ERRORE] Lettura regole firewall: $_" "Errore" } finally { Hide-WaitOverlay }
     }, "#064E3B", "#F8FAFC", "Mostra lo stato dei profili del firewall e le regole in ingresso attive che consentono il traffico su porte specifiche. Salva l'elenco completo in CSV."),
     @("Controllo Porte`na Rischio", {
-        Show-CommandSummary "Controllo Porte a Rischio" @("Porte in ascolto raggiungibili dalla rete (TCP/UDP)", "Get-SmbServerConfiguration (SMBv1)", "Registro: Desktop remoto e NLA", "Get-NetFirewallProfile")
+        Show-CommandSummary "Controllo Porte a Rischio" @("Porte in ascolto raggiungibili dalla rete (TCP/UDP)", "Get-SmbServerConfiguration (SMBv1)", "Registro: Desktop remoto e NLA", "Get-NetFirewallProfile", "Regole firewall attive (raggiungibilità reale delle porte)")
         Show-WaitOverlay -msg "Controllo porte a rischio..."
         try {
             $riskPorts = @(
@@ -2396,15 +3125,53 @@ $netBtns = @(
                 @{ Proto = "TCP"; Porta = 135;  Nome = "RPC";        Livello = "Info";  Nota = "Normale su Windows, ma non deve essere raggiungibile da Internet." }
             )
             $net = @(Get-ListeningPortRows | Where-Object { $_.Accesso -eq "Rete" })
+            $exp = Get-PortExposure -Rows $net
             $find = New-Object System.Collections.ArrayList
             foreach ($rk in $riskPorts) {
                 $hit = @($net | Where-Object { $_.Proto -eq $rk.Proto -and $_.Porta -eq $rk.Porta })
                 if ($hit.Count -eq 0) { continue }
                 $procs = (@($hit | ForEach-Object { $_.Processo } | Sort-Object -Unique)) -join ", "
-                [void]$find.Add([PSCustomObject]@{ Livello = $rk.Livello; Controllo = ("{0} {1} ({2}) in ascolto sulla rete" -f $rk.Proto, $rk.Porta, $rk.Nome); Dettaglio = ("Processo: {0}. {1}" -f $procs, $rk.Nota) })
+                # v3.9.28: il livello tiene conto del firewall (porta bloccata = solo informazione; limitata = un livello in meno per i rischi alti)
+                $lv = $rk.Livello
+                $ctl = ("{0} {1} ({2}) in ascolto sulla rete" -f $rk.Proto, $rk.Porta, $rk.Nome)
+                $fw = ""
+                if ($exp.Disponibile) {
+                    $ex = @($exp.Righe | Where-Object { $_.Proto -eq $rk.Proto -and $_.Porta -eq $rk.Porta }) | Select-Object -First 1
+                    if ($ex) {
+                        $fw = " Firewall: " + $ex.Profili + "."
+                        if ($ex.Esito -eq "Bloccata") {
+                            $lv = "Info"
+                            $ctl = ("{0} {1} ({2}) in ascolto ma bloccata dal firewall" -f $rk.Proto, $rk.Porta, $rk.Nome)
+                        } elseif ($ex.Esito -eq "Limitata" -and $lv -eq "Alto") { $lv = "Medio" }
+                    }
+                }
+                [void]$find.Add([PSCustomObject]@{ Livello = $lv; Controllo = $ctl; Dettaglio = ("Processo: {0}. {1}{2}" -f $procs, $rk.Nota, $fw) })
             }
             if ($find.Count -eq 0) {
                 [void]$find.Add([PSCustomObject]@{ Livello = "OK"; Controllo = "Porte a rischio note"; Dettaglio = "Nessuna è in ascolto sulla rete." })
+            }
+
+            # Esposizione reale (v3.9.28): quali porte in ascolto il firewall lascia davvero raggiungibili
+            if ($exp.Disponibile) {
+                $profIt = (@($exp.Profili | ForEach-Object { ConvertTo-FwProfileIt $_ }) -join ", ")
+                $nW = @($exp.Righe | Where-Object { $_.Esito -eq "Raggiungibile" }).Count
+                $nL = @($exp.Righe | Where-Object { $_.Esito -eq "Limitata" }).Count
+                $nB = @($exp.Righe | Where-Object { $_.Esito -eq "Bloccata" }).Count
+                [void]$find.Add([PSCustomObject]@{ Livello = "Info"; Controllo = "Esposizione reale delle porte"; Dettaglio = ("Profili firewall attivi: {0}. Porte in ascolto sulla rete: {1} | raggiungibili da qualsiasi indirizzo: {2} | da indirizzi limitati: {3} | bloccate dal firewall: {4}." -f $profIt, @($exp.Righe).Count, $nW, $nL, $nB) })
+                $riskKeys = @($riskPorts | ForEach-Object { "{0}|{1}" -f $_.Proto, $_.Porta })
+                $others = @($exp.Righe | Where-Object { $_.Esito -eq "Raggiungibile" -and ($riskKeys -notcontains ("{0}|{1}" -f $_.Proto, $_.Porta)) } | Sort-Object Porta)
+                $shownO = 0
+                foreach ($o in $others) {
+                    if ($shownO -ge 25) {
+                        [void]$find.Add([PSCustomObject]@{ Livello = "Info"; Controllo = "Altre porte raggiungibili"; Dettaglio = ("... e altre {0}: l'elenco completo è nel file CSV." -f ($others.Count - 25)) })
+                        break
+                    }
+                    $sn = ""; if ($o.Servizio) { $sn = " (" + $o.Servizio + ")" }
+                    [void]$find.Add([PSCustomObject]@{ Livello = "Info"; Controllo = ("{0} {1}{2} raggiungibile" -f $o.Proto, $o.Porta, $sn); Dettaglio = ("Processo: {0}. Firewall: {1}." -f $o.Processo, $o.Profili) })
+                    $shownO++
+                }
+            } else {
+                [void]$find.Add([PSCustomObject]@{ Livello = "Info"; Controllo = "Raggiungibilità non verificata"; Dettaglio = ("Lettura delle regole firewall non riuscita ({0}): i livelli si basano solo sulle porte in ascolto." -f $exp.Errore) })
             }
 
             # SMBv1
@@ -2455,12 +3222,17 @@ $netBtns = @(
                     }
                 }
             }
-            Write-Log "[INFO] Il controllo segnala l'esposizione: non verifica versioni né vulnerabilità dei singoli servizi."
+            Write-Log "[INFO] Il controllo segnala l'esposizione: non verifica versioni né vulnerabilità dei singoli servizi. La raggiungibilità si basa sul firewall di Windows di questo PC (non considera router, NAT o firewall di rete)."
             $csv = Join-Path $global:OutputDir ("Controllo_Rischio_Porte_{0}_{1}.csv" -f $env:COMPUTERNAME, (Get-Date -Format "yyyyMMdd_HHmmss"))
             $find | Export-Csv -Path $csv -NoTypeInformation -Encoding UTF8 -Delimiter ";"
             Write-Log ("[OK] Risultato salvato in: {0}" -f $csv) "Salvato"
+            if ($exp.Disponibile -and @($exp.Righe).Count -gt 0) {
+                $csvR = Join-Path $global:OutputDir ("Porte_Raggiungibili_{0}_{1}.csv" -f $env:COMPUTERNAME, (Get-Date -Format "yyyyMMdd_HHmmss"))
+                @($exp.Righe | Sort-Object @{ Expression = "Esito"; Descending = $true }, Porta) | Export-Csv -Path $csvR -NoTypeInformation -Encoding UTF8 -Delimiter ";"
+                Write-Log ("[OK] Elenco delle porte con raggiungibilità salvato in: {0}" -f $csvR) "Salvato"
+            }
         } catch { Write-Log "[ERRORE] Controllo porte a rischio: $_" "Errore" } finally { Hide-WaitOverlay }
-    }, "#064E3B", "#F8FAFC", "Segnala le porte a rischio note (Telnet, FTP, SMB, RDP, VNC, SNMP, database, WinRM) in ascolto sulla rete e controlla SMBv1, NLA del Desktop remoto e profili firewall disattivati. Salva un CSV."),
+    }, "#064E3B", "#F8FAFC", "Segnala le porte a rischio note (Telnet, FTP, SMB, RDP, VNC, SNMP, database, WinRM) in ascolto sulla rete, verifica con le regole del firewall se sono davvero raggiungibili (per profilo e indirizzo) e controlla SMBv1, NLA del Desktop remoto e profili firewall disattivati. Salva due CSV."),
     @("Confronto Porte`n(Baseline)", {
         Show-CommandSummary "Confronto Porte con Baseline" @("Porte in ascolto raggiungibili dalla rete (TCP/UDP)", "Confronto con il file Baseline_Porte_<PC>.csv nella cartella dello script")
         Show-WaitOverlay -msg "Lettura porte in ascolto..."
@@ -4753,7 +5525,7 @@ $welcomeForm.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#0F172A")
 $welcomeForm.BackgroundImageLayout = [System.Windows.Forms.ImageLayout]::Stretch
 # --- SFONDO PERSONALIZZATO ---
 try {
-    $scriptDir = Split-Path -Parent $PSCommandPath
+    $scriptDir = $global:AppDir
     if (-not $scriptDir) { $scriptDir = $PSScriptRoot }
     if (-not $scriptDir) { $scriptDir = (Get-Location).Path }
     $possibleBgs = @(
@@ -5135,7 +5907,7 @@ $pnlHeader.Dock = "Top"
 $pnlHeader.Height = 75
 $pnlHeader.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#1E293B")
 
-$logoPath = Join-Path -Path $PSScriptRoot -ChildPath "logo.png"
+$logoPath = Join-Path -Path $global:AppDir -ChildPath "logo.png"
 $titleXOffset = 20
 
 if (Test-Path $logoPath) {
@@ -5152,7 +5924,7 @@ $lblTitle = New-Object System.Windows.Forms.Label
 $lblTitle.Text = "UTILITY PER LA MANUTENZIONE DEL SISTEMA OPERATIVO E DEI SUI COMPONENTI"
 $lblTitle.Font = New-Object System.Drawing.Font("Segoe UI", 16, [System.Drawing.FontStyle]::Bold)
 $lblTitle.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#38BDF8")
-$lblTitle.Location = New-Object System.Drawing.Point($titleXOffset, 12)
+$lblTitle.Location = New-Object System.Drawing.Point($titleXOffset, 8)
 $lblTitle.AutoSize = $true
 
 $lblSubTitle = New-Object System.Windows.Forms.Label
@@ -5166,10 +5938,10 @@ $lblSubTitle.AutoSize = $true
 # ==============================================================================
 # PULSANTE INFO + POPUP EDITABILE - Aggiunto su richiesta utente
 # ==============================================================================
-$global:infoFilePath = Join-Path -Path $PSScriptRoot -ChildPath "bino_info.txt"
-# fallback se PSScriptRoot non scrivibile
+$global:infoFilePath = Join-Path -Path $global:AppDir -ChildPath "bino_info.txt"
+# fallback se la cartella dello script/exe non e' scrivibile
 try {
-    if (-not (Test-Path $PSScriptRoot)) { $global:infoFilePath = Join-Path $env:TEMP "bino_info.txt" }
+    if (-not (Test-DirWritable $global:AppDir)) { $global:infoFilePath = Join-Path $env:TEMP "bino_info.txt" }
 } catch { $global:infoFilePath = Join-Path $env:TEMP "bino_info.txt" }
 
 function Show-InfoPopup {
@@ -5364,10 +6136,15 @@ $btnSaveLog.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 $btnSaveLog.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#38BDF8")
 $btnSaveLog.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#1E293B")
 $btnSaveLog.Add_Click({
-    $filePath = Join-Path -Path $global:OutputDir -ChildPath ("Report_Diagnostica_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".txt")
-    ($txtLog.Text -replace "`r?`n", "`r`n") | Out-File -FilePath $filePath -Encoding utf8
-    Write-Log "[OK] Log della console salvato nella cartella dello script: $filePath" "Log Salvato"
-    [System.Windows.Forms.MessageBox]::Show("File di log salvato nella cartella dello script con successo!`r`n`r`n$filePath", "Salvataggio Completato", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+    try {
+        $filePath = Join-Path -Path $global:OutputDir -ChildPath ("Report_Diagnostica_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".txt")
+        ($txtLog.Text -replace "`r?`n", "`r`n") | Out-File -FilePath $filePath -Encoding utf8
+        Write-Log "[OK] Log della console salvato nella cartella dello script: $filePath" "Log Salvato"
+        [System.Windows.Forms.MessageBox]::Show("File di log salvato nella cartella dello script con successo!`r`n`r`n$filePath", "Salvataggio Completato", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+    } catch {
+        Write-Log "[ERRORE] Impossibile salvare il log in $($global:OutputDir): $_" "Errore"
+        [System.Windows.Forms.MessageBox]::Show("Impossibile salvare il file di log.`r`n`r`nCartella: $($global:OutputDir)`r`n$_", "Errore salvataggio", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error) | Out-Null
+    }
 })
 
 $pnlLog.Controls.Add($btnSaveLog)
@@ -5482,6 +6259,10 @@ function Invoke-BinoCommand {
     try {
         # v3.9.25: niente Reflection / .Invoke() su metodi privati (trigger euristico AV).
         # PerformClick() e' il metodo pubblico di WinForms e scatena gli stessi handler Add_Click.
+        # PerformClick() funziona solo se il pulsante e' visibile: prima porto in primo piano la sua scheda.
+        $tc = $global:BinoTabControl
+        if ($tc -and $Entry.Page -and $tc.SelectedTab -ne $Entry.Page) { $tc.SelectedTab = $Entry.Page }
+        if ($tc -and $Entry.Page -and $tc.SelectedTab -ne $Entry.Page) { return }   # scheda bloccata (es. avviso Veeam rifiutato)
         $Entry.Button.PerformClick()
     } catch { Write-Log "[ERRORE] Impossibile avviare il comando: $_" "Errore" }
 }
@@ -5775,6 +6556,8 @@ $btnFav.Add_Click({ Show-BinoFavoritesMenu })
 $btnSearch.Add_Click({ Show-BinoSearch })
 $pnlHeader.Controls.Add($btnFav)
 $pnlHeader.Controls.Add($btnSearch)
+# v3.9.27e: i pulsanti vanno davanti al titolo (prima il bordo superiore del campo ricerca veniva coperto dall'etichetta)
+$btnFav.BringToFront(); $btnSearch.BringToFront()
 
 $form.KeyPreview = $true
 $form.Add_KeyDown({
@@ -5807,13 +6590,17 @@ $tabControl.Controls.Add($tabDISM)
 
 $row = 0; $col = 0
 $cols = 4
+$dismSorted = Sort-ButtonsByColor $dismBtns
+$dismPos = Get-ColorGridPositions $dismSorted $cols
+$dismIdx = 0
 $btnW = 305
 $btnH = 58
 $gapX = 320
 $gapY = 66
 $startX = 15
 $startY = 10
-foreach ($b in $dismBtns) {
+foreach ($b in $dismSorted) {
+    $col = $dismPos.Col[$dismIdx]; $row = $dismPos.Row[$dismIdx]
     $x = $startX + ($col * $gapX)
     $y = $startY + ($row * $gapY)
     $bg = $b[2]; $fg = $b[3]; $tooltip = $b[4]
@@ -5825,12 +6612,11 @@ foreach ($b in $dismBtns) {
     }
     Register-BinoButton $btn $b $tabDISM
     $btn.Add_Click($b[1]); $tabDISM.Controls.Add($btn)
-    $col++
-    if ($col -ge $cols) { $col = 0; $row++ }
+    $dismIdx++
 }
 
 # ==============================================================================
-# TAB 3: UTILITY DI SISTEMA - console MMC e strumenti Windows (dispositivi, servizi, eventi, regedit, gpedit, firewall), inventario PC e software, report GPO
+# TAB 3: UTILITY DI SISTEMA - console MMC e strumenti Windows (dispositivi, servizi, eventi, regedit, gpedit, firewall), lista software, report GPO
 # ==============================================================================
 $tabTools = New-Object System.Windows.Forms.TabPage
 $tabTools.Text = "Utility di Sistema"
@@ -5839,7 +6625,7 @@ $tabTools.AutoScroll = $true
 $tabControl.Controls.Add($tabTools)
 
 
-Add-ButtonGrid -Tab $tabTools -Buttons $toolBtns
+Add-ButtonGrid -Tab $tabTools -Buttons $toolBtns -ByColor
 
 # ==============================================================================
 # TAB 4: NETWORK - IP, DNS, Winsock e TCP/IP, ping, porte (in ascolto, connessioni, scansione, firewall), proxy, profili Wi-Fi
@@ -5851,7 +6637,7 @@ $tabNet.AutoScroll = $true
 $tabControl.Controls.Add($tabNet)
 
 
-Add-ButtonGrid -Tab $tabNet -Buttons $netBtns
+Add-ButtonGrid -Tab $tabNet -Buttons $netBtns -ByColor
 
 # ==============================================================================
 # TAB 5: MANUTENZIONE OS - pulizia (temp, log eventi, WinSxS, cache WU), SFC/DISM/CHKDSK, punto di ripristino, winget, KB e Windows Update
@@ -5863,7 +6649,7 @@ $tabMaint.AutoScroll = $true
 $tabControl.Controls.Add($tabMaint)
 
 
-Add-ButtonGrid -Tab $tabMaint -Buttons $maintBtns
+Add-ButtonGrid -Tab $tabMaint -Buttons $maintBtns -ByColor
 
 # ==============================================================================
 # TAB 6: STAMPANTI - spooler, code di stampa, elenco ed eliminazione stampanti e driver, installazione per utenti non admin
@@ -5875,7 +6661,7 @@ $tabPrinters.AutoScroll = $true
 $tabControl.Controls.Add($tabPrinters)
 
 
-Add-ButtonGrid -Tab $tabPrinters -Buttons $printerBtns
+Add-ButtonGrid -Tab $tabPrinters -Buttons $printerBtns -ByColor
 
 # ==============================================================================
 # TAB 7: SICUREZZA & BITLOCKER - BitLocker (report, stato, attiva/disattiva), Defender, product key OEM, attivazione Windows, servizi critici, audit sicurezza client, amministratori locali, autorun e persistenza, condivisioni SMB, accessi falliti
@@ -5887,7 +6673,7 @@ $tabSec.AutoScroll = $true
 $tabControl.Controls.Add($tabSec)
 
 
-Add-ButtonGrid -Tab $tabSec -Buttons $secBtns
+Add-ButtonGrid -Tab $tabSec -Buttons $secBtns -ByColor
 
 # ==============================================================================
 # TAB 8: TWEAKS W11 - menu contestuale, cache Store e browser, Esplora risorse, prestazioni, ibernazione, avviso RDP
@@ -5898,7 +6684,7 @@ $tabTweaks.BackColor = [System.Drawing.ColorTranslator]::FromHtml("#0F172A")
 $tabTweaks.AutoScroll = $true
 $tabControl.Controls.Add($tabTweaks)
 
-Add-ButtonGrid -Tab $tabTweaks -Buttons $tweakBtns
+Add-ButtonGrid -Tab $tabTweaks -Buttons $tweakBtns -ByColor
 
 
 
@@ -5912,7 +6698,7 @@ $tabUSB.AutoScroll = $true
 $tabControl.Controls.Add($tabUSB)
 
 
-Add-ButtonGrid -Tab $tabUSB -Buttons $usbBtns
+Add-ButtonGrid -Tab $tabUSB -Buttons $usbBtns -ByColor
 
 
 # ==============================================================================
@@ -6085,7 +6871,7 @@ function Get-ADOutputPath {
 }
 
 
-Add-ButtonGrid -Tab $tabAD -Buttons $adBtns
+Add-ButtonGrid -Tab $tabAD -Buttons $adBtns -ByColor
 # ==============================================================================
 # FINE TAB AD-TOOLS
 # ==============================================================================
@@ -6115,7 +6901,7 @@ $tabO365.AutoScroll = $true
 $tabControl.Controls.Add($tabO365)
 
 
-Add-ButtonGrid -Tab $tabO365 -Buttons $o365Btns
+Add-ButtonGrid -Tab $tabO365 -Buttons $o365Btns -ByColor
 
 # ==============================================================================
 # GESTIONE EVENTO APERTURA TAB: ALERT DI SICUREZZA E CONTROLLO SERVIZI VEEAM
@@ -6146,5 +6932,5 @@ $tabControl.Add_SelectedIndexChanged({
 # ==============================================================================
 # AVVIO APPLICAZIONE
 # ==============================================================================
-Write-Log "[INFO] Cartella di output dei file: $global:OutputDir"
+Write-Log "[INFO] Cartella di output dei file: $global:OutputDir (avvio da $global:RunMode)"
 [System.Windows.Forms.Application]::Run($form)
